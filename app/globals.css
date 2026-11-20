@@ -161,3 +161,18 @@ html[data-theme="dark"] .review-check.ok{background:#24382b;color:#a6d2ae}
 .editorial-review-guidance ul{margin:8px 0 0;padding-left:18px}
 .editorial-review-guidance li{margin:4px 0}
 @media(max-width:600px){.editorial-review-card{padding:14px}.editorial-review-top{flex-direction:column;align-items:flex-start}}
+
+/* Phase 12: accessibility, resilience and responsive quality */
+.skip-link{position:fixed;top:8px;left:8px;z-index:1000;transform:translateY(-160%);background:var(--green);color:#fff;padding:12px 16px;border-radius:9px;font-weight:700;box-shadow:var(--shadow)}
+.skip-link:focus{transform:translateY(0)}
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{outline:3px solid #d1b66b;outline-offset:3px}
+#main-content:focus{outline:none}
+button:disabled{cursor:not-allowed;opacity:.62}
+img{max-width:100%;height:auto}
+.article-content{overflow-wrap:anywhere}
+.article-content [dir="rtl"],[dir="rtl"]{font-family:'Noto Naskh Arabic',serif;line-height:2}
+.article-title-arabic,.article-arabic,.result-arabic,.study-assistant-arabic{line-height:2}
+@media(max-width:720px){.header-inner{gap:10px}.header-actions{gap:6px}.icon-button{min-width:42px;min-height:42px}.mobile-menu{min-width:42px;min-height:42px}.nav.nav-open{max-height:calc(100dvh - 67px);overflow-y:auto;overscroll-behavior:contain}.nav.nav-open a{min-height:40px;display:flex;align-items:center}.search-box button,.advanced-search-form button,.button{min-height:44px}.article-page{padding-left:18px;padding-right:18px}.article-content{font-size:16px;line-height:1.9}.article-content h2{scroll-margin-top:90px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+html[data-theme="dark"] .skip-link{background:#d1b66b;color:#102b22}
+html[data-theme="dark"] :where(a,button,input,select,textarea,[tabindex]):focus-visible{outline-color:#e4cf85}
