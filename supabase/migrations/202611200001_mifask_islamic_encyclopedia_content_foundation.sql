@@ -57,7 +57,6 @@ create table if not exists public.ie_article_revisions (
 create index if not exists ie_articles_category_idx on public.ie_articles(category_id);
 create index if not exists ie_articles_status_idx on public.ie_articles(status);
 create index if not exists ie_articles_published_idx on public.ie_articles(published_at desc) where status = 'published';
-create index if not exists ie_articles_search_idx on public.ie_articles using gin (to_tsvector('english'::regconfig, coalesce(title,'') || ' ' || coalesce(summary,'') || ' ' || coalesce(array_to_string(tags,' '),'')));
 alter table public.ie_categories enable row level security;
 alter table public.ie_articles enable row level security;
 alter table public.ie_sources enable row level security;
