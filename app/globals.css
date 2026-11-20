@@ -189,3 +189,7 @@ html[data-theme="dark"] :where(a,button,input,select,textarea,[tabindex]):focus-
 html[data-theme="dark"] .app-error-state{background:var(--surface)}
 @media(prefers-reduced-motion:reduce){.app-loading-spinner{animation:none;border-top-color:var(--green2)}}
 @media(max-width:600px){.app-error-state{margin:38px auto;padding:25px 17px}.app-error-actions .button{flex:1}}
+
+/* Phase 14: explain related knowledge and article graph nodes */
+.related-item{display:flex;flex-direction:column;gap:8px}.related-reasons{display:flex;flex-wrap:wrap;gap:5px;padding:0 4px}.related-reasons span{font-size:10px;color:var(--muted);background:var(--soft);border:1px solid var(--line);padding:5px 8px;border-radius:999px}.kg-node-type{display:inline-flex;align-items:center;max-width:max-content}.kg-node small{display:block}.related-knowledge .related-note{font-size:11px;line-height:1.6;color:var(--muted);margin-top:18px}
+@media(max-width:640px){.related-reasons span{font-size:9px}.related-item .article-card{min-height:unset}}
