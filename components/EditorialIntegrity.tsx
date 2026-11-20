@@ -39,8 +39,8 @@ export default function EditorialIntegrity({articles,categories}:{articles:Integ
  const errors=issues.filter(i=>i.severity==='error').length;
  const warnings=issues.filter(i=>i.severity==='warning').length;
  const infos=issues.filter(i=>i.severity==='info').length;
- const grouped=new Map<string,Issue[]>();
- for(const issue of issues)grouped.set(issue.article.id,[...(grouped.get(issue.article.id)||[]),issue]);
+ const coverage=categories.map(category=>({category,count:articles.filter(a=>a.category_id===category.id).length}));
+ const uncovered=coverage.filter(row=>row.count===0);
  return <section className="integrity-report">
   <div className="admin-stats">
    <div><strong>{articles.length}</strong><span>Records scanned</span></div>
@@ -49,6 +49,7 @@ export default function EditorialIntegrity({articles,categories}:{articles:Integ
    <div><strong>{infos}</strong><span>Editorial notes</span></div>
   </div>
   <p className="admin-review-warning">Automated checks identify missing fields, consistency issues and citation-format concerns. They do not validate the authenticity of Hadith, correctness of Qur’anic references, or scholarly claims.</p>
+  <h3>Category coverage</h3><div className="admin-table"><div className="admin-row admin-row-header"><span>Category</span><span>Articles</span><span>Coverage</span></div>{coverage.map(row=><div className="admin-row" key={row.category.id}><span><strong>{row.category.name}</strong></span><span>{row.count}</span><span>{row.count===0?'No articles':'Has content'}</span></div>)}</div>{uncovered.length>0&&<p className="admin-review-warning">Categories with no CMS articles: {uncovered.map(x=>x.category.name).join(', ')}. These are coverage gaps, not proof that the topic is absent elsewhere on the site.</p>}
   {issues.length===0?<div className="admin-empty">No structural integrity issues detected in this scan.</div>:<div className="admin-table">
    <div className="admin-row admin-row-header"><span>Article / Issue</span><span>Severity</span><span>Slug</span></div>
    {issues.map((issue,index)=><div className="admin-row" key={issue.article.id+'-'+index}>
