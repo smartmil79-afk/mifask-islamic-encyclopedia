@@ -1,0 +1,33 @@
+name: Extract Mifask Starter ZIP
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  extract-starter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract uploaded starter archive
+        run: |
+          if [ ! -f starter.zip ]; then
+            echo "starter.zip not present; nothing to extract."
+            exit 0
+          fi
+          mkdir -p /tmp/mifask-starter
+          unzip -o starter.zip -d /tmp/mifask-starter
+          cp -a /tmp/mifask-starter/mifask-islamic-encyclopedia/. .
+          rm -f starter.zip
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No extracted changes."
+          else
+            git commit -m "Add Mifask Islamic Encyclopedia starter source"
+            git push
+          fi
