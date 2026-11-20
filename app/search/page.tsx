@@ -11,7 +11,7 @@ type SearchResult = Article & { slug?: string; categorySlug?: string; rank?: num
 type DbRow = { id:string; slug:string; title:string; summary:string|null; content:any; arabic_text:string|null; reading_minutes:number|null; tags:string[]|null; featured:boolean|null; reference_texts:string[]|null; verification_status?:string; reviewer_name?:string|null; verified_at?:string|null; category_name?:string|null; category_slug?:string|null; rank?:number };
 
 const aliases: Record<string,string[]> = {
-  quran:['Qur’an','Quran','القرآن'], qur'an:['Quran','القرآن'], koran:['Qur’an','القرآن'],
+  quran:['Qur’an','Quran','القرآن'], koran:['Qur’an','القرآن'],
   tawheed:['tawhid','توحيد','oneness of Allah'], tawhid:['tawheed','توحيد'],
   salah:['salat','prayer','الصلاة'], salat:['salah','prayer','الصلاة'], prayer:['salah','salat','الصلاة'],
   hadith:['hadeeth','حديث'], hadeeth:['hadith','حديث'],
@@ -19,13 +19,13 @@ const aliases: Record<string,string[]> = {
   hijrah:['hijra','الهجرة'], hijra:['hijrah','الهجرة'],
   taqwa:['تقوى','God-consciousness'], iman:['faith','إيمان'], faith:['iman','إيمان'],
   zakat:['zakah','زكاة'], zakah:['zakat','زكاة'],
-  dua:["du'a",'supplication','دعاء'], "du'a":['dua','supplication','دعاء'],
+  dua:['supplication','دعاء'],
   adhkar:['dhikr','remembrance','أذكار'], dhikr:['adhkar','remembrance','ذكر'],
   muhammad:['Prophet Muhammad','محمد'], adam:['آدم','Prophet Adam'],
   ramadan:['رمضان','fasting'], fasting:['صيام','Ramadan']
 };
 const normalizeArabic=(value:string)=>value.normalize('NFD').replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه');
-const normalize=(value:string)=>normalizeArabic(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,' ')).replace(/[^\p{L}\p{N}\s]/gu,' ').replace(/\s+/g,' ').trim();
+const normalize=(value:string)=>normalizeArabic(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'') .replace(/[’']/g,'')).replace(/[^\p{L}\p{N}\s]/gu,' ').replace(/\s+/g,' ').trim();
 const containsArabic=(value:string)=>/[\u0600-\u06FF]/.test(value);
 function termsFor(query:string){const q=normalize(query);const terms=[query];for(const word of q.split(' ')){if(aliases[word])terms.push(...aliases[word]);}return [...new Set(terms.filter(Boolean))].slice(0,4);}
 function mapRow(a:DbRow):SearchResult {return {id:a.slug,title:a.title,category:a.category_name||'Islamic Knowledge',summary:a.summary||'',readTime:a.reading_minutes?a.reading_minutes+' min read':'Reading time',tag:a.tags?.[0]||'Encyclopedia',featured:Boolean(a.featured),arabic:a.arabic_text||undefined,body:Array.isArray(a.content)?a.content.map(String):[],references:a.reference_texts||[],slug:a.slug,categorySlug:a.category_slug||undefined,rank:a.rank,referenceTexts:a.reference_texts||[],verificationStatus:a.verification_status||'unverified'};}
