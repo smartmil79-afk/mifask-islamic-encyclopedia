@@ -38,3 +38,7 @@ Public search uses `ie_search_published_articles` to search published titles, su
 
 ## Saved articles
 Readers can save articles to their browser's local reading list at `/saved`. Saved article IDs are stored in local browser storage and are not sent to the server.
+
+
+## Analytics
+Analytics are aggregate daily counters for article views and search actions. No IP address, personal identifier, or search query text is stored. Only active CMS administrators can read analytics.
