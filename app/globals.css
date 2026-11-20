@@ -72,3 +72,19 @@ html[data-theme="dark"] .quran-search input,html[data-theme="dark"] .quran-contr
 .revision-item>strong{display:block;font-size:13px}
 .revision-item>small{display:block;font-size:10px;color:var(--muted);margin:5px 0}
 .revision-item>p{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* Guided learning pathways */
+.learning-page{padding-bottom:70px}
+.learning-progress{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;margin:0 0 24px}
+.learning-progress-top{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.learning-progress-top strong{font-size:14px}.learning-progress-top p{margin:5px 0 0;color:var(--muted);font-size:12px}.learning-progress-top>span{font-family:'Playfair Display',serif;font-size:26px;color:var(--green2)}
+.learning-progress-track{height:8px;background:var(--soft);border-radius:99px;overflow:hidden;margin:17px 0 8px}.learning-progress-track>div{height:100%;background:var(--green2);border-radius:99px;transition:width .25s ease}
+.learning-reset{border:0;background:transparent;cursor:pointer;padding:5px 0;font:inherit;font-size:11px}
+.learning-path-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.learning-path-card{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:20px;min-width:0}
+.learning-path-head{display:flex;align-items:center;justify-content:space-between}.learning-level{font-size:10px;font-weight:700;color:var(--green2);background:var(--soft);padding:6px 9px;border-radius:99px}.learning-path-count{font-size:11px;color:var(--muted)}
+.learning-path-card h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;margin:14px 0 7px}.learning-path-card>p{font-size:12px;line-height:1.7;color:var(--muted);margin:0 0 16px}
+.learning-steps{display:grid;gap:0}.learning-step{display:flex;gap:12px;padding:13px 0;border-top:1px solid var(--line)}.learning-check{flex:0 0 30px;position:relative;display:flex;align-items:flex-start;justify-content:center;cursor:pointer}.learning-check input{position:absolute;opacity:0;width:26px;height:26px;cursor:pointer}.learning-check span{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border:1px solid var(--line);border-radius:50%;font-size:10px;color:var(--muted);background:var(--bg)}.learning-check input:checked+span{background:var(--green2);color:white;border-color:var(--green2)}.learning-check input:focus-visible+span{outline:2px solid var(--green2);outline-offset:2px}
+.learning-step-copy{min-width:0}.learning-step-copy strong{font-size:12px;display:block}.learning-step-copy p{font-size:11px;color:var(--muted);line-height:1.6;margin:4px 0 7px}.learning-step-copy a{font-size:10px;font-weight:700;color:var(--green2)}.learning-step.is-done .learning-step-copy strong{text-decoration:line-through;opacity:.72}
+.learning-note{margin-top:22px;border:1px solid var(--line);border-radius:12px;padding:15px 17px;color:var(--muted);font-size:11px;line-height:1.7}.learning-note strong{color:var(--text)}
+@media(max-width:720px){.learning-path-grid{grid-template-columns:1fr}.learning-path-card{padding:17px}}
