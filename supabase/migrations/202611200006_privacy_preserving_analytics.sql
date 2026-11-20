@@ -2,7 +2,7 @@
 create table if not exists public.ie_analytics_daily (
   day date not null default current_date,
   event_type text not null check (event_type in ('article_view','search')),
-  article_slug text,
+  article_slug text not null default '',
   event_count bigint not null default 0 check (event_count >= 0),
   primary key(day,event_type,article_slug)
 );
@@ -26,7 +26,7 @@ begin
   if event_kind='article_view' then
     if article_slug is null or not exists(select 1 from public.ie_articles a where a.slug=article_slug and a.status='published') then return; end if;
   else
-    article_slug := null;
+    article_slug := '';
   end if;
   insert into public.ie_analytics_daily(day,event_type,article_slug,event_count)
   values(current_date,event_kind,article_slug,1)
