@@ -21,3 +21,20 @@ The SQL function is in `supabase/migrations/20261120_secure_first_admin_bootstra
 
 ## CMS
 Visit `/admin`, sign in, and create articles. New content should start as Draft or Review. Only explicitly Published articles are public. Keep citations specific and check references before publishing.
+
+
+## Editorial verification and search (Phase 3)
+Migration: `supabase/migrations/202611200005_editorial_verification_and_search.sql`
+
+The CMS supports verification states:
+- **Unverified** — citations not checked yet.
+- **Sources checked** — source details have been reviewed.
+- **Editorially reviewed** — an editor reviewed the article.
+- **Verified by reviewer** — source-checking completed by the named reviewer.
+
+Verification notes can record editions, hadith grading attribution, context, differences of opinion, and any unresolved points. Verification is an editorial workflow label—not a fatwa and not a claim of scholarly consensus. Publishing an unverified article triggers a confirmation warning.
+
+Public search uses `ie_search_published_articles` to search published titles, summaries, content, Arabic text, tags and reference text. It returns only published articles.
+
+## Saved articles
+Readers can save articles to their browser's local reading list at `/saved`. Saved article IDs are stored in local browser storage and are not sent to the server.
