@@ -27,7 +27,7 @@ const aliases: Record<string,string[]> = {
 const normalizeArabic=(value:string)=>value.normalize('NFD').replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه');
 const normalize=(value:string)=>normalizeArabic(value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,' ')).replace(/[^\p{L}\p{N}\s]/gu,' ').replace(/\s+/g,' ').trim();
 const containsArabic=(value:string)=>/[\u0600-\u06FF]/.test(value);
-function termsFor(query:string){const q=normalize(query);const terms=[query];for(const word of q.split(' ')){if(aliases[word])terms.push(...aliases[word]);}return [...new Set(terms.filter(Boolean))].slice(0,8);}
+function termsFor(query:string){const q=normalize(query);const terms=[query];for(const word of q.split(' ')){if(aliases[word])terms.push(...aliases[word]);}return [...new Set(terms.filter(Boolean))].slice(0,4);}
 function mapRow(a:DbRow):SearchResult {return {id:a.slug,title:a.title,category:a.category_name||'Islamic Knowledge',summary:a.summary||'',readTime:a.reading_minutes?a.reading_minutes+' min read':'Reading time',tag:a.tags?.[0]||'Encyclopedia',featured:Boolean(a.featured),arabic:a.arabic_text||undefined,body:Array.isArray(a.content)?a.content.map(String):[],references:a.reference_texts||[],slug:a.slug,categorySlug:a.category_slug||undefined,rank:a.rank,referenceTexts:a.reference_texts||[],verificationStatus:a.verification_status||'unverified'};}
 function SearchContent(){
  const params=useSearchParams();const router=useRouter();
@@ -36,13 +36,13 @@ function SearchContent(){
  useEffect(()=>{setQuery(params.get('q')||'');},[params]);
  useEffect(()=>{try{const h=JSON.parse(localStorage.getItem('mifask-search-history-v1')||'[]');if(Array.isArray(h))setHistory(h.slice(0,6));}catch{}},[]);
  useEffect(()=>{const sb=getSupabaseClient();if(!sb)return;sb.from('ie_categories').select('id,slug,name,description,icon,sort_order').eq('is_active',true).order('sort_order').then(({data})=>{if(data?.length)setCategories(data.map(c=>({id:c.slug,title:c.name,subtitle:c.description||'',icon:c.icon||'✦',count:'Explore',color:'sage',href:'/category/'+c.slug})));});},[]);
- useEffect(()=>{let alive=true;const q=query.trim();if(!q){setResults([]);setError('');return;}setLoading(true);setError('');
+ useEffect(()=>{let alive=true;const q=query.trim();if(!q){setResults([]);setError('');setLoading(false);return;}const timer=setTimeout(()=>{setLoading(true);setError('');
   (async()=>{const sb=getSupabaseClient();let found:SearchResult[]=[];
    if(sb){const expanded=termsFor(q);const calls=expanded.map(term=>sb.rpc('ie_search_published_articles',{search_query:term,result_limit:50}));const responses=await Promise.all(calls);const rows=responses.flatMap(r=>r.data||[]);const seen=new Set<string>();found=rows.filter((r:any)=>{if(seen.has(r.slug))return false;seen.add(r.slug);return true;}).map((r:any)=>mapRow(r));if(responses.some(r=>r.error)&&found.length===0)setError('Some search services are unavailable. Showing locally available content where possible.');}
    if(!found.length){found=fallbackArticles.filter(a=>{const hay=normalize([a.title,a.category,a.summary,a.tag,a.arabic||'',a.body.join(' '),a.references.join(' ')].join(' '));return termsFor(q).some(t=>hay.includes(normalize(t)));}).map(a=>({...a,slug:a.id,referenceTexts:a.references,verificationStatus:a.verificationStatus||'unverified'}));}
    if(alive){setResults(found);setLoading(false);}
   })().catch(()=>{if(alive){setError('Search could not connect. Showing local content if available.');setResults(fallbackArticles.filter(a=>normalize([a.title,a.summary,a.category,a.body.join(' '),a.references.join(' ')].join(' ')).includes(normalize(q))).map(a=>({...a,slug:a.id,referenceTexts:a.references})));setLoading(false);}});
-  return()=>{alive=false;};
+ },350);return()=>{alive=false;clearTimeout(timer);};
  },[query]);
  const filtered=useMemo(()=>results.filter(r=>{
   if(category!=='all'&&r.categorySlug!==category&&normalize(r.category)!==normalize(categories.find(c=>c.id===category)?.title||''))return false;
