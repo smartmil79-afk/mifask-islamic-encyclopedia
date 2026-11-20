@@ -27,3 +27,43 @@ html[data-theme="dark"] .verification-sources_checked{background:#3a3020;border-
 html[data-theme="dark"] .verification-reviewed{background:#263540;border-color:#3a5263;color:#abc9dc}
 html[data-theme="dark"] .verified-mini{background:#243b2b;color:#a8d4b0}
 @media(max-width:720px){.saved-toolbar{align-items:flex-start}.article-actions{gap:6px}.article-action{font-size:10px;padding:7px 10px}}
+
+/* Quran reader and Hadith reference explorer */
+.quran-reader,.hadith-page{padding-bottom:60px}
+.quran-search{display:flex;gap:9px;max-width:760px;margin-top:20px}
+.quran-search input{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:11px;padding:14px;font:inherit;font-size:13px}
+.quran-search .button{border:0;background:var(--green);color:#fff;cursor:pointer}
+.quran-reading{border:1px solid var(--line);border-radius:17px;background:var(--surface);overflow:hidden}
+.quran-controls{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:18px;border-bottom:1px solid var(--line)}
+.quran-controls label{display:grid;gap:6px;font-size:11px;font-weight:700;max-width:560px;width:100%}
+.quran-controls select{border:1px solid var(--line);background:var(--bg);color:var(--text);padding:12px;border-radius:9px;font:inherit}
+.surah-meta{display:flex;gap:9px;flex-wrap:wrap;font-size:10px;color:var(--muted)}
+.surah-meta span{padding:6px 8px;border-radius:100px;background:var(--soft)}
+.surah-title{text-align:center;padding:26px 15px;border-bottom:1px solid var(--line)}
+.surah-title h2{font-family:'Playfair Display',serif;font-weight:500;font-size:28px;margin:0}
+.surah-title p{font-size:12px;color:var(--muted);margin:7px 0}
+.surah-title div{font-family:'Noto Naskh Arabic',serif;font-size:26px;color:var(--green2)}
+.quran-ayah-list{padding:0 20px}
+.quran-ayah{padding:20px 0;border-bottom:1px solid var(--line)}
+.ayah-meta{font-size:10px;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:12px}
+.ayah-arabic{font-family:'Noto Naskh Arabic',serif;font-size:27px;line-height:2.2;text-align:right;color:var(--text);margin:0}
+.quran-nav{display:flex;justify-content:space-between;gap:12px;padding:18px}
+.quran-nav button:disabled{opacity:.45}
+.quran-results{padding:25px 0}
+.quran-results .quran-ayah{border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px;background:var(--surface)}
+.quran-source{margin-top:25px;padding:14px 17px;border:1px solid var(--line);border-radius:11px;font-size:11px;line-height:1.7;color:var(--muted)}
+.quran-source a{color:var(--green2);font-weight:700}
+.quran-error{padding:12px;margin:12px 0}
+.hadith-collection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.hadith-collection{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:18px}
+.hadith-collection h3{font-family:'Playfair Display',serif;font-weight:500;font-size:19px;margin:0 0 8px}
+.hadith-collection p{font-size:12px;line-height:1.7;color:var(--muted)}
+.hadith-collection a{font-size:11px;font-weight:700;color:var(--green2)}
+.hadith-results{display:grid;gap:10px}
+.hadith-result{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:17px;border:1px solid var(--line);border-radius:13px;background:var(--surface)}
+.hadith-result h3{font-family:'Playfair Display',serif;font-weight:500;font-size:18px;margin:0 0 5px}
+.hadith-result p{font-size:11px;color:var(--muted);line-height:1.6;margin:0 0 5px}
+.hadith-result small{font-size:10px;color:var(--muted)}
+.hadith-result>a{font-size:11px;color:var(--green2);font-weight:700;white-space:nowrap}
+html[data-theme="dark"] .quran-search input,html[data-theme="dark"] .quran-controls select{background:var(--surface)}
+@media(max-width:720px){.quran-search{flex-direction:column}.quran-controls{align-items:flex-start;flex-direction:column}.quran-controls label{max-width:none}.quran-ayah-list{padding:0 13px}.ayah-arabic{font-size:23px;line-height:2}.quran-nav{padding:12px}.hadith-collection-grid{grid-template-columns:1fr}.hadith-result{align-items:flex-start;flex-direction:column}.hadith-result>a{white-space:normal}}
