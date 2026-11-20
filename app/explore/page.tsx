@@ -1,0 +1,9 @@
+'use client';
+import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { categories, articles } from '@/lib/content';
+import CategoryCard from '@/components/CategoryCard';
+import ArticleCard from '@/components/ArticleCard';
+import SearchBox from '@/components/SearchBox';
+function ExploreContent(){const params=useSearchParams();const q=(params.get('q')||'').trim().toLowerCase();const filtered=articles.filter(a=>!q||[a.title,a.category,a.summary,a.tag,a.body.join(' ')].join(' ').toLowerCase().includes(q));const cats=categories.filter(c=>!q||[c.title,c.subtitle,c.id].join(' ').toLowerCase().includes(q));return <div className="page-shell"><div className="page-hero"><span className="section-kicker">The knowledge library</span><h1>Explore Islamic knowledge</h1><p>Browse a growing collection of topics or search for something specific.</p><SearchBox large placeholder="Search articles, categories, concepts…"/></div>{q&&<div className="search-results-note">Showing results for <strong>“{q}”</strong></div>}<section className="section"><div className="section-heading"><div><h2>Categories</h2><p className="muted">Explore by subject</p></div></div><div className="category-grid">{cats.map(c=><CategoryCard key={c.id} category={c}/>)}</div></section><section className="section"><div className="section-heading"><div><h2>Articles</h2><p className="muted">Found {filtered.length} article{filtered.length===1?'':'s'}</p></div></div>{filtered.length?<div className="article-grid">{filtered.map(a=><ArticleCard key={a.id} article={a}/>)}</div>:<div className="empty-state"><h3>No articles found</h3><p>Try a broader search term or explore a category above.</p></div>}</section></div>}
+export default function Explore(){return <Suspense fallback={<div className="page-shell empty-state">Loading library…</div>}><ExploreContent/></Suspense>}

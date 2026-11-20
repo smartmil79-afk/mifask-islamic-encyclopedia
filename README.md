@@ -16,12 +16,13 @@ A responsive Next.js starter for a comprehensive Islamic knowledge platform.
 
 ## Run locally
 1. Install Node.js 20 or newer.
-2. In the project folder run:
+2. Extract this folder.
+3. In the project folder run:
    ```bash
    npm install
    npm run dev
    ```
-3. Open http://localhost:3000
+4. Open http://localhost:3000
 
 ## Deploy
 Push to GitHub and import the repository into Vercel. No environment variables are needed for this starter.
