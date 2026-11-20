@@ -12,3 +12,18 @@ html[data-theme="dark"]{--bg:#101b17;--surface:#182620;--text:#e4ede5;--muted:#9
 @media(max-width:720px){.admin-row-actions{gap:4px}.admin-secondary.small{padding:5px 7px;font-size:9px}.admin-row{grid-template-columns:1.4fr .7fr}.admin-row-actions{grid-column:1/-1;padding-top:4px}.admin-row-header span:last-child{display:none}}
 
 .admin-search{max-width:420px;flex:1;min-width:180px;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:9px;padding:10px 12px;font:inherit;font-size:12px}.admin-word-count{font-size:11px;color:var(--muted);font-weight:400}.admin-review-warning{padding:11px 13px;border:1px solid #e3c98f;background:#fff8e8;color:#8a6423;border-radius:10px;font-size:12px;line-height:1.5}.admin-panel-head{flex-wrap:wrap}@media(max-width:720px){.admin-search{max-width:none;width:100%}.admin-panel-head{gap:10px}.admin-panel-head select{width:100%}}
+
+/* Editorial verification and reading list */
+.article-actions{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px}
+.article-action{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:100px;padding:8px 12px;font-size:11px;font-weight:700;cursor:pointer}
+.article-actions small{width:100%;color:var(--muted);font-size:10px}
+.verification-badge{display:inline-flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:15px;border:1px solid #c5dfc9;background:#edf7ef;color:#2e6b3f;border-radius:100px;padding:8px 12px;font-size:11px}
+.verification-sources_checked{background:#fff7e8;border-color:#e9d6a9;color:#8b672e}
+.verification-reviewed{background:#eef3f7;border-color:#d1dfe9;color:#446d87}
+.verified-mini{font-size:9px;border-radius:100px;padding:5px 7px;background:#e7f2e9;color:#2d7143;font-weight:700}
+.saved-toolbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:18px}
+html[data-theme="dark"] .verification-badge{background:#23372a;border-color:#395641;color:#b6d9be}
+html[data-theme="dark"] .verification-sources_checked{background:#3a3020;border-color:#5a482b;color:#d7b77b}
+html[data-theme="dark"] .verification-reviewed{background:#263540;border-color:#3a5263;color:#abc9dc}
+html[data-theme="dark"] .verified-mini{background:#243b2b;color:#a8d4b0}
+@media(max-width:720px){.saved-toolbar{align-items:flex-start}.article-actions{gap:6px}.article-action{font-size:10px;padding:7px 10px}}
