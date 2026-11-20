@@ -1,9 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { getSupabaseClient } from '@/lib/supabase';
 export default function ArticleActions({slug,title}:{slug:string;title:string}) {
   const [saved,setSaved]=useState(false);
   const [message,setMessage]=useState('');
-  useEffect(()=>{try{const items=JSON.parse(localStorage.getItem('mifask-bookmarks')||'[]');setSaved(items.includes(slug));}catch{}},[slug]);
+  useEffect(()=>{try{const items=JSON.parse(localStorage.getItem('mifask-bookmarks')||'[]');setSaved(items.includes(slug));}catch{};getSupabaseClient()?.rpc('ie_record_analytics',{event_kind:'article_view',article_slug:slug});},[slug]);
   function toggle(){
     try{const items:string[]=JSON.parse(localStorage.getItem('mifask-bookmarks')||'[]');const next=saved?items.filter(x=>x!==slug):[...new Set([...items,slug])];localStorage.setItem('mifask-bookmarks',JSON.stringify(next));setSaved(!saved);setMessage(saved?'Removed from saved articles':'Saved for later');}catch{setMessage('Unable to save on this device');}
   }
