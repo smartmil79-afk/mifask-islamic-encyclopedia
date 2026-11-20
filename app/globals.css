@@ -143,3 +143,21 @@ html[data-theme="dark"] .hadith-collection-icon{background:#243a2c;color:#9dc4a4
 html[data-theme="dark"] .hadith-citation-preview{background:#213328}
 @media(max-width:850px){.hadith-collection-grid{grid-template-columns:repeat(2,1fr)}.hadith-citation-builder{grid-template-columns:1fr}}
 @media(max-width:560px){.hadith-collection-grid{grid-template-columns:1fr}.hadith-result{align-items:flex-start;flex-direction:column}.hadith-result>a{margin-top:4px}.hadith-citation-fields{grid-template-columns:1fr;padding:14px}.hadith-search{padding:0 12px}.hadith-search input{font-size:12px}}
+
+/* Phase 11: Editorial review and governance */
+.editorial-review-list{display:grid;gap:13px;margin-top:16px}
+.editorial-review-card{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:18px}
+.editorial-review-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.editorial-review-top h3{margin:0 0 5px;font-size:17px}
+.editorial-review-top small{color:var(--muted);font-size:10px}
+.editorial-review-card>p{color:var(--muted);font-size:12px;line-height:1.7;margin:12px 0}
+.editorial-review-checks{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.review-check{border:1px solid var(--line);background:var(--soft);color:var(--muted);border-radius:100px;padding:6px 9px;font-size:10px}
+.review-check.ok{border-color:#8eb59b;color:#39764c;background:#edf6ef}
+html[data-theme="dark"] .review-check.ok{background:#24382b;color:#a6d2ae}
+.editorial-review-actions{display:flex;flex-wrap:wrap;gap:7px}
+.editorial-review-guidance{border:1px solid var(--line);background:var(--soft);border-radius:12px;padding:14px 16px;font-size:11px;line-height:1.7;color:var(--muted)}
+.editorial-review-guidance strong{color:var(--text)}
+.editorial-review-guidance ul{margin:8px 0 0;padding-left:18px}
+.editorial-review-guidance li{margin:4px 0}
+@media(max-width:600px){.editorial-review-card{padding:14px}.editorial-review-top{flex-direction:column;align-items:flex-start}}
