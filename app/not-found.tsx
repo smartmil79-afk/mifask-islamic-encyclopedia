@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function NotFound(){return <div className="page-shell"><section className="app-error-state"><span className="section-kicker">404 · Not found</span><h1>This page isn’t in the library</h1><p>The link may be outdated, or the article may have moved. You can search the encyclopedia or browse its categories.</p><div className="app-error-actions"><Link className="button" href="/explore">Explore knowledge</Link><Link className="button button-outline" href="/search">Search</Link></div></section></div>}
