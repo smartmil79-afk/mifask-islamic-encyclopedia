@@ -1,0 +1,13 @@
+import Link from 'next/link';
+import { articles } from '@/lib/content';
+import { getPublishedArticles } from '@/lib/published-content';
+
+type ArticleLike={id:string;title:string;summary?:string;body?:string[];content?:unknown;category?:string;references?:string[]};
+function textOf(a:ArticleLike){const body=Array.isArray(a.body)?a.body.join(' '):typeof a.content==='string'?a.content:JSON.stringify(a.content||'');return [a.title,a.summary||'',body].join(' ').toLowerCase();}
+export default async function CrossReferencesPage(){
+ const published=await getPublishedArticles();
+ const all=[...published,...articles.filter(a=>!published.some(p=>p.id===a.id))] as ArticleLike[];
+ const connections=all.map(source=>({source,mentions:all.filter(target=>target.id!==source.id&&target.title.trim().length>=5&&textOf(source).includes(target.title.toLowerCase())).slice(0,8)})).filter(x=>x.mentions.length);
+ const total=connections.reduce((sum,x)=>sum+x.mentions.length,0);
+ return <main className="page-shell crossref-page"><header className="page-hero"><span className="section-kicker">Phase 14 · Cross-reference intelligence</span><h1>Article <em>connections</em></h1><p>Find places where one encyclopedia article mentions the title of another article, creating opportunities for readers to navigate between topics.</p></header><section className="crossref-summary"><div><strong>{all.length}</strong><span>articles scanned</span></div><div><strong>{connections.length}</strong><span>articles with title mentions</span></div><div><strong>{total}</strong><span>potential links detected</span></div></section>{connections.length?<div className="crossref-list">{connections.map(({source,mentions})=><section className="crossref-card" key={source.id}><div className="crossref-source"><span className="section-kicker">{source.category||'Article'}</span><h2><Link href={'/article/'+source.id}>{source.title}</Link></h2><p>{source.summary}</p></div><div className="crossref-mentions"><h3>Title mentions detected</h3>{mentions.map(target=><Link key={target.id} href={'/article/'+target.id} className="crossref-link"><span>{target.title}</span><small>Open article ↗</small></Link>)}</div></section>)}</div>:<div className="empty-state"><h2>No title mentions detected</h2><p>As the library grows, this page will identify potential article-to-article navigation opportunities.</p></div>}<div className="crossref-caveat"><strong>Important:</strong> These are automated phrase matches only. A mention does not establish a substantive, scholarly, chronological, or evidentiary relationship. Editors should review the context before adding a link.</div><Link className="button button-outline" href="/knowledge-graph">← Explore Knowledge Graph</Link></main>;
+}
