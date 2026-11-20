@@ -22,7 +22,7 @@ security definer
 set search_path = public
 as $$
 begin
-  if event_kind not in ('article_view','search') then return; end if;
+  if event_kind is null or event_kind not in ('article_view','search') then return; end if;
   if event_kind='article_view' then
     if article_slug is null or not exists(select 1 from public.ie_articles a where a.slug=article_slug and a.status='published') then return; end if;
   else
