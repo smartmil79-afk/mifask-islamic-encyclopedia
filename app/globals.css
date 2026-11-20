@@ -97,3 +97,8 @@ html[data-theme="dark"] .quran-search input,html[data-theme="dark"] .quran-contr
 html[data-theme="dark"] .dictionary-search input{background:var(--surface)}
 @media(max-width:900px){.dictionary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.dictionary-grid{grid-template-columns:1fr}.dictionary-search{align-items:stretch;flex-direction:column}.dictionary-search span{align-self:flex-start}}
+
+/* Qur'an translations and personal verse bookmarks */
+.quran-controls label{display:grid;gap:6px;font-size:11px;font-weight:700;max-width:560px;width:100%}.quran-controls select{border:1px solid var(--line);background:var(--bg);color:var(--text);padding:12px;border-radius:9px;font:inherit}
+.ayah-bookmark{border:1px solid var(--line);border-radius:100px;background:var(--surface);color:var(--green2);padding:6px 10px;font:inherit;font-size:10px;cursor:pointer}.ayah-translation{font-size:14px;line-height:1.9;margin:14px 0 0;color:var(--text);max-width:900px}.quran-ayah-list .quran-ayah{padding:23px 0}.quran-controls{flex-wrap:wrap}
+html[data-theme="dark"] .quran-controls select{background:var(--surface)}
