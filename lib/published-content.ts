@@ -26,7 +26,7 @@ export async function getPublishedArticles():Promise<Article[]> {
 }
 export async function getPublishedArticle(slug:string):Promise<Article|null>{
   const sb=client();if(!sb)return null;
-  const {data,error}=await sb.from('ie_articles').select('id,slug,title,summary,content,arabic_text,status,reading_minutes,tags,featured,reference_texts,category:ie_categories(name,slug)').eq('slug',slug).eq('status','published').maybeSingle();
+  const {data,error}=await sb.from('ie_articles').select('id,slug,title,summary,content,arabic_text,status,reading_minutes,tags,featured,reference_texts,verification_status,reviewer_name,verified_at,category:ie_categories(name,slug)').eq('slug',slug).eq('status','published').maybeSingle();
   if(error){console.error('Encyclopedia article query failed',error.message);return null;}
   return data?mapArticle(data as DbArticle):null;
 }
