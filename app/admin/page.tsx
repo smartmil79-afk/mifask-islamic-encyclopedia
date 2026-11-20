@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { getSupabaseClient } from '@/lib/supabase';
 
+type AdminTab = 'overview' | 'new' | 'edit' | 'history' | 'analytics' | 'review';
 type Category = { id: string; name: string; slug: string };
 type Article = { id: string; title: string; slug: string; summary: string|null; content: any; status: string; created_at: string; category_id: string|null; reference_texts?: string[]; author_name?: string|null; reviewer_name?: string|null; verification_status?: string; verified_by?: string|null; verified_at?: string|null; verification_notes?: string|null; reading_minutes?: number|null; tags?: string[]; featured?: boolean; arabic_text?: string|null; published_at?: string|null };
 const makeSlug = (value:string) => value.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
