@@ -1,5 +1,5 @@
 export type Category = { id: string; title: string; subtitle: string; icon: string; count: string; color: string; href: string };
-export type Article = { id: string; title: string; category: string; summary: string; readTime: string; tag: string; featured?: boolean; arabic?: string; body: string[]; references: string[] };
+export type Article = { id: string; title: string; category: string; summary: string; readTime: string; tag: string; featured?: boolean; arabic?: string; body: string[]; references: string[]; verificationStatus?: string; reviewerName?: string; verifiedAt?: string };
 
 export const categories: Category[] = [
   { id: 'quran', title: "The Qur'an", subtitle: 'Surahs, verses, tafsir and Qur’anic themes', icon: '☾', count: '114 Surahs', color: 'sage', href: '/category/quran' },
