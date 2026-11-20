@@ -1,0 +1,1 @@
+export default function Loading(){return <div className="page-shell"><div className="app-loading-state" role="status" aria-live="polite"><span className="app-loading-spinner" aria-hidden="true"></span><span>Loading Islamic knowledge…</span></div></div>}
