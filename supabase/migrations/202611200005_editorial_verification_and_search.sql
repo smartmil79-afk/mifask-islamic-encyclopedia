@@ -14,9 +14,8 @@ begin
 end $$;
 
 create index if not exists ie_articles_tags_gin_idx on public.ie_articles using gin(tags);
-create index if not exists ie_articles_content_search_idx on public.ie_articles using gin(
-  to_tsvector('simple', coalesce(title,'') || ' ' || coalesce(summary,'') || ' ' || coalesce(content::text,'') || ' ' || coalesce(arabic_text,'') || ' ' || array_to_string(tags,' '))
-);
+create index if not exists ie_articles_title_lower_idx on public.ie_articles using btree(lower(title));
+create index if not exists ie_articles_summary_lower_idx on public.ie_articles using btree(lower(summary));
 
 create or replace function public.ie_search_published_articles(search_query text, result_limit integer default 25)
 returns table (
@@ -25,9 +24,7 @@ returns table (
   verification_status text, reviewer_name text, verified_at timestamptz,
   category_name text, category_slug text, rank real
 )
-language sql
-stable
-set search_path = public
+language sql stable set search_path = public
 as $$
   with q as (
     select nullif(trim(search_query),'') as query,
@@ -56,5 +53,4 @@ as $$
   order by rank desc, a.published_at desc nulls last
   limit greatest(1,least(coalesce(result_limit,25),100));
 $$;
-
 grant execute on function public.ie_search_published_articles(text,integer) to anon, authenticated;
