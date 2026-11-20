@@ -1,0 +1,1 @@
+alter table public.ie_articles add column if not exists reference_texts text[] not null default '{}';
