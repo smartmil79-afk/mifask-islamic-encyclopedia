@@ -22,7 +22,7 @@ export default function AdminPage() {
   const [articles,setArticles] = useState<Article[]>([]);
   const [form,setForm] = useState({id:'',title:'',slug:'',summary:'',category_id:'',body:'',references:'',status:'draft',change_note:'Initial creation',arabic_text:'',featured:false,reviewer_name:'',tags:'',verification_status:'unverified',verification_notes:''});
   const [saving,setSaving] = useState(false);
-  const [tab,setTab] = useState<'overview'|'new'|'edit'|'history'|'analytics'>('overview');
+  const [tab,setTab] = useState<AdminTab>('overview');
   const [analyticsRows,setAnalyticsRows] = useState<any[]>([]);
   const [history,setHistory] = useState<any[]>([]);
   const [historyArticle,setHistoryArticle] = useState<Article|null>(null);
