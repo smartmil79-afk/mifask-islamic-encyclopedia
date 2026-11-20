@@ -32,6 +32,7 @@ function mapRow(a:DbRow):SearchResult {return {id:a.slug,title:a.title,category:
 function SearchContent(){
  const params=useSearchParams();const router=useRouter();
  const [query,setQuery]=useState(params.get('q')||'');const [mode,setMode]=useState('all');const [category,setCategory]=useState('all');const [sourceOnly,setSourceOnly]=useState(false);const [verifiedOnly,setVerifiedOnly]=useState(false);const [sort,setSort]=useState('relevance');
+ const q=query.trim();
  const [results,setResults]=useState<SearchResult[]>([]);const [loading,setLoading]=useState(false);const [error,setError]=useState('');const [categories,setCategories]=useState(fallbackCategories);const [history,setHistory]=useState<string[]>([]);
  useEffect(()=>{setQuery(params.get('q')||'');},[params]);
  useEffect(()=>{try{const h=JSON.parse(localStorage.getItem('mifask-search-history-v1')||'[]');if(Array.isArray(h))setHistory(h.slice(0,6));}catch{}},[]);
