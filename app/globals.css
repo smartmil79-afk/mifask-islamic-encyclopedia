@@ -67,3 +67,8 @@ html[data-theme="dark"] .verified-mini{background:#243b2b;color:#a8d4b0}
 .hadith-result>a{font-size:11px;color:var(--green2);font-weight:700;white-space:nowrap}
 html[data-theme="dark"] .quran-search input,html[data-theme="dark"] .quran-controls select{background:var(--surface)}
 @media(max-width:720px){.quran-search{flex-direction:column}.quran-controls{align-items:flex-start;flex-direction:column}.quran-controls label{max-width:none}.quran-ayah-list{padding:0 13px}.ayah-arabic{font-size:23px;line-height:2}.quran-nav{padding:12px}.hadith-collection-grid{grid-template-columns:1fr}.hadith-result{align-items:flex-start;flex-direction:column}.hadith-result>a{white-space:normal}}
+
+.revision-item{border:1px solid var(--line);border-radius:12px;padding:15px;margin:12px 0;background:var(--bg)}
+.revision-item>strong{display:block;font-size:13px}
+.revision-item>small{display:block;font-size:10px;color:var(--muted);margin:5px 0}
+.revision-item>p{font-size:12px;color:var(--muted);line-height:1.6}
