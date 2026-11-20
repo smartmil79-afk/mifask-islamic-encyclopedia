@@ -48,9 +48,8 @@ function SearchContent(){
  const filtered=useMemo(()=>results.filter(r=>{
   if(category!=='all'&&r.categorySlug!==category&&normalize(r.category)!==normalize(categories.find(c=>c.id===category)?.title||''))return false;
   const text=normalize([r.title,r.summary,r.category,r.tag,r.body.join(' '),r.arabic||'',(r.referenceTexts||r.references).join(' ')].join(' '));
-  if(mode==='arabic'&&!termsFor(q).some(t=>containsArabic(t)))return false;
-  if(mode==='arabic'&&!normalizeArabic([r.arabic||'',r.body.join(' ')].join(' ')).includes(normalizeArabic(q)))return false;
-  if(mode==='references'&&!normalize((r.referenceTexts||r.references).join(' ')).includes(normalize(q)))return false;
+  if(mode==='arabic'&&!termsFor(q).filter(containsArabic).some(t=>normalizeArabic([r.arabic||'',r.body.join(' ')].join(' ')).includes(normalizeArabic(t))))return false;
+  if(mode==='references'&&!termsFor(q).some(t=>normalize((r.referenceTexts||r.references).join(' ')).includes(normalize(t))))return false;
   if(mode==='transliteration'&&!termsFor(q).some(t=>text.includes(normalize(t))))return false;
   if(sourceOnly&&!(r.referenceTexts||r.references||[]).length)return false;
   if(verifiedOnly&&!['reviewed','verified'].includes(r.verificationStatus||''))return false;
