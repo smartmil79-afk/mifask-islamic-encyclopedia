@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
+import { articles } from '@/lib/content';
 
 type NodeItem={id:string;name:string;arabic?:string;type:string;description:string;connections:string[];href?:string};
 const nodes:NodeItem[]=[
@@ -18,15 +19,17 @@ const nodes:NodeItem[]=[
 {id:'faith',name:'Faith (Iman)',arabic:'إيمان',type:'Concept',description:'Belief and faith in Islamic teaching, including the articles of faith.',connections:['creation','taqwa','quran'],href:'/dictionary'},
 {id:'hijrah',name:'Hijrah',arabic:'الهجرة',type:'Event',description:'The migration associated with the early Muslim community and the start of the Hijri calendar.',connections:['seerah','muhammad','companions'],href:'/explore'}
 ];
-const types=['All','Source','Person','People','Concept','Topic','Practice','Event'];
+const types=['All','Source','Person','People','Concept','Topic','Practice','Event','Article'];
 export default function KnowledgeGraphPage(){
+ const articleNodes:NodeItem[]=articles.map(a=>{const relatedArticles=articles.filter(other=>other.id!==a.id&&other.category===a.category).slice(0,3);return {id:'article:'+a.id,name:a.title,type:'Article',description:a.summary,connections:relatedArticles.map(x=>'article:'+x.id),href:'/article/'+a.id};});
+ const allNodes=[...nodes,...articleNodes];
  const [search,setSearch]=useState('');const [type,setType]=useState('All');const [selected,setSelected]=useState('quran');
- const filtered=useMemo(()=>nodes.filter(n=>(type==='All'||n.type===type)&&(!search||[n.name,n.arabic,n.type,n.description].join(' ').toLowerCase().includes(search.toLowerCase()))),[search,type]);
- const active=nodes.find(n=>n.id===selected)||nodes[0];
- const related=active.connections.map(id=>nodes.find(n=>n.id===id)).filter(Boolean) as NodeItem[];
- return <main className="kg-page"><header className="kg-intro"><span className="section-kicker">Explore relationships</span><h1>Connected <em>Knowledge</em></h1><p>Discover how Islamic topics, sources, people, concepts and events relate to one another. Select a node to explore its connections.</p></header>
+ const filtered=useMemo(()=>allNodes.filter(n=>(type==='All'||n.type===type)&&(!search||[n.name,n.arabic,n.type,n.description].join(' ').toLowerCase().includes(search.toLowerCase()))),[search,type]);
+ const active=allNodes.find(n=>n.id===selected)||allNodes[0];
+ const related=active.connections.map(id=>allNodes.find(n=>n.id===id)).filter(Boolean) as NodeItem[];
+ return <main className="kg-page"><header className="kg-intro"><span className="section-kicker">Explore relationships</span><h1>Connected <em>Knowledge</em></h1><p>Discover how Islamic topics, sources, people, concepts and events relate to one another. Select a node to explore its connections. Article nodes are linked automatically by category and are navigation suggestions.</p></header>
  <div className="kg-toolbar"><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search knowledge nodes…" aria-label="Search knowledge nodes"/><div className="kg-filters">{types.map(t=><button key={t} className={type===t?'active':''} onClick={()=>setType(t)}>{t}</button>)}</div></div>
  <div className="kg-layout"><section className="kg-list"><div className="kg-list-head"><strong>Knowledge nodes</strong><span>{filtered.length} results</span></div>{filtered.map(n=><button key={n.id} className={'kg-node '+(selected===n.id?'selected':'')} onClick={()=>setSelected(n.id)}><span className="kg-node-type">{n.type}</span><strong>{n.name}</strong>{n.arabic&&<span className="kg-arabic">{n.arabic}</span>}<small>{n.connections.length} connections</small></button>)}{filtered.length===0&&<p className="kg-empty">No matches. Try a broader search.</p>}</section>
- <section className="kg-detail"><div className="kg-detail-top"><span className="kg-node-type">{active.type}</span><span className="kg-connection-count">{related.length} connections</span></div><h2>{active.name}</h2>{active.arabic&&<div className="kg-detail-arabic">{active.arabic}</div>}<p>{active.description}</p>{active.href&&<Link className="button" href={active.href}>Explore topic →</Link>}<h3>Connected topics</h3><div className="kg-connected">{related.map(n=><button key={n.id} onClick={()=>setSelected(n.id)}><span className="kg-node-type">{n.type}</span><strong>{n.name}</strong>{n.arabic&&<span className="kg-arabic">{n.arabic}</span>}<span className="kg-arrow">↗</span></button>)}</div><div className="kg-caveat">This is an editorial starter map. Relationships are navigation aids—not claims of equivalence, chronology, authenticity, or scholarly consensus. Each connection should be reviewed and supported by references as the encyclopedia grows.</div></section></div>
+ <section className="kg-detail"><div className="kg-detail-top"><span className="kg-node-type">{active.type}</span><span className="kg-connection-count">{related.length} connections</span></div><h2>{active.name}</h2>{active.arabic&&<div className="kg-detail-arabic">{active.arabic}</div>}<p>{active.description}</p>{active.href&&<Link className="button" href={active.href}>Explore topic →</Link>}<h3>Connected topics</h3><div className="kg-connected">{related.map(n=><button key={n.id} onClick={()=>setSelected(n.id)}><span className="kg-node-type">{n.type}</span><strong>{n.name}</strong>{n.arabic&&<span className="kg-arabic">{n.arabic}</span>}<span className="kg-arrow">↗</span></button>)}</div><div className="kg-caveat">Starter-topic links are editorial navigation aids. Article-to-article links are generated from category matching and do not establish scholarly relationships, equivalence, chronology, authenticity, or consensus. Review and source substantive connections before treating them as editorial claims.</div></section></div>
  </main>
 }
