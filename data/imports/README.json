@@ -1,0 +1,18 @@
+{
+  "source": "Milnoor",
+  "sourceSite": "https://milnoor.netlify.app",
+  "purpose": "One-time migration/export source only. MIFASK runtime must never call this website.",
+  "datasets": [
+    "quran_surahs",
+    "quran_verses",
+    "hadith_collections",
+    "hadith_books",
+    "hadiths",
+    "adhkar",
+    "duas",
+    "names_of_allah",
+    "seerah_events",
+    "prophets"
+  ],
+  "format": "JSON arrays or objects with a records array; UTF-8, Arabic preserved"
+}
