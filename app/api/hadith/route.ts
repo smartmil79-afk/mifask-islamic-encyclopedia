@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 
 const BASE = "https://sahih-al-bukhari.com/api/v1";
-const TRANSLATION_BASES = [\n  "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions",\n  "https://raw.githubusercontent.com/fawazahmed0/hadith-api/1/editions",\n];
+const TRANSLATION_BASES = [
+  "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions",
+  "https://raw.githubusercontent.com/fawazahmed0/hadith-api/1/editions",
+];
 const allowed = new Set(["bukhari","muslim","abudawud","tirmidhi","nasai","ibnmajah"]);
 
 function listFrom(data: any): any[] {
@@ -16,18 +19,30 @@ function numberOf(record: any): string {
 }
 function translationText(data: any): string {
   const records = listFrom(data);
-  const record = records[0] || data?.hadiths?.[0] || data;
-  return typeof record?.text === "string" ? record.text : typeof record?.english === "string" ? record.english : typeof record?.translation === "string" ? record.translation : "";
+  const record = records[0] || data?.hadiths?.[0] || data?.data?.hadiths?.[0] || data;
+  for (const value of [record?.text, record?.english, record?.translation, record?.translated_text, record?.text_en]) {
+    if (typeof value === "string" && value.trim()) return value.trim();
+    if (value && typeof value === "object") {
+      const nested = value.en || value.english || value.text;
+      if (typeof nested === "string" && nested.trim()) return nested.trim();
+    }
+  }
+  return "";
 }
 async function getEnglish(book: string, hadithNo: string): Promise<string> {
   if (!hadithNo) return "";
-  const url = `${TRANSLATION_BASE}/eng-${book}/${encodeURIComponent(hadithNo)}.json`;
-  try {
-    let res = await fetch(url, { next: { revalidate: 3600 } });
-    if (!res.ok) res = await fetch(url.replace(".json", ".min.json"), { next: { revalidate: 3600 } });
-    if (!res.ok) return "";
-    return translationText(await res.json());
-  } catch { return ""; }
+  const file = `${encodeURIComponent(hadithNo)}.json`;
+  for (const base of TRANSLATION_BASES) {
+    for (const suffix of [file, file.replace(".json", ".min.json")]) {
+      try {
+        const res = await fetch(`${base}/eng-${book}/${suffix}`, { next: { revalidate: 3600 } });
+        if (!res.ok) continue;
+        const text = translationText(await res.json());
+        if (text) return text;
+      } catch { /* try the next fallback */ }
+    }
+  }
+  return "";
 }
 async function attachTranslations(book: string, data: any): Promise<any> {
   const records = listFrom(data);
