@@ -26,7 +26,7 @@ function arabicText(record: any): string {
   return "";
 }
 function englishText(record: any): any {
-  const value = record?.english ?? record?.translation ?? record?.text_en ?? record?.translated_text;
+  const value = record?.english ?? record?.translation ?? record?.text_en ?? record?.translated_text ?? record?.text;
   if (typeof value === "string" && value.trim()) return value.trim();
   if (value && typeof value === "object") return value;
   return "";
@@ -39,6 +39,19 @@ async function fetchJSON(url: string): Promise<any> {
 async function fetchEdition(edition: string): Promise<any> {
   try { return await fetchJSON(`${EDITION_BASE}/${edition}.json`); }
   catch { return fetchJSON(`${EDITION_BASE}/${edition}.min.json`); }
+}
+async function searchEdition(book: string, q: string): Promise<any[]> {
+  const englishData = await fetchEdition(`eng-${book}`);
+  let arabicData: any = null;
+  try { arabicData = await fetchEdition(`ara-${book}`); } catch { /* English search remains available. */ }
+  const english = listFrom(englishData);
+  const arabic = listFrom(arabicData);
+  const arabicByNumber = new Map(arabic.map((r: any) => [numberOf(r), r]));
+  return english.map((r: any) => {
+    const n = numberOf(r), en = englishText(r), ar = arabicByNumber.get(n);
+    return { ...r, number: n, arabic: arabicText(ar || {}), english: en, translation: en,
+      source_dataset: "fawazahmed0/hadith-api" };
+  }).filter((r: any) => matchesQuery(r, q)).slice(0, 20);
 }
 async function malikRecords(): Promise<any[]> {
   const [arabicData, englishData] = await Promise.all([fetchEdition("ara-malik"), fetchEdition("eng-malik")]);
@@ -114,8 +127,16 @@ export async function GET(request: Request) {
       : `${BASE}/search?q=${encodeURIComponent(q!)}&book=${book}&limit=20`;
     const response = await fetch(endpoint, { next: { revalidate: number ? 3600 : 300 } });
     const data = await response.json();
-    if (!response.ok) return NextResponse.json(data, { status: response.status });
+    if (!response.ok) {
+      const fallback = await searchEdition(book, q!).catch(() => []);
+      if (fallback.length) return NextResponse.json({ results: fallback }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" } });
+      return NextResponse.json(data, { status: response.status });
+    }
     const enriched = await attachTranslations(book, data);
+    if (!listFrom(enriched).length) {
+      const fallback = await searchEdition(book, q!).catch(() => []);
+      return NextResponse.json({ results: fallback }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" } });
+    }
     return NextResponse.json(enriched, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" } });
   } catch {
     return NextResponse.json({ error: "Hadith source is temporarily unavailable. Please try again." }, { status: 502 });
