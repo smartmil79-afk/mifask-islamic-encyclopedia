@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 const BASE = "https://sahih-al-bukhari.com/api/v1";
-const TRANSLATION_BASE = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions";
+const TRANSLATION_BASES = [\n  "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions",\n  "https://raw.githubusercontent.com/fawazahmed0/hadith-api/1/editions",\n];
 const allowed = new Set(["bukhari","muslim","abudawud","tirmidhi","nasai","ibnmajah"]);
 
 function listFrom(data: any): any[] {
