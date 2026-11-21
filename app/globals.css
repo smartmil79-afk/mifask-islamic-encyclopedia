@@ -249,3 +249,28 @@ html[data-theme="dark"] .app-error-state{background:var(--surface)}
 .hadith-reader-page .hadith-guidance ul{padding-left:18px}
 .hadith-reader-page .hadith-guidance li{margin:5px 0}
 @media(max-width:600px){.hadith-reader-status{align-items:flex-start;flex-direction:column}.hadith-reader-arabic{font-size:28px}.hadith-reader-record{padding:15px}}
+
+/* Hadith reader mobile UX polish */
+.hadith-reader-search-panel{display:grid;gap:14px;margin:20px 0 22px;padding:16px;background:var(--surface);border:1px solid var(--line);border-radius:16px}
+.hadith-reader-search-form,.hadith-reader-number-form{display:flex;gap:9px;align-items:stretch;width:100%;min-width:0}
+.hadith-reader-search-form label{display:flex;align-items:center;gap:9px;flex:1;min-width:0;border:1px solid var(--line);background:var(--background);border-radius:11px;padding:0 12px;color:var(--muted)}
+.hadith-reader-search-form input{width:100%;min-width:0;border:0!important;outline:0;background:transparent!important;padding:12px 0!important;color:var(--text)}
+.hadith-reader-search-form button,.hadith-reader-number-form button{border:0;border-radius:11px;background:var(--green2);color:#fff;font-weight:700;padding:0 16px;min-width:74px}
+.hadith-reader-search-form button:disabled,.hadith-reader-number-form button:disabled{opacity:.45;cursor:not-allowed}
+.hadith-reader-number-form label{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0;font-size:12px;font-weight:700;color:var(--text)}
+.hadith-reader-number-form input{width:100%;box-sizing:border-box;min-width:0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--background);color:var(--text)}
+.hadith-reader-unavailable{margin:0;font-size:12px;color:var(--muted)}
+.hadith-reader-loading{display:flex;align-items:center;gap:10px;padding:22px;color:var(--muted);font-size:14px}
+.hadith-reader-spinner{width:18px;height:18px;border:2px solid var(--line);border-top-color:var(--green2);border-radius:50%;animation:hadith-spin .8s linear infinite}
+@keyframes hadith-spin{to{transform:rotate(360deg)}}
+.hadith-reader-navigation{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 0;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.hadith-reader-navigation button{display:flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);padding:9px 12px;font-weight:700}
+.hadith-reader-navigation button:disabled{opacity:.4}
+.hadith-reader-navigation span{font-size:12px;color:var(--muted);font-weight:700}
+.hadith-reader-source-policy{margin:18px 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.hadith-reader-source-policy summary{display:flex;align-items:center;gap:9px;cursor:pointer;list-style:none;color:var(--green2)}
+.hadith-reader-source-policy summary::-webkit-details-marker{display:none}
+.hadith-reader-source-policy>div{padding:10px 0 0 28px}
+.hadith-reader-source-policy p{font-size:12px;line-height:1.75;color:var(--muted);margin:0 0 10px}
+.hadith-reader-source-policy a{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--green2);font-weight:700}
+@media(max-width:600px){.hadith-reader-search-panel{padding:12px;gap:12px}.hadith-reader-search-form button{padding:0 12px}.hadith-reader-number-form button{min-width:64px}.hadith-reader-navigation button{padding:8px 9px}.hadith-reader-text-ar{font-size:25px;line-height:2.15}.hadith-reader-source-policy>div{padding-left:0}}
