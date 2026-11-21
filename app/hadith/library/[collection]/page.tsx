@@ -1,5 +1,5 @@
 'use client';
-import Link from "next/link";
+import Link from "next/link";\nimport { useParams } from "next/navigation";
 import { useState } from "react";
 import { Search, ShieldCheck, ExternalLink } from "lucide-react";
 
