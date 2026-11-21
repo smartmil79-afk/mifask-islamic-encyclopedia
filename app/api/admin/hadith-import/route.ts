@@ -5,7 +5,7 @@ export const maxDuration = 60;
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
 const malikBase = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions";
 const riyadUrl = "https://raw.githubusercontent.com/AhmedBaset/hadith-json/70b83d6d21995bb32f8d7271cd75501be5a922a/db/by_book/other_books/riyad_assalihin.json";
 
@@ -75,11 +75,11 @@ export async function POST(request:Request) {
     const auth=request.headers.get("authorization")||"";
     const token=auth.startsWith("Bearer ")?auth.slice(7):"";
     if(!token)return NextResponse.json({error:"Authentication required"},{status:401});
-    if(!supabaseUrl||!anonKey||!serviceKey)return NextResponse.json({error:"Server database configuration missing"},{status:500});
+    if(!supabaseUrl||!anonKey)return NextResponse.json({error:"Server database configuration missing"},{status:500});
     const authClient=createClient(supabaseUrl,anonKey,{auth:{persistSession:false}});
     const {data:userData,error:userErr}=await authClient.auth.getUser(token);
     if(userErr||!userData.user)return NextResponse.json({error:"Invalid session"},{status:401});
-    const admin=createClient(supabaseUrl,serviceKey,{auth:{persistSession:false}});
+    const admin=createClient(supabaseUrl,anonKey,{auth:{persistSession:false},global:{headers:{Authorization:"Bearer "+token}}});
     const {data:adminRow,error:adminErr}=await admin.from("ie_admins").select("active,role").eq("user_id",userData.user.id).maybeSingle();
     if(adminErr||!adminRow?.active)return NextResponse.json({error:"Administrator access required"},{status:403});
     const [malikArabic,malikEnglish,riyadData]=await Promise.all([
