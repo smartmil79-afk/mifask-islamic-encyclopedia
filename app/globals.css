@@ -214,3 +214,6 @@ html[data-theme="dark"] .app-error-state{background:var(--surface)}
 @keyframes heroFloat{0%,100%{translate:0 0}50%{translate:0 -7px}}
 @keyframes heroGlow{0%,100%{box-shadow:0 0 55px rgba(209,182,107,.1)}50%{box-shadow:0 0 85px rgba(209,182,107,.22)}}
 @media(max-width:720px){.hero-art .art-chip{font-size:11px;padding:10px 13px}}
+
+/* Direct Qur'an citation links */
+.quran-reference-link{color:var(--green2);font-weight:600;text-decoration:underline;text-decoration-color:rgba(30,107,84,.35);text-underline-offset:3px}.quran-reference-link:hover{text-decoration-color:currentColor}.quran-ayah.ayah-target-highlight{outline:2px solid var(--gold);background:rgba(209,182,107,.12);border-radius:14px;transition:background .5s}
