@@ -86,7 +86,7 @@ export async function POST(request:Request) {
       fetchJson(`${malikBase}/ara-malik.json`),fetchJson(`${malikBase}/eng-malik.json`),fetchJson(riyadUrl)
     ]);
     const arabic=records(malikArabic),english=records(malikEnglish);
-    const englishMap=new Map(english.map((r:any)=>[String(r.number??r.hadithnumber??r.id),r]));
+    const englishMap=new Map<string,any>(english.map((r:any)=>[String(r.number??r.hadithnumber??r.id),r]));
     const malikRows=arabic.map((r:any,i:number)=>{
       const n=numberValue(r,i),en=englishMap.get(n);
       return {hadith_number:n,arabic:textValue(r,["arabic","text","hadith"]),translations:{en:textValue(en,["english","translation","text","hadith"])},narrator:textValue(en,["narrator"]),source_refs:{dataset:"fawazahmed0/hadith-api",edition:"ara-malik/eng-malik",number:n}};
