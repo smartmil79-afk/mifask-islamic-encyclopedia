@@ -3,7 +3,7 @@ import { articles, getArticle } from '@/lib/content';
 import { getPublishedArticle, getPublishedArticles } from '@/lib/published-content';
 import RelatedKnowledge from '@/components/RelatedKnowledge';
 import ArticleActions from '@/components/ArticleActions';
-import { CitationText, QuranReference } from '@/components/QuranReference';
+import QuranReference, { CitationText } from '@/components/QuranReference';
 export function generateStaticParams(){return articles.map(a=>({slug:a.id}));}
 export const dynamic = 'force-dynamic';
 export default async function ArticlePage({params}:{params:Promise<{slug:string}>}){
