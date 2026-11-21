@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { categories, articles } from '@/lib/content';
 import { getPublishedArticlesInCategory } from '@/lib/published-content';
 import ArticleCard from '@/components/ArticleCard';
@@ -6,6 +7,8 @@ export function generateStaticParams(){return categories.map(c=>({slug:c.id}));}
 export const dynamic = 'force-dynamic';
 export default async function CategoryPage({params}:{params:Promise<{slug:string}>}){
  const {slug}=await params;
+ if(slug==='quran') redirect('/quran');
+ if(slug==='hadith') redirect('/hadith');
  const category=categories.find(c=>c.id===slug);
  if(!category)return <div className="page-shell empty-state"><h1>Category not found</h1><Link href="/explore">Return to Explore</Link></div>;
  const live=await getPublishedArticlesInCategory(slug);
