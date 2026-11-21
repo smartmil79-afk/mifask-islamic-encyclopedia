@@ -1,5 +1,6 @@
 'use client';
-import Link from "next/link";\nimport { useParams } from "next/navigation";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import { Search, ShieldCheck, ExternalLink } from "lucide-react";
 
@@ -9,7 +10,9 @@ const collections: Record<string,{name:string,arabic:string,compiler:string}> = 
  abudawud:{name:"Sunan Abi Dawud",arabic:"سنن أبي داود",compiler:"Abu Dawud al-Sijistani"},
  tirmidhi:{name:"Jamiʿ al-Tirmidhi",arabic:"جامع الترمذي",compiler:"Muhammad ibn Isa al-Tirmidhi"},
  nasai:{name:"Sunan al-Nasa’i",arabic:"سنن النسائي",compiler:"Ahmad ibn Shu‘ayb al-Nasa’i"},
- ibnmajah:{name:"Sunan Ibn Majah",arabic:"سنن ابن ماجه",compiler:"Muhammad ibn Yazid Ibn Majah"},\n malik:{name:"Muwattaʾ Malik",arabic:"الموطأ",compiler:"Malik ibn Anas"},\n riyad:{name:"Riyad as-Salihin",arabic:"رياض الصالحين",compiler:"Yahya ibn Sharaf al-Nawawi"},
+ ibnmajah:{name:"Sunan Ibn Majah",arabic:"سنن ابن ماجه",compiler:"Muhammad ibn Yazid Ibn Majah"},
+ malik:{name:"Muwattaʾ Malik",arabic:"الموطأ",compiler:"Malik ibn Anas"},
+ riyad:{name:"Riyad as-Salihin",arabic:"رياض الصالحين",compiler:"Yahya ibn Sharaf al-Nawawi"},
 };
 type RecordData = Record<string,any>;
 function recordsFrom(data:any):RecordData[]{ if(Array.isArray(data))return data; for(const k of ["results","hadiths","items","data"])if(Array.isArray(data?.[k]))return data[k]; if(data&&typeof data==="object"&&(data.arabic||data.text_ar||data.hadith))return [data];return [];}
