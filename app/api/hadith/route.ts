@@ -41,12 +41,13 @@ async function fetchEdition(edition: string): Promise<any> {
   catch { return fetchJSON(`${EDITION_BASE}/${edition}.min.json`); }
 }
 async function searchEdition(book: string, q: string): Promise<any[]> {
-  const englishData = await fetchEdition(`eng-${book}`);
-  let arabicData: any = null;
-  try { arabicData = await fetchEdition(`ara-${book}`); } catch { /* English search remains available. */ }
+  const [englishData, arabicData] = await Promise.all([
+    fetchEdition(`eng-${book}`),
+    fetchEdition(`ara-${book}`).catch(() => null),
+  ]);
   const english = listFrom(englishData);
   const arabic = listFrom(arabicData);
-  const arabicByNumber = new Map(arabic.map((r: any) => [numberOf(r), r]));
+  const arabicByNumber = new Map<string, any>(arabic.map((r: any) => [numberOf(r), r] as [string, any]));
   return english.map((r: any) => {
     const n = numberOf(r), en = englishText(r), ar = arabicByNumber.get(n);
     return { ...r, number: n, arabic: arabicText(ar || {}), english: en, translation: en,
@@ -56,7 +57,7 @@ async function searchEdition(book: string, q: string): Promise<any[]> {
 async function malikRecords(): Promise<any[]> {
   const [arabicData, englishData] = await Promise.all([fetchEdition("ara-malik"), fetchEdition("eng-malik")]);
   const arabic = listFrom(arabicData), english = listFrom(englishData);
-  const englishByNumber = new Map(english.map((r:any)=>[numberOf(r),r]));
+  const englishByNumber = new Map<string, any>(english.map((r:any)=>[numberOf(r),r] as [string, any]));
   return arabic.map((r:any)=> {
     const n=numberOf(r), e=englishByNumber.get(n);
     return { ...r, number:n, arabic:arabicText(r), english:englishText(e||{}), translation:englishText(e||{}), source_dataset:"fawazahmed0/hadith-api" };
