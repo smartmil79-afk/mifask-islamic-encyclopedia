@@ -26,7 +26,7 @@ export default function HadithCollectionPage(){
  if(!c)return <main className="page-shell"><h1>Collection not found</h1><Link href="/hadith/library">Back to library</Link></main>;
  const title=(r:RecordData)=>r.reference||r.collection_reference||r.hadith_reference||((r.book||r.collection||c.name)+" "+(r.number||r.hadith_number||""));
  const arabic=(r:RecordData)=>r.arabic||r.text_ar||r.arabic_text||r.text||r.hadith||"";
- const english=(r:RecordData)=>r.english||r.text_en||r.translation||r.english_text||r.translated_text||r.translation_text||r.translation?.english||r.translation?.text||r.translations?.english||r.translations?.en||r.text?.english||r.text?.en||r.hadith?.english||r.hadith?.en||"";
+ const english=(r:RecordData)=>{const candidates=[r.english,r.text_en,r.translation,r.english_text,r.translated_text,r.translation_text,r.translations?.english,r.translations?.en,r.text?.english,r.text?.en,r.hadith?.english,r.hadith?.en];for(const value of candidates){if(typeof value==="string"&&value.trim())return value;if(value&&typeof value==="object"){const nested=value.english||value.en||value.text;if(typeof nested==="string"&&nested.trim())return nested;}}return "";};
  const chapter=(r:RecordData)=>r.chapter?.title||r.chapter_title||r.chapter||r.book_title||"";
  const grade=(r:RecordData)=>typeof r.grade==="object"?(r.grade.label||r.grade.name||""):r.grade||r.grading||"";
  const canonical=(r:RecordData)=>r.canonical||r.url||r.source_url||"";
