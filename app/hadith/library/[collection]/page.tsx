@@ -1,7 +1,7 @@
 'use client';
 import Link from "next/link";
 import { useState } from "react";
-import { BookOpen, Search, ShieldCheck, ExternalLink } from "lucide-react";
+import { Search, ShieldCheck, ExternalLink } from "lucide-react";
 
 const collections: Record<string,{name:string,arabic:string,compiler:string}> = {
  bukhari:{name:"Sahih al-Bukhari",arabic:"صحيح البخاري",compiler:"Muhammad ibn Isma’il al-Bukhari"},
@@ -9,7 +9,7 @@ const collections: Record<string,{name:string,arabic:string,compiler:string}> = 
  abudawud:{name:"Sunan Abi Dawud",arabic:"سنن أبي داود",compiler:"Abu Dawud al-Sijistani"},
  tirmidhi:{name:"Jamiʿ al-Tirmidhi",arabic:"جامع الترمذي",compiler:"Muhammad ibn Isa al-Tirmidhi"},
  nasai:{name:"Sunan al-Nasa’i",arabic:"سنن النسائي",compiler:"Ahmad ibn Shu‘ayb al-Nasa’i"},
- ibnmajah:{name:"Sunan Ibn Majah",arabic:"سنن ابن ماجه",compiler:"Muhammad ibn Yazid Ibn Majah"},
+ ibnmajah:{name:"Sunan Ibn Majah",arabic:"سنن ابن ماجه",compiler:"Muhammad ibn Yazid Ibn Majah"},\n malik:{name:"Muwattaʾ Malik",arabic:"الموطأ",compiler:"Malik ibn Anas"},\n riyad:{name:"Riyad as-Salihin",arabic:"رياض الصالحين",compiler:"Yahya ibn Sharaf al-Nawawi"},
 };
 type RecordData = Record<string,any>;
 function recordsFrom(data:any):RecordData[]{ if(Array.isArray(data))return data; for(const k of ["results","hadiths","items","data"])if(Array.isArray(data?.[k]))return data[k]; if(data&&typeof data==="object"&&(data.arabic||data.text_ar||data.hadith))return [data];return [];}
@@ -28,8 +28,8 @@ export default function HadithCollectionPage({params}:{params:{collection:string
  <nav className="hadith-reader-breadcrumb"><Link href="/hadith">Hadith Explorer</Link><span>›</span><Link href="/hadith/library">Library</Link><span>›</span><span>{c.name}</span></nav>
  <header className="page-hero hadith-reader-hero"><span className="section-kicker">MIFASK · Hadith Reader</span><div className="hadith-reader-arabic" lang="ar" dir="rtl">{c.arabic}</div><h1>{c.name}</h1><p className="hadith-reader-compiler">Compiled by {c.compiler}</p><p>Search Arabic text, topics, chapter titles, or jump to a collection reference. Text is served with source attribution.</p></header>
  <section className="hadith-reader-search-panel">
-  <form onSubmit={e=>{e.preventDefault();search(query)}} className="hadith-reader-search-form"><label><Search size={17}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search Arabic text or topic" /></label><button type="submit" disabled={loading||!query.trim()}>{loading?"Searching…":"Search"}</button></form>
-  <form onSubmit={e=>{e.preventDefault();search("",number)}} className="hadith-reader-number-form"><label>Jump to hadith number<input value={number} onChange={e=>setNumber(e.target.value)} placeholder="e.g. 1" /></label><button type="submit" disabled={loading||!number.trim()}>Open reference</button></form>
+  <form onSubmit={e=>{e.preventDefault();search(query)}} className="hadith-reader-search-form"><label><Search size={17}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search Arabic text or topic" /></label><button type="submit" disabled={loading||!query.trim()||["malik","riyad"].includes(params.collection)}>{loading?"Searching…":"Search"}</button></form>
+  <form onSubmit={e=>{e.preventDefault();search("",number)}} className="hadith-reader-number-form"><label>Jump to hadith number<input value={number} onChange={e=>setNumber(e.target.value)} placeholder="e.g. 1" /></label><button type="submit" disabled={loading||!number.trim()||["malik","riyad"].includes(params.collection)}>Open reference</button></form>
   <small>Arabic text dataset: fawazahmed0/hadith-api, served via Words of Rasulullah API. English translations are not included here because translation rights are not confirmed.</small>
  </section>
  {error&&<div className="hadith-reader-empty"><p>{error}</p></div>}
