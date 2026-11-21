@@ -2,7 +2,7 @@ export type Category = { id: string; title: string; subtitle: string; icon: stri
 export type Article = { id: string; title: string; category: string; summary: string; readTime: string; tag: string; featured?: boolean; arabic?: string; body: string[]; references: string[]; verificationStatus?: string; reviewerName?: string; verifiedAt?: string };
 
 export const categories: Category[] = [
-  { id: 'quran', title: "The Qur'an", subtitle: 'Surahs, verses, tafsir and Qur’anic themes', icon: '☾', count: '114 Surahs', color: 'sage', href: '/category/quran' },
+  { id: 'quran', title: "The Qur'an", subtitle: 'Surahs, verses, tafsir and Qur’anic themes', icon: '☾', count: '114 Surahs', color: 'sage', href: '/quran' },
   { id: 'hadith', title: 'Hadith & Sunnah', subtitle: 'Prophetic sayings, actions and guidance', icon: '✧', count: 'Collections', color: 'sand', href: '/hadith' },
   { id: 'prophets', title: 'The Prophets', subtitle: 'Stories and lessons from the Prophets', icon: '◈', count: 'Prophetic history', color: 'blue', href: '/category/prophets' },
   { id: 'seerah', title: 'Seerah', subtitle: 'The life and legacy of Prophet Muhammad ﷺ', icon: '۞', count: 'Biography', color: 'rose', href: '/category/seerah' },
