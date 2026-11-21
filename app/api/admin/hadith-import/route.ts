@@ -92,7 +92,7 @@ export async function POST(request:Request) {
       return {hadith_number:n,arabic:textValue(r,["arabic","text","hadith"]),translations:{en:textValue(en,["english","translation","text","hadith"])},narrator:textValue(en,["narrator"]),source_refs:{dataset:"fawazahmed0/hadith-api",edition:"ara-malik/eng-malik",number:n}};
     });
     const chapters=Array.isArray(riyadData?.chapters)?riyadData.chapters:[];
-    const chapterMap=new Map(chapters.map((c:any)=>[String(c.id),c]));
+    const chapterMap=new Map<string,any>(chapters.map((c:any)=>[String(c.id),c] as [string,any]));
     const riyadRows=records(riyadData).map((r:any,i:number)=>{
       const n=numberValue(r,i),chapter=chapterMap.get(String(r.chapterId));
       const en=r.english;
