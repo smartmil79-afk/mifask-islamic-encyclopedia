@@ -15,7 +15,7 @@ const collections: Record<string,{name:string,arabic:string,compiler:string}> = 
  riyad:{name:"Riyad as-Salihin",arabic:"رياض الصالحين",compiler:"Yahya ibn Sharaf al-Nawawi"},
 };
 type RecordData = Record<string,any>;
-function recordsFrom(data:any):RecordData[]{ if(Array.isArray(data))return data; for(const k of ["results","hadiths","items","data"])if(Array.isArray(data?.[k]))return data[k]; if(data&&typeof data==="object"&&(data.arabic||data.text_ar||data.hadith))return [data];return [];}
+function recordsFrom(data:any):RecordData[]{ if(Array.isArray(data))return data; for(const k of ["results","hadiths","items","data"])if(Array.isArray(data?.[k]))return data[k]; if(data&&typeof data==="object"&&(data.arabic||data.text_ar||data.hadith||data.english||data.translation||data.text_en))return [data];return [];}
 export default function HadithCollectionPage(){
  const routeParams = useParams<{collection:string}>();
  const collectionSlug = routeParams.collection;
