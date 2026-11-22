@@ -35,7 +35,8 @@ async function importCollection(admin:any,key:string,sourceName:string,sourceUrl
   const {data:imp,error:impErr}=await admin.from("ie_source_imports").insert({
     source_name:sourceName,source_site:sourceUrl,source_path:sourceUrl,dataset_key:key,
     import_version:"2026-11-21",status:"running",records_total:rows.length,records_imported:0,records_skipped:0,
-    source_manifest:{collection:key,source_url:sourceUrl,method:"server-side batch import",source_hash:null}
+    source_manifest:{collection:key,source_url:sourceUrl,method:"server-side batch import",source_hash:null},
+    started_at:new Date().toISOString()
   }).select("id").single();
   if(impErr)throw impErr;
   const importId=imp.id;
@@ -66,7 +67,8 @@ async function importCollection(admin:any,key:string,sourceName:string,sourceUrl
     if(error)throw error;
     imported+=payload.length;
   }
-  await admin.from("ie_source_imports").update({status:"completed",records_imported:imported,completed_at:new Date().toISOString(),notes:"Imported source dataset; translations and metadata preserved where available."}).eq("id",importId);
+  const {error:completionError}=await admin.from("ie_source_imports").update({status:"completed",records_imported:imported,completed_at:new Date().toISOString(),notes:"Imported source dataset; translations and metadata preserved where available."}).eq("id",importId);
+  if(completionError)throw completionError;
   return {collection:key,records:imported,source:sourceUrl};
 }
 
