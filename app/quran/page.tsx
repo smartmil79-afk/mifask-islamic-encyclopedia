@@ -10,7 +10,7 @@ const savedKey='mifask-quran-bookmarks-v1';
 export default function QuranReader(){
  const [surahs,setSurahs]=useState<Surah[]>([]);const [surahNo,setSurahNo]=useState(1);const [targetAyah,setTargetAyah]=useState<number|null>(null);
  const [ayahs,setAyahs]=useState<Ayah[]>([]);const [translations,setTranslations]=useState<Ayah[]>([]);
- const [edition,setEdition]=useState('en.sahih');const [dataSource,setDataSource]=useState<'local'|'online'>('online');const [loading,setLoading]=useState(true);const [search,setSearch]=useState('');
+ const [edition,setEdition]=useState('mifask-quranenc');const [dataSource,setDataSource]=useState<'local'|'online'>('online');const [loading,setLoading]=useState(true);const [search,setSearch]=useState('');
  const [results,setResults]=useState<Ayah[]>([]);const [searching,setSearching]=useState(false);const [error,setError]=useState('');
  const [saved,setSaved]=useState<SavedVerse[]>([]);const [showSaved,setShowSaved]=useState(false);const [audioState,setAudioState]=useState<{key:string;url?:string;loading:boolean;error?:string}>({key:'',loading:false});
  useEffect(()=>{try{const raw=localStorage.getItem(savedKey);if(raw)setSaved(JSON.parse(raw));}catch{}const params=new URLSearchParams(window.location.search);const s=Number(params.get('surah'));const a=Number(params.get('ayah'));if(s>=1&&s<=114)setSurahNo(s);if(a>0)setTargetAyah(a);},[]);
