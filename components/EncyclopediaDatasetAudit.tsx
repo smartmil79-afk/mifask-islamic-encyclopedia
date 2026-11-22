@@ -44,17 +44,17 @@ export default function EncyclopediaDatasetAudit() {
       { label: 'Riyad as-Salihin missing Arabic', table: 'ie_hadiths', filter: q => q.eq('collection_key', 'riyad').or('arabic.is.null,arabic.eq.'), detail: 'Arabic text completeness check.', severity: 'gap' },
       { label: 'Riyad as-Salihin missing English', table: 'ie_hadiths', filter: q => q.eq('collection_key', 'riyad').or('translations->en.is.null,translations->en.eq.'), detail: 'English translation field.', severity: 'gap' },
       { label: 'Hadith records missing source references', table: 'ie_hadiths', filter: q => q.or('source_refs.is.null,source_refs.eq.[]'), detail: 'Records without collection/source reference metadata.', severity: 'gap' },
-      { label: 'Hadith book metadata', table: 'ie_hadith_books', detail: 'Book titles/metadata rows.', severity: 'gap', zeroWarning: true },
+      { label: 'Hadith book metadata', table: 'ie_hadith_books', detail: 'Book titles/metadata rows.', severity: 'normal', zeroWarning: true },
       { label: 'Prophet reference index', table: 'ie_prophets', detail: 'Reference-only index; entries still need human editorial review.', severity: 'normal' },
-      { label: 'Seerah events', table: 'ie_seerah_events', detail: 'No timeline entries currently stored.', severity: 'gap', zeroWarning: true },
-      { label: 'Duas', table: 'ie_duas', detail: 'Sourced supplications library.', severity: 'gap', zeroWarning: true },
-      { label: 'Adhkar', table: 'ie_adhkar', detail: 'Sourced remembrance library.', severity: 'gap', zeroWarning: true },
-      { label: 'Names of Allah', table: 'ie_names_of_allah', detail: 'Sourced names/meanings library.', severity: 'gap', zeroWarning: true },
-      { label: 'Companions library', table: 'ie_articles', filter: q => q.eq('status', 'published').ilike('tags', '%companions%'), detail: 'Published articles tagged Companions; no dedicated table exists.', severity: 'gap', zeroWarning: true },
+      { label: 'Seerah events', table: 'ie_seerah_events', detail: 'No timeline entries currently stored.', severity: 'normal', zeroWarning: true },
+      { label: 'Duas', table: 'ie_duas', detail: 'Sourced supplications library.', severity: 'normal', zeroWarning: true },
+      { label: 'Adhkar', table: 'ie_adhkar', detail: 'Sourced remembrance library.', severity: 'normal', zeroWarning: true },
+      { label: 'Names of Allah', table: 'ie_names_of_allah', detail: 'Sourced names/meanings library.', severity: 'normal', zeroWarning: true },
+      { label: 'Companions articles', table: 'ie_articles', filter: q => q.ilike('slug', 'companions-%'), detail: 'Articles in the Companions series; no dedicated table exists.', severity: 'normal', zeroWarning: true },
       { label: 'Articles', table: 'ie_articles', detail: 'Total CMS records.', severity: 'normal' },
       { label: 'Published articles still unverified', table: 'ie_articles', filter: q => q.eq('status', 'published').eq('verification_status', 'unverified'), detail: 'Needs editorial review before verification.', severity: 'gap' },
       { label: 'Articles in review still unverified', table: 'ie_articles', filter: q => q.eq('status', 'review').eq('verification_status', 'unverified'), detail: 'Review queue.', severity: 'gap' },
-      { label: 'Verified articles', table: 'ie_articles', filter: q => q.eq('verification_status', 'verified'), detail: 'Verification labels are not automatically granted.', severity: 'normal', zeroWarning: true },
+      { label: 'Verified articles', table: 'ie_articles', filter: q => q.eq('verification_status', 'verified'), detail: 'Verification labels are not automatically granted.', severity: 'normal' },
       { label: 'Source records', table: 'ie_sources', detail: 'Source catalog entries.', severity: 'normal' },
       { label: 'Source records missing URL', table: 'ie_sources', filter: q => q.or('url.is.null,url.eq.'), detail: 'Source catalog needs a resolvable URL.', severity: 'gap' },
       { label: 'Article-source links', table: 'ie_article_sources', detail: 'Articles linked to source catalog entries.', severity: 'normal' },
@@ -73,7 +73,7 @@ export default function EncyclopediaDatasetAudit() {
 
   useEffect(() => { void run(); }, [run]);
 
-  const issueCount = rows.filter(r => r.value === null || (r.severity === 'gap' && (r.value > 0 || r.zeroWarning))).length;
+  const issueCount = rows.filter(r => r.value === null || (r.severity === 'gap' && r.value > 0) || (r.zeroWarning && r.value === 0)).length;
   const unavailableCount = rows.filter(r => r.value === null).length;
 
   return (
@@ -95,8 +95,8 @@ export default function EncyclopediaDatasetAudit() {
       <div className="admin-table">
         <div className="admin-row admin-row-header"><span>Check</span><span>Count</span><span>Assessment</span></div>
         {rows.map(row => {
-          const warning = row.severity === 'gap' && (row.value === null || row.value > 0 || row.zeroWarning);
-          const status = row.value === null ? 'Unavailable' : warning ? (row.value === 0 ? 'Empty dataset' : 'Needs attention') : 'Count checked';
+          const warning = row.value === null || (row.severity === 'gap' && row.value > 0) || (row.zeroWarning && row.value === 0);
+          const status = row.value === null ? 'Unavailable' : warning ? (row.value === 0 ? 'Empty dataset' : 'Needs attention') : row.zeroWarning && row.value > 0 ? 'Records present' : 'Count checked';
           return <div className="admin-row" key={row.label}>
             <span><strong>{row.label}</strong><small>{row.detail}{row.error ? ' Query error: ' + row.error : ''}</small></span>
             <span>{row.value === null ? '—' : row.value.toLocaleString()}</span>
