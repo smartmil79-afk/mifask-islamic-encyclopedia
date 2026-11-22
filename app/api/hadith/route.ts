@@ -139,7 +139,7 @@ export async function GET(request: Request) {
     }
     const endpoint = number
       ? BASE + "/hadith/" + book + "/" + encodeURIComponent(number)
-      : BASE + "/search?q=" + encodeURIComponent(q!) + "&book=" + book + "&limit=20;
+      : BASE + "/search?q=" + encodeURIComponent(q!) + "&book=" + book + "&limit=20";
     const response = await fetch(endpoint, { next: { revalidate: number ? 3600 : 300 } });
     const data = await response.json();
     if (!response.ok) {
