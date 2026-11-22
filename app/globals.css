@@ -281,3 +281,5 @@ html[data-theme="dark"] .app-error-state{background:var(--surface)}
 
 /* Phase 16 — Quran recitation controls */
 .ayah-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ayah-audio-button{border:1px solid var(--line);background:var(--soft);color:var(--green);border-radius:999px;padding:7px 12px;font-size:12px;font-weight:700}.ayah-audio-button:disabled{opacity:.6;cursor:wait}.ayah-audio-player{display:block;width:100%;margin:16px 0 4px}.quran-audio-error{font-size:13px;color:#a34d3d;margin:10px 0}.ayah-bookmark{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;font-size:12px}
+.verification-unverified{background:#fff7e8;border-color:#e9d6a9;color:#8b672e}
+html[data-theme="dark"] .verification-unverified{background:#3a3020;border-color:#5a482b;color:#d7b77b}
