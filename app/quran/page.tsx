@@ -26,7 +26,7 @@ export default function QuranReader(){
   try{
    const sb=getSupabaseClient();
    if(edition==='mifask-quranenc'&&sb){
-    const {data,error:localError}=await sb.from('ie_quran_verses').select('surah_number,ayah_number,arabic').ilike('arabic',`%${term}%`).limit(50);
+    const {data,error:localError}=await sb.rpc('ie_search_quran',{p_query:term,p_limit:50});
     if(!localError&&data?.length){
      setResults(data.map((v:any)=>({number:v.surah_number*100000+v.ayah_number,numberInSurah:v.ayah_number,text:v.arabic,surah:surahs.find(s=>s.number===v.surah_number)})));
      return;
