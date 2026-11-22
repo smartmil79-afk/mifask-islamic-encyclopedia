@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import type { Article } from '@/lib/content';
+import type { Article, ArticleSourceLink } from '@/lib/content';
 
 function client() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -28,7 +28,12 @@ export async function getPublishedArticle(slug:string):Promise<Article|null>{
   const sb=client();if(!sb)return null;
   const {data,error}=await sb.from('ie_articles').select('id,slug,title,summary,content,arabic_text,status,reading_minutes,tags,featured,reference_texts,verification_status,reviewer_name,verified_at,category:ie_categories(name,slug)').eq('slug',slug).eq('status','published').maybeSingle();
   if(error){console.error('Encyclopedia article query failed',error.message);return null;}
-  return data?mapArticle(data as DbArticle):null;
+  if(!data)return null;
+  const article=mapArticle(data as DbArticle);
+  const {data:sourceRows,error:sourceError}=await sb.from('ie_article_sources').select('citation_detail,source:ie_sources(title,url,citation)').eq('article_id',data.id);
+  if(sourceError){console.error('Article source links query failed',sourceError.message);return article;}
+  const sourceLinks=(sourceRows||[]).map((row:any)=>{const source=Array.isArray(row.source)?row.source[0]:row.source;return {title:source?.title||'Untitled source',url:source?.url||undefined,citation:source?.citation||undefined,citationDetail:row.citation_detail||undefined} as ArticleSourceLink;});
+  return {...article,sourceLinks};
 }
 export async function getPublishedArticlesInCategory(slug:string):Promise<Article[]>{
   const sb=client();if(!sb)return [];
