@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
 const BASE = "https://sahih-al-bukhari.com/api/v1";
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const localDb = SUPABASE_URL && SUPABASE_ANON_KEY ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false } }) : null;
 const EDITION_BASE = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions";
 const RIYAD_DATA_URL = "https://raw.githubusercontent.com/AhmedBaset/hadith-json/70b83d6d21995bb32f8d7271cd75501be5a922a/db/by_book/other_books/riyad_assalihin.json";
 const TRANSLATION_BASES = [
@@ -54,7 +58,15 @@ async function searchEdition(book: string, q: string): Promise<any[]> {
       source_dataset: "fawazahmed0/hadith-api" };
   }).filter((r: any) => matchesQuery(r, q)).slice(0, 20);
 }
-async function malikRecords(): Promise<any[]> {
+async function importedRecords(book: "malik" | "riyad", number?: string, q?: string): Promise<any[]> {
+  if (!localDb) throw new Error("MIFASK database is not configured.");
+  let query = localDb.from("ie_hadiths")
+    .select("collection_key,hadith_number,book_number,chapter_number,chapter_title,arabic,translations,narrator,grading,source_refs,metadata")
+    .eq("collection_key", book);
+  if (number) {
+    query = query.eq("hadith_number", number).limit(1);
+  } else {
+    const term = (q || "").trim().replace(/[\\%_]/g, "\\async function malikRecords(): Promise<any[]> {
   const [arabicData, englishData] = await Promise.all([fetchEdition("ara-malik"), fetchEdition("eng-malik")]);
   const arabic = listFrom(arabicData), english = listFrom(englishData);
   const englishByNumber = new Map<string, any>(english.map((r:any)=>[numberOf(r),r] as [string, any]));
@@ -66,6 +78,30 @@ async function malikRecords(): Promise<any[]> {
 async function riyadRecords(): Promise<{records:any[];chapters:any[]}> {
   const data=await fetchJSON(RIYAD_DATA_URL);
   return {records:listFrom(data),chapters:Array.isArray(data?.chapters)?data.chapters:[]};
+}").replace(/[(),]/g, " ");
+    query = query.or(`arabic.ilike.%${term}%,translations->>en.ilike.%${term}%,chapter_title.ilike.%${term}%`).limit(20);
+  }
+  const { data, error } = await query;
+  if (error) throw new Error(`MIFASK database query failed: ${error.message}`);
+  return (data || []).map((row: any) => {
+    const translation = row.translations?.en || row.translations?.english || row.translations?.["en-US"] || "";
+    const dataset = row.source_refs?.dataset || row.metadata?.source_dataset || "Imported dataset";
+    const sourceUrl = dataset.includes("fawazahmed0")
+      ? "https://github.com/fawazahmed0/hadith-api/tree/1/editions"
+      : row.metadata?.imported_from || RIYAD_DATA_URL;
+    return {
+      ...row,
+      number: String(row.hadith_number),
+      hadith_number: String(row.hadith_number),
+      arabic: row.arabic || "",
+      english: translation,
+      translation,
+      chapter_title: row.chapter_title || "",
+      source_dataset: dataset,
+      source_url: sourceUrl,
+      translationSource: translation ? dataset : "",
+    };
+  });
 }
 function matchesQuery(record:any, q:string):boolean {
   const eng=record?.english;
@@ -106,22 +142,10 @@ export async function GET(request: Request) {
   if (!allowed.has(book)) return NextResponse.json({ error: "Unsupported collection" }, { status: 400 });
   if (!q && !number) return NextResponse.json({ error: "Enter a search term or hadith number." }, { status: 400 });
   try {
-    if (book === "malik") {
-      const records=await malikRecords();
-      const found=number?records.filter(r=>numberOf(r)===number):records.filter(r=>matchesQuery(r,q!)).slice(0,20);
-      if(!found.length)return NextResponse.json({results:[]});
-      return NextResponse.json(number?found[0]:{results:found},{headers:{"Cache-Control":"public, s-maxage=3600, stale-while-revalidate=86400"}});
-    }
-    if (book === "riyad") {
-      const {records,chapters}=await riyadRecords();
-      const chapterMap=new Map(chapters.map((c:any)=>[String(c.id),c]));
-      const found=number?records.filter(r=>String(r.idInBook??r.number??r.hadith_number)===number):records.filter(r=>matchesQuery(r,q!)).slice(0,20);
-      const shaped=found.map((r:any)=>{
-        const ch=chapterMap.get(String(r.chapterId));
-        return {...r,number:String(r.idInBook??r.number??r.hadith_number??r.id),chapter_title:ch?.english||"",chapter_arabic:ch?.arabic||"",english:r.english||"",translation:r.english?.text||"",narrator:r.english?.narrator||"",source_dataset:"AhmedBaset/hadith-json"};
-      });
-      if(!shaped.length)return NextResponse.json({results:[]});
-      return NextResponse.json(number?shaped[0]:{results:shaped},{headers:{"Cache-Control":"public, s-maxage=3600, stale-while-revalidate=86400"}});
+    if (book === "malik" || book === "riyad") {
+      const records = await importedRecords(book, number, q);
+      if (!records.length) return NextResponse.json({results:[]});
+      return NextResponse.json(number ? records[0] : {results:records}, {headers:{"Cache-Control":"public, s-maxage=300, stale-while-revalidate=3600"}});
     }
     const endpoint = number
       ? `${BASE}/hadith/${book}/${encodeURIComponent(number)}`
