@@ -39,7 +39,7 @@ export async function getPublishedArticlesInCategory(slug:string):Promise<Articl
   const sb=client();if(!sb)return [];
   const {data:cat}=await sb.from('ie_categories').select('id').eq('slug',slug).maybeSingle();
   if(!cat)return [];
-  const {data,error}=await sb.from('ie_articles').select('id,slug,title,summary,content,arabic_text,status,reading_minutes,tags,featured,reference_texts,category:ie_categories(name,slug)').eq('category_id',cat.id).eq('status','published').order('published_at',{ascending:false});
+  const {data,error}=await sb.from('ie_articles').select('id,slug,title,summary,content,arabic_text,status,reading_minutes,tags,featured,reference_texts,verification_status,reviewer_name,verified_at,category:ie_categories(name,slug)').eq('category_id',cat.id).eq('status','published').order('published_at',{ascending:false});
   if(error){console.error('Encyclopedia category query failed',error.message);return [];}
   return (data||[]).map((row:any)=>mapArticle(row));
 }
