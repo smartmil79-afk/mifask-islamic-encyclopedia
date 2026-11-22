@@ -13,6 +13,10 @@ async function json(url:string) {
   return r.json();
 }
 export async function POST(req:Request) {
+ let db:any=null;
+ let createdImportId:string|null=null;
+ let importedVerses=0;
+ let totalVerses=0;
  try {
   const token=(req.headers.get("authorization")||"").replace(/^Bearer /,"");
   if(!token) return NextResponse.json({error:"Authentication required"},{status:401});
@@ -20,7 +24,7 @@ export async function POST(req:Request) {
   const auth=createClient(supabaseUrl,anonKey,{auth:{persistSession:false}});
   const {data:user,error:userError}=await auth.auth.getUser(token);
   if(userError||!user.user) return NextResponse.json({error:"Invalid session"},{status:401});
-  const db=createClient(supabaseUrl,anonKey,{auth:{persistSession:false},global:{headers:{Authorization:"Bearer "+token}}});
+  db=createClient(supabaseUrl,anonKey,{auth:{persistSession:false},global:{headers:{Authorization:"Bearer "+token}}});
   const {data:admin,error:adminError}=await db.from("ie_admins").select("active,role").eq("user_id",user.user.id).maybeSingle();
   if(adminError||!admin?.active) return NextResponse.json({error:"Administrator access required"},{status:403});
   const body=await req.json().catch(()=>({}));
@@ -42,6 +46,7 @@ export async function POST(req:Request) {
   }).select("id").single();
   if(impErr) throw impErr;
   const importId=imp.id;
+  createdImportId=importId;
   const verseRows:any[]=[]; const metaRows:any[]=[];
   for(let n=start;n<=end;n++){
    const meta=surahList.data[n-1];
@@ -54,16 +59,25 @@ export async function POST(req:Request) {
     verseRows.push({surah_number:n,ayah_number:ayah,arabic:v.arabic_text,translations:{en:{text:v.translation,footnotes:v.footnotes||"",edition:"english_saheeh",publisher:edition?.title||"QuranEnc.com",version:String(version),source_url:"https://quranenc.com"}},audio_urls:{},metadata:{source:"QuranEnc.com",translation_key:"english_saheeh",imported_at:new Date().toISOString()},source_import_id:importId});
    }
   }
+  totalVerses=verseRows.length;
   const {error:surahError}=await db.from("ie_quran_surahs").upsert(metaRows,{onConflict:"surah_number"});
   if(surahError) throw surahError;
   for(let offset=0;offset<verseRows.length;offset+=400){
-   const {error}=await db.from("ie_quran_verses").upsert(verseRows.slice(offset,offset+400),{onConflict:"surah_number,ayah_number"});
+   const batch=verseRows.slice(offset,offset+400);
+   const {error}=await db.from("ie_quran_verses").upsert(batch,{onConflict:"surah_number,ayah_number"});
    if(error) throw error;
+   importedVerses+=batch.length;
   }
   const {error:finishError}=await db.from("ie_source_imports").update({status:"completed",records_total:verseRows.length,records_imported:verseRows.length,records_skipped:0,completed_at:new Date().toISOString(),notes:"Arabic text and English translation imported unchanged from QuranEnc; surah metadata from AlQuran Cloud. Attribution and translation version preserved in each record."}).eq("id",importId);
   if(finishError) throw finishError;
   return NextResponse.json({success:true,start,end,surahs:metaRows.length,verses:verseRows.length,translation:"english_saheeh",version,importId});
  } catch(e:any) {
+  if(db&&createdImportId){
+   const message=String(e?.message||"Import failed").slice(0,500);
+   const status=totalVerses>0&&importedVerses===totalVerses?"completed":importedVerses>0?"partial":"failed";
+   const {error:statusError}=await db.from("ie_source_imports").update({status,records_total:totalVerses,records_imported:importedVerses,records_skipped:0,completed_at:new Date().toISOString(),notes:`Import stopped/finalization error: ${message}. ${importedVerses}/${totalVerses} verses stored.`}).eq("id",createdImportId);
+   if(statusError) console.error("Quran import status update failed",statusError);
+  }
   console.error("Quran import failed",e);
   return NextResponse.json({error:e?.message||"Qur'an import failed"},{status:500});
  }
