@@ -59,7 +59,7 @@ BEGIN
 ('zakariya','Zakariya','زكريا','Zakariya',3,37),
 ('yahya','Yahya','يحيى','Yahya',3,39),
 ('isa','Isa','عيسى','Isa',3,45),
-('muhammad','Muhammad','محمد','3',144,undefined)
+('muhammad','Muhammad','محمد','Muhammad',3,144)
   )
   INSERT INTO public.ie_prophets (
     id, name, name_arabic, name_transliteration, quran_references,
