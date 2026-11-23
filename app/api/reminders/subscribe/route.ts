@@ -28,6 +28,7 @@ export async function POST(request: Request) {
       status:'pending', updated_at:new Date().toISOString()
     });
     if (error) {
+      if (error.code === '23505') return NextResponse.json({error:'This WhatsApp number is already registered. Please contact MIFASK if you need to change your schedule.'},{status:409});
       console.error('Reminder signup error',error.message);
       return NextResponse.json({error:'We could not save your subscription. Please try again.'},{status:500});
     }
