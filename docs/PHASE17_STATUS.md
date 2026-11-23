@@ -6,38 +6,42 @@ Last evidence review: 2026-11-24 (00:52 Africa/Lagos; direct Supabase/GitHub/Ver
 
 | Workstream | Status | Current evidence / next action |
 |---|---|---|
-| Qur'an Arabic text | Completed (coverage/integrity) | 6,236 verses; no Arabic gaps; duplicate coordinates=0. |
-| Qur'an English translation | Completed (coverage) | 6,236 populated; QuranEnc English Saheeh v1.1.2 provenance retained. |
-| Surah metadata | Completed (coverage/integrity) | 114/114; ayah-count sum=6,236; no mismatches. |
-| Qur'an transliteration | Blocked | 0/6,236; permission compatible with MIFASK use/redistribution not confirmed. |
-| Hadith text coverage | In progress | Malik 1,858: 29 Arabic gaps, 40 English gaps; Riyad 1,896 complete Arabic/English. |
-| Hadith metadata | Blocked / In progress | Malik narrator/book/chapter/title absent for all 1,858; Riyad 11 narrator gaps, book number absent all 1,896; chapter/title complete. Exact edition/right clearance unresolved. |
-| Prophet narratives & lessons | Completed (draft coverage) | 25/25 stories and lessons; all pending editorial review/not scholarly verified. |
-| Seerah | Completed (draft coverage) | 9/9 descriptions; all pending review/not scholarly verified. |
-| Companions | In progress | 22 CMS articles; all review/unverified. Latest Abdullah ibn Mas‘ud draft is source-backed, revision-snapshotted, pending primary-source/editorial review. |
-| Article source coverage | Completed (coverage only) | 33 articles; 58 links; all source-linked; citation gaps=0; duplicate article/source pairs=0; duplicate non-null URLs=0. |
+| Qur'an Arabic text | Completed (coverage/integrity) | 6,236 verses; Arabic blanks=0; duplicate coordinates=0. |
+| Qur'an English translation | Completed (coverage/provenance) | 6,236 English texts present; edition/version/publisher and verse source metadata gaps=0; QuranEnc English Saheeh v1.1.2. |
+| Surah metadata | Completed (coverage/integrity) | 114/114; Arabic/transliterated/English names, revelation type and ayah counts complete; sum=6,236; mismatches=0. |
+| Qur'an transliteration | Blocked | 0/6,236; Tanzil non-commercial terms and permission for MIFASK redistribution/use are not cleared. |
+| Hadith text coverage | In progress | Malik 1,858: 29 Arabic and 40 English gaps; Riyad 1,896 Arabic/English complete. |
+| Hadith metadata | Blocked / In progress | Malik narrator/book/chapter/title missing all 1,858; Riyad 11 narrator gaps and book_number missing all 1,896; chapter/title complete; hadith-books table empty. Exact edition/rights unresolved. |
+| Prophet narratives & lessons | Completed (draft coverage only) | 25/25 stories/lessons; review/verification flags correct on all; pending editorial review/not scholarly verified. |
+| Seerah | Completed (draft coverage only) | 9/9 descriptions; review/verification flags correct on all; pending editorial review/not scholarly verified. |
+| Companions | In progress | 22 CMS articles; all review/unverified. Latest source-backed drafts retain primary-source/editorial review notes. |
+| Article source coverage | Completed (coverage only) | 33 articles; 58 links; 0 missing source links/citation details; 0 duplicate pairs/duplicate non-null URLs. |
 | Article scholarly verification | In progress | 2 published/unverified; 31 review/unverified; 0 verified. |
-| Verification workflow audit | Completed (code) | Required verifier/timestamp/notes and provenance/review-gap checks retained. |
+| Provenance/checksum audit | In progress | 18 import records; all original content hashes NULL. QuranEnc: 12 completed batches totaling 6,236 records; one zero-record failed attempt for batch 1–10 followed by successful retry. |
+| Source/revision audit | In progress | 45 source records (2 unlinked NULL-URL placeholders preserved); 18 revision snapshots. |
 | Duas | In progress | 40 records; transliteration missing 40; English fields complete. |
-| Navigation/static regression | In progress | Latest build smoke: 67 internal links, 27 targets, 25 route templates, 0 dynamic hrefs skipped; build/TypeScript passed, 78/78 static pages generated. |
-| Authenticated reader tests | Blocked | SSO blocks authenticated interactive tests; no bypass. |
-| Production health | Completed (current check) | READY deployment dpl_6TPCQ2EpYuFed4WgB9CWM3CJ25So, commit 2af3da6; all 3 aliases verified. Vercel runtime errors 24h=0; no error/fatal logs last 30m. Supabase logs include 5 earlier SQL parse errors from automation attempts; successful later writes independently verified. Historical Qur'an-import RLS error remains documented; do not weaken RLS. |
+| Navigation/static regression | In progress | Route smoke passed 67 links, 27 targets, 25 route templates, 0 dynamic hrefs skipped; TypeScript/build passed; 78/78 static pages generated. |
+| Authenticated reader tests | Blocked | Project SSO protection blocks authenticated browser testing; no bypass. |
+| Production health | Completed (last verified check) | READY deployment dpl_EotA4Z93jig7oNrvxkbKFvV3UhSB, commit 18248fb; 3 aliases verified. Vercel runtime errors 24h=0 and error/fatal logs 30m=0. Latest docs commit deployment is BUILDING; verify before claiming it live. Supabase unified-log query for 30m returned no rows (not a comprehensive error count). Historical Qur'an import RLS error remains; do not weaken RLS. |
 
-## Current audit snapshot — 2026-11-23 (23:35 Africa/Lagos)
+
+## Current audit snapshot — 2026-11-24 (00:52 Africa/Lagos)
 
 | Workstream | Status | Current evidence / blocker |
 |---|---|---|
-| Qur'an | Complete coverage | 6,236 verses; Arabic/English complete; QuranEnc English Saheeh v1.1.2; 114/114 Surah metadata, ayah sum 6,236. |
-| Transliteration | Blocked | 0/6,236; license compatibility for redistribution/use unconfirmed. |
-| Hadith | Blocked/in progress | 3,754 records. Malik: 1,858 (29 Arabic gaps, 40 English gaps; all narrator/book/chapter/title missing). Riyad: 1,896 (11 narrator gaps, all book numbers missing; chapter/title complete). No import pending exact edition and rights. |
-| Prophets | Draft coverage complete | 25/25 stories/lessons/references; pending review/not scholarly verified. |
-| Seerah | Draft coverage complete | 9/9 descriptions; pending review/not scholarly verified. |
-| Companions | In progress | 22 CMS articles, all review/unverified. Latest Abdullah ibn Mas‘ud draft: 4 content items, 2 references, 1 source link, 1 revision. |
-| Duas | In progress | 40 records; 40 transliterations missing, English complete. |
-| Articles | Source coverage complete; verification in progress | 33 total; 2 published/unverified, 31 review/unverified, 0 verified; 58 source links; 0 source-link gaps/citation gaps; 0 duplicate pairs or duplicate non-null URLs. |
-| Source/revision audit | In progress | 45 source records (2 NULL-URL placeholders left untouched); 18 revisions. |
-| Navigation | In progress | Static build smoke passed; SSO blocks authenticated reader/navigation checks. |
-| Production | Healthy at last check | READY dpl_6TPCQ2EpYuFed4WgB9CWM3CJ25So on commit 2af3da6; aliases verified. Vercel error aggregation 24h=0; runtime error/fatal logs last 30m=0. Supabase log window 22:05–22:35 UTC had 5 SQL parse-error entries from earlier raw SQL attempts; they failed at parse time, no writes from those failed statements. |
+| Qur'an | Complete coverage/integrity | 6,236 verses; Arabic and English text complete; English version/publisher/provenance present; 114/114 Surah metadata fields complete; ayah-count sum=6,236. |
+| Transliteration | Blocked | 0/6,236. Official Tanzil page lists transliteration and states non-commercial use; MIFASK compatibility/permission not confirmed. |
+| Hadith | In progress / rights blocked | 3,754 records. Malik: 1,858 (29 Arabic, 40 English gaps; narrator/book/chapter/title all absent). Riyad: 1,896 (Arabic/English complete; 11 narrator gaps; book_number absent all; chapter/title complete). `ie_hadith_books` has 0 rows. |
+| Prophets | Draft coverage complete | 25/25 stories/lessons; review/verification flags correct; pending editorial review/not scholarly verified. |
+| Seerah | Draft coverage complete | 9/9 descriptions; review/verification flags correct; pending editorial review/not scholarly verified. |
+| Companions | In progress | 22 CMS articles, all review/unverified. |
+| Duas | In progress | 40 records; 40 transliterations missing. |
+| Articles | Source coverage complete; verification in progress | 33 total; 2 published/unverified, 31 review/unverified, 0 verified; 58 links; no source/citation gaps or duplicates. |
+| Imports | Provenance audit in progress | 18 import records; content_hash NULL for all. QuranEnc English Saheeh: 13 batch records, one failed 0-row attempt for batch 1–10 and a completed retry; 12 successful batches total 6,236 records, skipped=0. |
+| Source/revisions | In progress | 45 source records; 2 unlinked NULL-URL placeholders preserved; 18 revisions. |
+| Navigation | In progress | 67 links, 27 targets, 25 templates, 0 dynamic hrefs skipped; build/TypeScript and 78/78 static pages passed. Authenticated reader tests blocked by SSO. |
+| Production | Healthy at last check | READY dpl_EotA4Z93jig7oNrvxkbKFvV3UhSB on commit 18248fb; 3 aliases verified. Vercel runtime error aggregation 24h=0, error/fatal logs 30m=0. Latest checklist commit 8291a26 deployment BUILDING. Supabase unified-log query for 23:22–23:52 UTC returned no rows; not treated as a full error count. |
+
 
 ## Source/licensing review
 
@@ -63,13 +67,12 @@ Last evidence review: 2026-11-24 (00:52 Africa/Lagos; direct Supabase/GitHub/Ver
 
 ## Deployment evidence
 
-- Latest main-code commit: `7b9ee64ac7b217639061c58bb1142d9186b978de`
-- Deployment: READY.
-- Verified production aliases point to the READY deployment:
-  - `mifask-islamic-encyclopedia-liha.vercel.app`
-  - `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`
-  - `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`
-- Direct browser verification: blocked by SSO protection; no bypass used.
+- Latest verified READY deployment at 2026-11-24 00:52 Africa/Lagos: `dpl_EotA4Z93jig7oNrvxkbKFvV3UhSB`, commit `18248fb89e5394702b59f54ba7890244a5fb9c5f`.
+- Verified aliases: `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`.
+- Build smoke: 67 internal links, 27 unique targets, 25 route templates, 0 dynamic hrefs skipped; compilation passed, 78/78 static pages generated.
+- Current checklist commit `8291a26196d612b9bf59268a5672e8f99f64a89a` has a Git-triggered deployment `dpl_6tpaKYwmYqVrmuFoTBDgLwZAxRuW` in BUILDING state; do not mark it READY until verified.
+- Direct authenticated browser verification remains blocked by SSO protection; no bypass used.
+
 
 ## Next priorities
 
