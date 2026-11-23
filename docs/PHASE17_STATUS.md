@@ -15,7 +15,7 @@ Last evidence review: 2026-11-23 (hourly active execution)
 | Prophet narratives & lessons | Completed (draft coverage) | 25/25 entries have brief Qur’an-based summaries, lessons and references. All are pending editorial review and not scholarly-verified; this completes draft coverage, not scholarly review. |
 | Seerah timeline descriptions | Completed (draft content) | 9/9 descriptions exist and are marked Qur'an-based drafts; editorial review pending. No dates or unsupported chronology inferred. |
 | Companions | In progress | 18 Companion articles (17 reference-index + Abu Bakr introduction) are in review/unverified; all 18 have source links. Mus'ab and al-Zubayr now have scholarly secondary references and expanded draft summaries; primary-report verification and editorial review remain pending. |
-| Article sourcing | In progress | 29 articles; 2 published, 27 review, 0 verified; 43 source links across all 29 articles, with 0 articles missing links and 0 links missing citation detail. “What Is Hadith?” has 3 linked secondary references and remains unverified. |
+| Article sourcing | In progress | 29 articles; 2 published, 27 review, 0 verified; 47 source links across all 29 articles, with 0 articles missing links and 0 links missing citation detail. “What Is Hadith?” has 3 linked secondary references and remains unverified. |
 | Verification workflow audit | Completed (code) | Checks verified articles for reviewer, verification timestamp and notes; checks Prophet story/lesson gaps, Seerah descriptions and Hadith metadata gaps. |
 | Navigation/browser test | In progress | Static smoke check previously passed 62 internal literals, 25 targets, 22 route templates. Authenticated functional browser test remains blocked by SSO. |
 | Production health | In progress | Current main deployment READY; production alias verified. One historical Qur'an import RLS error from 2026-11-22 remains in 7-day report. Existing data is complete, so no re-import needed. Service-role env key is not configured; do not weaken RLS. |
@@ -40,7 +40,7 @@ This snapshot supersedes older interim counts above.
 | Seerah | Completed (draft coverage) | 9/9 descriptions and sources; 9/9 pending editorial review and not scholarly verified. Chronology intentionally omitted. |
 | Companions | In progress | 18 Companion articles (17 reference-index + Abu Bakr introduction), all in review/unverified and all linked to sources. Mus'ab and al-Zubayr have TDV encyclopedia links and draft expansions. The /companions page is intentionally a Qur'an-named index and lists Zayd only; the category/article collection still needs further content and review. |
 | Duas | In progress | 40 records; Arabic/English/source fields complete; transliteration missing in 40. 6 use review_status=pending, 34 carry a legacy pending flag. |
-| Articles | In progress | 29 total; 2 published/unverified, 27 review/unverified, 0 verified. 43 source-link rows across 29 articles; 0 missing reference_texts, source links, or citation details. |
+| Articles | In progress | 29 total; 2 published/unverified, 27 review/unverified, 0 verified. 47 source-link rows across 29 articles; 0 missing reference_texts, source links, or citation details. |
 | Article verification safeguards | Completed (code) | Verified status requires reviewer, date and notes; current DB has no verified articles. |
 | Dataset audit UI | Completed (code/deploy) | New checks for source provenance, Prophet/Seerah review state, dua review flags, article references and citation details; commit e56cca5 is READY and production aliases are assigned. |
 | Navigation/reader | In progress | Build-time route smoke test runs via prebuild; latest static test previously passed 65 literal links/26 targets/24 route templates. Authenticated interactive browser test is blocked by SSO. |
@@ -206,3 +206,15 @@ This snapshot supersedes older interim counts above.
 - Rechecked article-source coverage: 46 links across all 29 articles (29/29 source-linked). No article was marked verified.
 - Production: latest production deployment dpl_5a1URhEviWAiiMsBoo81fe1FL95u is READY for commit e4145b341302c66bf135a5ca673dad9a7a58671; the three production aliases are assigned to it. Runtime error aggregation for the last 30 minutes reports no runtime errors.
 - No deployment attempt was made in this run. Respect the previously reported deployment API quota block until its reset is confirmed; do not attempt to bypass it.
+
+
+## Hourly execution update — 2026-11-23 (Abu Hurayrah source-backed draft)
+
+- Reviewed M. Yaşar Kandemir, “Ebû Hüreyre,” TDV İslâm Ansiklopedisi, vol. 10 (1994), pp. 160–167. The article page identifies its author, publication, and bibliography. MIFASK uses paraphrase only; no copyrighted text was copied.
+- Added two cautious draft paragraphs to the Abu Hurayrah reference-index article: tribal affiliation/name variation and arrival at Madinah/Khaybar; learning/transmission activity and reported later service. Details and chronology remain subject to primary-source checking.
+- Added source catalog record, linked source row, citation detail, and revision snapshot before content update.
+- Supabase verification: article has 4 content items, 3 reference strings, 2 source links, 1 revision, 1 catalog record, and the new TDV link is present. Status remains review/unverified.
+- Source: https://islamansiklopedisi.org.tr/ebu-hureyre
+- Article-source coverage verified: 29 articles, 0 missing source links, 47 total source-link rows. No article was marked verified.
+- Latest production deployment at this check: READY, commit 9cd8efb30d60ae61733deb26a29dfd6f7d4e6d70; three project aliases were returned for the deployment. Runtime error aggregation for the last 30 minutes: no runtime errors.
+- No deployment API call made. This content change is in Supabase; the checklist change below is repository documentation. If Git integration triggers a build, monitor it and only report deployment success after READY/alias confirmation.
