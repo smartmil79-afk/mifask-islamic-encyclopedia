@@ -377,3 +377,7 @@ html[data-theme="dark"] .verification-unverified{background:#3a3020;border-color
 .arabic-learning-voice select{max-width:100%;min-height:40px;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);font:inherit}
 .arabic-audio-note{display:block;width:100%;max-width:560px;color:var(--muted);font-size:13px;line-height:1.6;text-align:center}
 @media(max-width:600px){.arabic-learning{padding:16px 13px;border-radius:18px;gap:14px;margin:16px auto}.arabic-learning-meaning{grid-template-columns:1fr;gap:10px}.arabic-learning-meaning>div{padding:12px 14px}.arabic-learning-toggle,.arabic-audio-button{width:100%;max-width:420px;min-height:46px;padding:12px 14px;font-size:14px}.arabic-learning-audio-controls{flex-direction:column;align-items:stretch;gap:9px}.arabic-learning-voice{width:100%;flex-direction:column}.arabic-learning-voice select{width:100%}.arabic-audio-note{font-size:12px;padding:0 3px}.arabic-learning-script{line-height:1.75}}
+
+/* Separate Arabic and English playback controls */
+.arabic-audio-button-english{background:var(--surface);color:var(--green);}
+.arabic-audio-button-stop{background:#8b3a3a;border-color:#8b3a3a;color:#fff;}
