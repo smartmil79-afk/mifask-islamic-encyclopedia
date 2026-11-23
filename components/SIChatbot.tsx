@@ -10,13 +10,13 @@ export default function SIChatbot(){
    const words=terms(q);const hits:Hit[]=[];
    const searches=words.slice(0,3).map(w=>Promise.all([
     db.from('ie_articles').select('title,summary,slug,content,reference_texts').eq('status','published').ilike('title',`%${w}%`).limit(3),
-    db.from('ie_quran_verses').select('surah_number,ayah_number,arabic,translation').ilike('translation',`%${w}%`).limit(3),
-    db.from('ie_hadiths').select('*').ilike('english',`%${w}%`).limit(3)
+    db.from('ie_quran_verses').select('surah_number,ayah_number,arabic,translations').filter('translations::text','ilike',`%${w}%`).limit(3),
+    db.from('ie_hadiths').select('collection_key,hadith_number,narrator,arabic,translations,source_refs').filter('translations::text','ilike',`%${w}%`).limit(3)
    ]));
    const res=await Promise.all(searches);
    for(const [a,v,h] of res){for(const x of a.data||[])hits.push({source:'MIFASK article',title:x.title,text:String(x.summary||JSON.stringify(x.content)||'').slice(0,500),link:x.slug?'/article/'+x.slug:undefined});
-    for(const x of v.data||[])hits.push({source:'Qur’an',title:`Surah ${x.surah_number}, verse ${x.ayah_number}`,text:String(x.translation||'')+`\n${x.arabic||''}`,link:`/quran?surah=${x.surah_number}&ayah=${x.ayah_number}`});
-    for(const x of h.data||[]){const txt=String(x.english||x.translation||x.text||x.matn||'');if(txt)hits.push({source:'Hadith database',title:String(x.reference||x.hadith_number||x.id||'Hadith record'),text:txt.slice(0,500)})}
+    for(const x of v.data||[])hits.push({source:'Qur’an',title:`Surah ${x.surah_number}, verse ${x.ayah_number}`,text:String(typeof x.translations==='string'?x.translations:JSON.stringify(x.translations||{}))+`\n${x.arabic||''}`,link:`/quran?surah=${x.surah_number}&ayah=${x.ayah_number}`});
+    for(const x of h.data||[]){const txt=String(typeof x.translations==='string'?x.translations:JSON.stringify(x.translations||{}));if(txt)hits.push({source:'Hadith database',title:String(x.collection_key||'Hadith')+' · '+String(x.hadith_number||'record'),text:txt.slice(0,500)})}
    }
    const unique=hits.filter((x,i)=>hits.findIndex(y=>y.title===x.title&&y.text===x.text)===i).slice(0,5);
    if(!unique.length){setAnswer('1. I could not find a matching entry in the currently searchable MIFASK data.\n2. Try a shorter keyword, a person’s name, a Qur’an topic, or a phrase.');}
