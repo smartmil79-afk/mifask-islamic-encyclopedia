@@ -5,7 +5,8 @@ import Footer from '@/components/Footer';
 export const metadata: Metadata = {
   title: { default: 'Mifask Islamic Encyclopedia', template: '%s | Mifask Islamic Encyclopedia' },
   description: 'A comprehensive digital repository of Islamic knowledge — Qur’an, Hadith, Prophets, history, teachings and Muslim life.',
-  applicationName: 'Mifask Islamic Encyclopedia',\n  icons: { icon: '/favicon.svg', shortcut: '/favicon.svg', apple: '/favicon.svg' },
+  applicationName: 'Mifask Islamic Encyclopedia',
+  icons: { icon: '/favicon.svg', shortcut: '/favicon.svg', apple: '/favicon.svg' },
   metadataBase: new URL('https://mifask-islamic-encyclopedia-liha.vercel.app'),
   openGraph: { title: 'Mifask Islamic Encyclopedia', description: 'Explore Islamic knowledge with context, references and connected learning.', type: 'website' },
 };
