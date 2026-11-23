@@ -169,17 +169,21 @@ if (!fs.existsSync(quranReaderFile)) {
 // coverage. Textual reference strings are not substitutes for source records.
 const adminPageFile = path.join(root, 'app', 'admin', 'page.tsx');
 const editorialIntegrityFile = path.join(root, 'components', 'EditorialIntegrity.tsx');
-if (!fs.existsSync(adminPageFile) || !fs.existsSync(editorialIntegrityFile)) {
+const datasetAuditFile = path.join(root, 'components', 'EncyclopediaDatasetAudit.tsx');
+if (!fs.existsSync(adminPageFile) || !fs.existsSync(editorialIntegrityFile) || !fs.existsSync(datasetAuditFile)) {
   problems.push({ file: 'editorial-source-smoke', href: 'integrity audit components', pathname: 'missing file' });
 } else {
   const adminSource = fs.readFileSync(adminPageFile, 'utf8');
   const editorialSource = fs.readFileSync(editorialIntegrityFile, 'utf8');
+  const datasetAuditSource = fs.readFileSync(datasetAuditFile, 'utf8');
   const requiredEditorialMarkers = [
     [adminSource, 'linked-source query', "from('ie_article_sources')"],
     [adminSource, 'linked-source count attached to articles', 'source_count'],
     [editorialSource, 'linked-source coverage summary', 'Linked source records:'],
     [editorialSource, 'text-only citation warning', 'textual references alone are not source records'],
     [editorialSource, 'verified articles source-link check', 'Verified article has fewer than two linked source records'],
+    [datasetAuditSource, 'missing article source-link audit', 'Articles missing linked source records'],
+    [datasetAuditSource, 'companion source-link audit', 'Companion reference articles missing linked source records'],
   ];
   for (const [source, feature, marker] of requiredEditorialMarkers) {
     if (!source.includes(marker)) problems.push({ file: 'editorial-source-smoke', href: feature, pathname: 'required editorial audit feature missing' });
