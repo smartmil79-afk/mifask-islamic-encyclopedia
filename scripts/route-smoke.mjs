@@ -138,6 +138,30 @@ for (const requirement of requiredNavigation) {
   }
 }
 
+// Guard the Qur'an reader's local-search translation and completeness fallback
+// against regressions. This checks implementation markers; runtime integration
+// still requires a browser test with Supabase and the external fallback.
+const quranReaderFile = path.join(appDir, 'quran', 'page.tsx');
+if (!fs.existsSync(quranReaderFile)) {
+  problems.push({ file: 'quran-reader-smoke', href: 'reader component', pathname: 'missing file' });
+} else {
+  const quranReaderSource = fs.readFileSync(quranReaderFile, 'utf8');
+  const requiredReaderMarkers = [
+    ['local Arabic search', 'ie_search_quran'],
+    ['search translation lookup', 'translationByKey'],
+    ['English translation display', 'className="ayah-translation"'],
+    ['local dataset completeness guard', 'completeLocalData'],
+    ['expected Surah ayah count guard', 'expectedAyahCount'],
+    ['online fallback', 'api.alquran.cloud/v1/surah/'],
+    ['read-in-context action', 'Read in context'],
+  ];
+  for (const [feature, marker] of requiredReaderMarkers) {
+    if (!quranReaderSource.includes(marker)) {
+      problems.push({ file: 'quran-reader-smoke', href: feature, pathname: 'required reader feature missing' });
+    }
+  }
+}
+
 if (problems.length) {
   console.error('Route/navigation smoke check FAILED:');
   for (const item of problems.slice(0, 30)) console.error('- ' + item.file + ': ' + item.href + ' -> ' + item.pathname);
