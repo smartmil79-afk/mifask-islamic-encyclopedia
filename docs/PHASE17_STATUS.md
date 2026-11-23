@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-23 (hourly active execution)
+Last evidence review: 2026-11-23 (19:50 Africa/Lagos; hourly active execution)
 
 ## Checklist
 
@@ -242,3 +242,16 @@ This snapshot supersedes older interim counts above.
 - Qur'an audit remains 6,236 verses with Arabic and English complete; 114 surahs; transliteration missing all 6,236 and blocked pending compatible licensing. Prophet drafts 25/25 and Seerah 9/9 remain pending editorial review/not scholarly verified. Hadith gaps unchanged; no import due exact-edition/rights blockers. Duas transliteration 40/40 remains missing.
 - Production monitor: latest deployment `dpl_EgBLZpwYqiBeB6SL7FVpzyjyknzW` is READY on commit `1055059f7527ff30143ceefd88efcab1818778ad`. Three aliases are mapped, and the main alias `mifask-islamic-encyclopedia-liha.vercel.app` was directly confirmed. Runtime errors in the last 30 minutes: none.
 - Latest GitHub main at check: `b6e831b16247f10e50f9d6f8bb26c7efb0d0b7ad`. No deployment was attempted; the previous 402 daily quota restriction has not yet reached its 24-hour reset. SSO still blocks authenticated browser testing. No RLS or billing changes.
+
+
+## Hourly execution update — 2026-11-23 (19:50 Africa/Lagos)
+
+- Supabase schema was inspected before additions; the source-type check allows `quran`, `hadith`, `book`, `scholar`, `website`, or `other`. Two source-backed Companion drafts were expanded using the `website` type, paraphrase-only, without publishing or changing verification status.
+- Ali ibn Abi Talib draft: appended two paragraphs based on Ethem Ruhi Fığlalı, “Ali,” TDV İslâm Ansiklopedisi vol. 2 (1989), pp. 371–374, and M. Yaşar Kandemir, pp. 375–378; source URL https://islamansiklopedisi.org.tr/ali. Avoids definitive early-conversion chronology and disputed-period detail. Source catalog record and link added; revision snapshot #1 saved.
+- Hafsa bint Umar draft: appended two paragraphs based on M. Yaşar Kandemir, “Hafsa,” TDV İslâm Ansiklopedisi vol. 15 (1997), pp. 119–120; https://islamansiklopedisi.org.tr/hafsa. Codex custody report is attributed to the TDV entry's citation of Sahih al-Bukhari, Fada’il al-Qur’an 3; exact edition/report wording still needs primary-source review. Source record/link added; revision snapshot #1 saved.
+- Direct Supabase verification: both articles remain `status=review`, `verification_status=unverified`; each now has 4 content items, 3 reference strings, 2 source links, and 1 revision snapshot. Source URL uniqueness checked: one catalog record per Ali/Hafsa URL. New source links = 2; no existing content replaced.
+- Latest audit counts: Qur'an 6,236 verses (0 Arabic/English gaps, 6,236 transliteration gaps), 114 Surahs (0 metadata gaps); Prophet entries 25 (0 story/lesson gaps, all 25 pending editorial review); Seerah 9 (0 description gaps, all 9 pending review); Malik 1,858 (29 Arabic gaps, 40 English gaps, metadata missing on all); Riyad 1,896 (11 narrator gaps, book_number missing on all, chapter fields complete); Duas 40 (40 transliteration gaps).
+- Article audit: 30 total, 2 published/unverified, 28 review/unverified, 0 verified; 53 source-link rows; 0 articles missing sources; 0 source-link citation details missing; 40 source catalog rows; 13 revision rows. Article sourcing coverage is complete but verification remains outstanding.
+- Production: Git-triggered deployment for checklist commit `fa30d44ca7acc61ec2e7c1f392e6a7349286c9fe` is READY (`dpl_Eb5dHz8Wxbtm1dQXahZmTU77aSHj`). Three aliases confirmed, including `mifask-islamic-encyclopedia-liha.vercel.app`. Build log: route smoke passed 67 internal literal links, 27 unique targets, 25 route templates, 0 dynamic hrefs skipped; required header/footer/category slugs passed; TypeScript/build completed and 78/78 static pages generated. Non-fatal warnings: edge runtime disables static generation on one page; npm `cache-dir` config warning.
+- Runtime error aggregation: no runtime errors in either last 30 minutes or last 24 hours (correct Vercel team ID used). Authenticated browser testing remains blocked by SSO. No deployment API/manual deployment attempted; Git integration handled the prior commit. No RLS, credentials, or billing changes.
+- Checklist next actions: continue source-backed content expansion; obtain explicit redistribution/license compatibility for Qur'an transliteration and Hadith translation; reconcile Hadith metadata against edition-matched sources; editorial review; authenticated reader/navigation regression.
