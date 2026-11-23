@@ -196,3 +196,13 @@ This snapshot supersedes older interim counts above.
 - Re-audited source coverage: 29/29 articles linked, 45 total source links. Salman al-Farsi remains 4 content items, 3 references, 2 source links, 1 revision, review/unverified.
 - Bilal source URL: https://islamansiklopedisi.org.tr/bilal-i-habesi
 - No article was published or marked verified.
+
+
+## Hourly execution update — 2026-11-23 (Umar ibn al-Khattab source-backed draft)
+
+- Reviewed Mustafa Fayda, “Ömer,” TDV İslâm Ansiklopedisi (2007), https://islamansiklopedisi.org.tr/omer. The page's bibliographic section identifies early source works; the biography is Turkish and used as secondary research only. Claims are paraphrased, not copied; primary-report verification remains necessary.
+- Added two short draft paragraphs to the existing Umar ibn al-Khattab reference-index article, covering the source's account of early Islam/migration and participation in major events, and his advisory role during Abu Bakr's caliphate and role in proposing Qur'an collection after Yamama. No Qur'an text or Hadith wording was added.
+- Added one source-catalog record and article-source link; created revision snapshot before update. Database verification: content items 4, reference strings 3, source links 3, revisions 1, source catalog record 1. Article remains review/unverified; review note retained.
+- Rechecked article-source coverage: 46 links across all 29 articles (29/29 source-linked). No article was marked verified.
+- Production: latest production deployment dpl_5a1URhEviWAiiMsBoo81fe1FL95u is READY for commit e4145b341302c66bf135a5ca673dad9a7a58671; the three production aliases are assigned to it. Runtime error aggregation for the last 30 minutes reports no runtime errors.
+- No deployment attempt was made in this run. Respect the previously reported deployment API quota block until its reset is confirmed; do not attempt to bypass it.
