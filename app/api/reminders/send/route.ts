@@ -23,6 +23,7 @@ export async function GET(req:Request) {
   const template=process.env.WHATSAPP_TEMPLATE_NAME;
   const templateLanguage=process.env.WHATSAPP_TEMPLATE_LANGUAGE||'en';
   const publicImage=process.env.REMINDER_CARD_IMAGE_URL;
+  if(process.env.WHATSAPP_SEND_ENABLED!=='true') return NextResponse.json({status:'sending_disabled',message:'Sending remains disabled until WhatsApp credentials, template, and end-to-end test are configured.'},{status:503});
   if(!db||!token||!phoneId||!template) return NextResponse.json({status:'configuration_required',missing:['SUPABASE_SERVICE_ROLE_KEY','WHATSAPP_ACCESS_TOKEN','WHATSAPP_PHONE_NUMBER_ID','WHATSAPP_TEMPLATE_NAME'].filter(k=>!process.env[k])},{status:503});
   const now=new Date();
   const {data:subs,error}=await db.from('ie_reminder_subscribers').select('id,phone_e164,timezone,preferred_time,reminder_types,weekdays,last_sent_at').eq('status','active').limit(500);
