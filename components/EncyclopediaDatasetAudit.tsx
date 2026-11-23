@@ -95,6 +95,22 @@ export default function EncyclopediaDatasetAudit() {
       const result = await exactCount(sb, check.table, check.filter);
       return { label: check.label, value: result.value, detail: check.detail, severity: check.severity, zeroWarning: check.zeroWarning, error: result.error } as AuditRow;
     }));
+
+    // Count articles with no linked source record (textual references alone are not link records).
+    const [articleRows, sourceLinks] = await Promise.all([
+      sb.from('ie_articles').select('id,slug'),
+      sb.from('ie_article_sources').select('article_id'),
+    ]);
+    if (articleRows.error || sourceLinks.error) {
+      const error = articleRows.error?.message || sourceLinks.error?.message;
+      results.push({ label: 'Articles missing linked source records', value: null, detail: 'Cross-table source-link coverage could not be checked.', severity: 'error', error });
+      results.push({ label: 'Companion reference articles missing linked source records', value: null, detail: 'Cross-table source-link coverage could not be checked.', severity: 'error', error });
+    } else {
+      const linkedArticleIds = new Set((sourceLinks.data || []).map((link: { article_id: string }) => link.article_id));
+      const missingLinks = (articleRows.data || []).filter((article: { id: string; slug: string }) => !linkedArticleIds.has(article.id));
+      results.push({ label: 'Articles missing linked source records', value: missingLinks.length, detail: 'Articles without any ie_article_sources relationship; textual references alone do not count.', severity: 'gap' });
+      results.push({ label: 'Companion reference articles missing linked source records', value: missingLinks.filter((article: { slug: string }) => article.slug.startsWith('companion-') || article.slug.startsWith('companions-')).length, detail: 'Companion reference drafts with no linked source record; do not attach generic sources without exact matching.', severity: 'gap' });
+    }
     setRows(results);
     setLastRun(new Date().toISOString());
     setLoading(false);
