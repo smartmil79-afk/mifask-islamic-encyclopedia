@@ -283,3 +283,46 @@ html[data-theme="dark"] .app-error-state{background:var(--surface)}
 .ayah-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ayah-audio-button{border:1px solid var(--line);background:var(--soft);color:var(--green);border-radius:999px;padding:7px 12px;font-size:12px;font-weight:700}.ayah-audio-button:disabled{opacity:.6;cursor:wait}.ayah-audio-player{display:block;width:100%;margin:16px 0 4px}.quran-audio-error{font-size:13px;color:#a34d3d;margin:10px 0}.ayah-bookmark{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;font-size:12px}
 .verification-unverified{background:#fff7e8;border-color:#e9d6a9;color:#8b672e}
 html[data-theme="dark"] .verification-unverified{background:#3a3020;border-color:#5a482b;color:#d7b77b}
+
+/* Phase 18 — cinematic motion, gentle reflections and SI */
+.hero{isolation:isolate}
+.hero:before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 72% 40%,rgba(211,181,103,.17),transparent 32%),radial-gradient(circle at 18% 85%,rgba(82,177,139,.14),transparent 30%);animation:heroGlow 18s ease-in-out infinite alternate;pointer-events:none}
+.hero-art{animation:heroFloat 7s ease-in-out infinite}
+.art-ring{animation:ringDrift 24s linear infinite}
+.ring-two{animation-direction:reverse}
+.art-center{animation:centerGlow 5s ease-in-out infinite}
+.art-chip{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.art-chip:hover{transform:translateY(-5px) scale(1.035);box-shadow:0 16px 35px rgba(0,0,0,.18)}
+.category-card,.article-card,.principle,.timeline-node{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.category-card:hover,.article-card:hover{transform:translateY(-7px);box-shadow:0 20px 42px rgba(19,54,44,.12)}
+.reflection-pop{position:fixed;z-index:45;right:22px;bottom:100px;width:min(365px,calc(100vw - 32px));padding:20px 19px 16px;border:1px solid rgba(209,182,107,.42);border-radius:20px;background:linear-gradient(145deg,rgba(12,65,51,.97),rgba(25,86,67,.96));color:#f8f4e7;box-shadow:0 24px 60px rgba(4,30,22,.27);backdrop-filter:blur(16px);animation:popupEnter .7s cubic-bezier(.16,1,.3,1)}
+.reflection-close{position:absolute;right:12px;top:10px;border:0;background:rgba(255,255,255,.1);color:white;width:28px;height:28px;border-radius:50%;font-size:20px;line-height:1}
+.reflection-kicker{font-size:10px;text-transform:uppercase;letter-spacing:1.8px;color:#e4cd86;font-weight:800}
+.reflection-pop p{font-family:'Playfair Display',serif;font-size:20px;line-height:1.5;margin:12px 0 16px}
+.reflection-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:11px}
+.reflection-foot a{color:#e8d48f;font-weight:700}
+.reflection-foot button{border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;padding:8px 10px;font-size:11px}
+.si-chat{position:fixed;right:22px;bottom:22px;z-index:50;font-family:'DM Sans',sans-serif}
+.si-launch{display:flex;align-items:center;gap:10px;border:0;border-radius:999px;padding:10px 16px 10px 10px;background:var(--green);color:#fff;box-shadow:0 14px 35px rgba(8,58,42,.25);font-weight:700;transition:transform .2s,box-shadow .2s}
+.si-launch:hover{transform:translateY(-3px);box-shadow:0 20px 42px rgba(8,58,42,.3)}
+.si-orb{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#d8c17b,#f1dfad);color:#164638;font-weight:900;font-size:12px;box-shadow:0 0 0 4px rgba(219,195,127,.13)}
+.si-launch-arrow{font-size:19px;opacity:.85}
+.si-panel{position:absolute;right:0;bottom:60px;width:min(390px,calc(100vw - 24px));height:min(550px,calc(100vh - 120px));display:flex;flex-direction:column;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.2);animation:popupEnter .35s ease-out}
+.si-panel header{padding:15px 16px;background:var(--green);color:#fff;display:flex;justify-content:space-between;align-items:center}
+.si-panel header strong{display:block;font-size:13px}.si-panel header small{display:block;font-size:10px;opacity:.78;margin-top:4px}
+.si-panel header button{border:0;background:rgba(255,255,255,.1);color:white;border-radius:50%;width:30px;height:30px;font-size:20px}
+.si-content{padding:14px;overflow:auto;flex:1}
+.si-intro{font-size:12px;color:var(--muted);line-height:1.6;margin:0 0 12px}
+.si-answer{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.65 'DM Sans',sans-serif;background:var(--soft);border:1px solid var(--line);padding:13px;border-radius:13px;margin:0}
+.si-panel form{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.si-panel input{min-width:0;flex:1;border:1px solid var(--line);border-radius:10px;padding:11px;font-size:12px;background:var(--bg);color:var(--text);outline:none}
+.si-panel form button{border:0;border-radius:10px;background:var(--green);color:white;font-weight:700;padding:0 14px;font-size:12px}
+.si-panel form button:disabled{opacity:.55}
+.si-panel footer{padding:0 12px 12px;color:var(--muted);font-size:9px;line-height:1.5}
+@keyframes heroGlow{from{transform:translate3d(-1%,0,0) scale(1)}to{transform:translate3d(2%,2%,0) scale(1.05)}}
+@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes ringDrift{to{transform:rotate(360deg)}}
+@keyframes centerGlow{0%,100%{filter:drop-shadow(0 0 0 rgba(209,182,107,0))}50%{filter:drop-shadow(0 0 15px rgba(209,182,107,.23))}}
+@keyframes popupEnter{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:700px){.reflection-pop{right:12px;bottom:88px;width:calc(100vw - 24px)}.reflection-pop p{font-size:18px}.si-chat{right:12px;bottom:12px}.si-panel{bottom:58px;width:calc(100vw - 24px);height:min(520px,calc(100vh - 100px))}.hero-art{animation-duration:9s}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
