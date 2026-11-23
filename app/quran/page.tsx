@@ -2,11 +2,25 @@
 import { useEffect, useState } from 'react';
 import { getSupabaseClient } from '@/lib/supabase';
 type Surah={number:number;name:string;englishName:string;englishNameTranslation:string;numberOfAyahs:number;revelationType:string};
-type Ayah={number:number;numberInSurah:number;text:string;surah?:Surah;footnotes?:string;transliteration?:string;translation?:string};
+type Ayah={number:number;numberInSurah:number;text:string;surah?:Surah;footnotes?:string;transliteration?:string;translation?:string;translationSource?:string};
 type ApiResponse<T>={code:number;status:string;data:T};
 type SavedVerse={key:string;surahNo:number;surahName:string;ayahNo:number;arabic:string;translation:string;footnotes?:string;transliteration?:string;edition:string};
 const editions=[{id:'mifask-quranenc',name:'QuranEnc English Saheeh (MIFASK local copy)'},{id:'en.sahih',name:'Sahih International (online fallback)'},{id:'en.pickthall',name:'Pickthall (online fallback)'},{id:'en.yusufali',name:'Yusuf Ali (online fallback)'}];
 const savedKey='mifask-quran-bookmarks-v1';
+const onlineSearchTranslationSource='Saheeh International (AlQuranCloud online fallback)';
+async function lookupOnlineTranslations(matches:Ayah[]):Promise<Ayah[]>{
+ const limit=8;
+ const translated=await Promise.all(matches.slice(0,limit).map(async a=>{
+  const reference=a.surah?.number&&a.numberInSurah?String(a.surah.number)+':'+String(a.numberInSurah):String(a.number);
+  try{
+   const r=await fetch('https://api.alquran.cloud/v1/ayah/'+encodeURIComponent(reference)+'/en.sahih');
+   const x=await r.json();
+   if(x.code===200&&typeof x.data?.text==='string'&&x.data.text.trim())return {...a,translation:x.data.text,translationSource:onlineSearchTranslationSource};
+  }catch{}
+  return {...a,translationSource:'Online translation lookup unavailable'};
+ }));
+ return [...translated,...matches.slice(limit).map(a=>({...a,translationSource:'Translation fallback not fetched (per-search limit: 8)'}))];
+}
 export default function QuranReader(){
  const [surahs,setSurahs]=useState<Surah[]>([]);const [surahNo,setSurahNo]=useState(1);const [targetAyah,setTargetAyah]=useState<number|null>(null);
  const [ayahs,setAyahs]=useState<Ayah[]>([]);const [translations,setTranslations]=useState<Ayah[]>([]);
@@ -34,13 +48,16 @@ export default function QuranReader(){
      if(!detailsError&&verseDetails){
       for(const detail of verseDetails as any[]){const en=detail.translations?.en;if(en&&typeof en.text==='string')translationByKey.set(detail.surah_number+':'+detail.ayah_number,{text:en.text,footnotes:en.footnotes||undefined});}
      }
-     setResults(data.map((v:any)=>{const en=translationByKey.get(v.surah_number+':'+v.ayah_number);return {number:v.surah_number*100000+v.ayah_number,numberInSurah:v.ayah_number,text:v.arabic,translation:en?.text,footnotes:en?.footnotes,surah:surahs.find(s=>s.number===v.surah_number)};}));
+     const localMatches=data.map((v:any)=>{const en=translationByKey.get(v.surah_number+':'+v.ayah_number);return {number:v.surah_number*100000+v.ayah_number,numberInSurah:v.ayah_number,text:v.arabic,translation:en?.text,footnotes:en?.footnotes,surah:surahs.find(s=>s.number===v.surah_number),translationSource:en?.text?'QuranEnc English Saheeh (local edition v1.1.2)':undefined};});
+     const missingTranslations=localMatches.filter((match:any)=>!match.translation);
+     if(missingTranslations.length){const fallbackMatches=await lookupOnlineTranslations(missingTranslations);const fallbackByKey=new Map(fallbackMatches.map((match:any)=>[match.surah?.number+':'+match.numberInSurah,match]));for(const match of localMatches){if(!match.translation){const fallback=fallbackByKey.get(match.surah?.number+':'+match.numberInSurah) as any;if(fallback){match.translation=fallback.translation;match.translationSource=fallback.translationSource;}}}}
+     setResults(localMatches);
      return;
     }
    }
    const r=await fetch('https://api.alquran.cloud/v1/search/'+encodeURIComponent(term)+'/all/quran-uthmani');
    const x=await r.json();
-   if(x.code===200){const matches=x.data.matches||[];setResults(matches);if(!matches.length)setError('No matches found.');}
+   if(x.code===200){const matches=x.data.matches||[];setResults(await lookupOnlineTranslations(matches));if(!matches.length)setError('No matches found.');}
    else setError('No search results available.');
   }catch{setError('Qur’an search is temporarily unavailable.');}
   finally{setSearching(false);}
@@ -52,7 +69,7 @@ export default function QuranReader(){
  async function playAyah(ayahNo:number,key:string){setAudioState({key,loading:true});try{const globalNo=surahs.slice(0,surahNo-1).reduce((n,s)=>n+s.numberOfAyahs,0)+ayahNo;const r=await fetch('https://api.alquran.cloud/v1/ayah/'+globalNo+'/ar.alafasy');const x=await r.json();if(x.code===200&&x.data?.audio)setAudioState({key,url:x.data.audio,loading:false});else throw new Error();}catch{setAudioState({key,loading:false,error:'Audio unavailable. Please try again.'});}}
  return <div className="page-shell quran-reader"><div className="page-hero"><span className="section-kicker">Qur’an Reader</span><h1>Read & explore the Qur’an</h1><p>Read Arabic text alongside a selected English translation, search Arabic words, and save verses privately on this device.</p><form className="quran-search" onSubmit={doSearch}><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search an Arabic word or phrase…" aria-label="Search Arabic Qur'an text"/><button className="button" type="submit" disabled={searching}>{searching?'Searching…':'Search'}</button></form></div>
  {error&&<div className="admin-error quran-error">{error}</div>}
- {search.trim()&&results.length>0&&<section className="quran-results"><div className="section-heading"><div><h2>Search matches</h2><p className="muted">{results.length} match{results.length===1?'':'es'}</p></div><button className="admin-secondary" onClick={()=>{setResults([]);setSearch('');}}>Clear</button></div>{results.map((a,i)=><div className="quran-ayah" key={a.number||i}><div className="ayah-meta">{a.surah?.englishName||'Surah'} · {a.numberInSurah}</div><p dir="rtl" lang="ar" className="ayah-arabic">{a.text}</p>{a.translation&&<p className="ayah-translation">{a.translation}</p>}{a.footnotes&&<details className="ayah-footnotes"><summary>Translation footnotes</summary><p>{a.footnotes}</p></details>}<button className="admin-secondary" type="button" onClick={()=>{const targetSurah=a.surah?.number||surahNo;setResults([]);setSearch('');setShowSaved(false);if(targetSurah===surahNo){setTargetAyah(a.numberInSurah);document.getElementById('ayah-'+a.numberInSurah)?.scrollIntoView({behavior:'smooth',block:'center'});}else{setSurahNo(targetSurah);setTargetAyah(a.numberInSurah);}}}>Read in context</button></div>)}</section>}
+ {search.trim()&&results.length>0&&<section className="quran-results"><div className="section-heading"><div><h2>Search matches</h2><p className="muted">{results.length} match{results.length===1?'':'es'}</p></div><button className="admin-secondary" onClick={()=>{setResults([]);setSearch('');}}>Clear</button></div>{results.map((a,i)=><div className="quran-ayah" key={a.number||i}><div className="ayah-meta">{a.surah?.englishName||'Surah'} · {a.numberInSurah}</div><p dir="rtl" lang="ar" className="ayah-arabic">{a.text}</p>{a.translation&&<p className="ayah-translation">{a.translation}</p>}{a.translationSource&&<small className="ayah-translation-source">Translation source: {a.translationSource}</small>}{a.footnotes&&<details className="ayah-footnotes"><summary>Translation footnotes</summary><p>{a.footnotes}</p></details>}<button className="admin-secondary" type="button" onClick={()=>{const targetSurah=a.surah?.number||surahNo;setResults([]);setSearch('');setShowSaved(false);if(targetSurah===surahNo){setTargetAyah(a.numberInSurah);document.getElementById('ayah-'+a.numberInSurah)?.scrollIntoView({behavior:'smooth',block:'center'});}else{setSurahNo(targetSurah);setTargetAyah(a.numberInSurah);}}}>Read in context</button></div>)}</section>}
  <section className="quran-reading"><div className="quran-controls"><label>Surah<select value={surahNo} onChange={e=>{setSurahNo(Number(e.target.value));setShowSaved(false);}}>{surahs.map(s=><option key={s.number} value={s.number}>{s.number}. {s.englishName} — {s.englishNameTranslation}</option>)}</select></label><label>English translation<select value={edition} onChange={e=>setEdition(e.target.value)}>{editions.map(e=><option key={e.id} value={e.id}>{e.name}</option>)}</select></label><button className="admin-secondary" onClick={()=>setShowSaved(v=>!v)}>{showSaved?'Show Surah':'Saved verses ('+saved.length+')'}</button>{selected&&<div className="surah-meta"><span>{selected.revelationType}</span><span>{selected.numberOfAyahs} ayahs</span></div>}</div>
  {selected&&<div className="surah-title"><h2>{selected.englishName}</h2><p>{selected.englishNameTranslation}</p><div dir="rtl" lang="ar">{selected.name}</div></div>}{!loading&&!displayed.some(v=>v.transliteration)&&<p className="quran-source-note">Transliteration is not present in the current copy; it will appear only when a source with confirmed redistribution rights is added.</p>}
  {loading?<div className="empty-state">Loading Qur’an text and translation…</div>:<div className="quran-ayah-list">{displayed.map((v,i)=><article id={"ayah-"+v.ayahNo} className="quran-ayah" key={v.key}><div className="ayah-meta"><span>Ayah {v.ayahNo}</span><div className="ayah-actions"><button className="ayah-audio-button" onClick={()=>playAyah(v.ayahNo,v.key)} disabled={audioState.key===v.key&&audioState.loading}>{audioState.key===v.key&&audioState.loading?'Loading audio…':'▶ Listen'}</button><button className="ayah-bookmark" onClick={()=>{if(showSaved){setSaved(prev=>prev.filter(s=>s.key!==v.key));}else toggleSave(ayahs[i],translations[i]);}}>{savedIds.has(v.key)?'★ Saved':'☆ Save verse'}</button></div></div><p className="ayah-arabic" dir="rtl" lang="ar">{v.arabic}</p>{v.transliteration&&<p className="ayah-transliteration" lang="en">{v.transliteration}</p>}{v.translation&&<p className="ayah-translation">{v.translation}</p>}{v.footnotes&&<details className="ayah-footnotes"><summary>Translation footnotes</summary><p>{v.footnotes}</p></details>}{audioState.key===v.key&&audioState.url&&<audio className="ayah-audio-player" controls autoPlay src={audioState.url}>Your browser does not support audio playback.</audio>}{audioState.key===v.key&&audioState.error&&<p className="quran-audio-error">{audioState.error}</p>}</article>)}</div>}
