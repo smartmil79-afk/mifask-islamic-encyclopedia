@@ -4,7 +4,7 @@ type IntegrityArticle = {
   id:string; title:string; slug:string; summary:string|null; content:any; status:string;
   category_id:string|null; reference_texts?:string[]|null; reviewer_name?:string|null;
   verification_status?:string|null; verified_by?:string|null; verified_at?:string|null;
-  verification_notes?:string|null; tags?:string[]|null;
+  verification_notes?:string|null; tags?:string[]|null; source_count?:number|null;
 };
 type IntegrityCategory={id:string;name:string;slug:string};
 
@@ -28,6 +28,10 @@ export default function EditorialIntegrity({articles,categories}:{articles:Integ
   const paragraphs=Array.isArray(a.content)?a.content:typeof a.content==='string'?[a.content]:[];
   if(!paragraphs.some(p=>String(p).trim()))issues.push({severity:'error',article:a,message:'Article body is empty'});
   if(!a.category_id||!catIds.has(a.category_id))issues.push({severity:'warning',article:a,message:'Category missing or no longer exists'});
+  if(a.source_count===null||a.source_count===undefined)issues.push({severity:'info',article:a,message:'Linked-source count unavailable; source-link audit could not complete'});
+  else if(a.source_count===0)issues.push({severity:a.status==='published'||a.verification_status==='verified'?'warning':'info',article:a,message:'No linked source records; textual references alone are not source records'});
+  else if(a.verification_status==='verified'&&a.source_count<2)issues.push({severity:'warning',article:a,message:'Verified article has fewer than two linked source records'});
+  else if((a.verification_status==='reviewed'||a.verification_status==='sources_checked')&&a.source_count<2)issues.push({severity:'info',article:a,message:'Reviewed status has fewer than two linked source records'});
   const refs=(a.reference_texts||[]).map(r=>String(r).trim()).filter(Boolean);
   if(!refs.length)issues.push({severity:a.status==='published'?'error':'warning',article:a,message:'No citations recorded'});
   else if(refs.some(r=>genericReference.test(r)))issues.push({severity:'warning',article:a,message:'Reference contains a generic placeholder rather than a specific citation'});
@@ -48,6 +52,7 @@ export default function EditorialIntegrity({articles,categories}:{articles:Integ
    <div><strong>{warnings}</strong><span>Warnings</span></div>
    <div><strong>{infos}</strong><span>Editorial notes</span></div>
   </div>
+  <p className="admin-word-count">Linked source records: {articles.filter(a=>typeof a.source_count==='number'&&a.source_count>0).length} of {articles.length} articles have at least one source record. Textual reference strings are audited separately and are not counted as linked sources.</p>
   <p className="admin-review-warning">Automated checks identify missing fields, consistency issues and citation-format concerns. They do not validate the authenticity of Hadith, correctness of Qur’anic references, or scholarly claims.</p>
   <h3>Category coverage</h3><div className="admin-table"><div className="admin-row admin-row-header"><span>Category</span><span>Articles</span><span>Coverage</span></div>{coverage.map(row=><div className="admin-row" key={row.category.id}><span><strong>{row.category.name}</strong></span><span>{row.count}</span><span>{row.count===0?'No articles':'Has content'}</span></div>)}</div>{uncovered.length>0&&<p className="admin-review-warning">Categories with no CMS articles: {uncovered.map(x=>x.category.name).join(', ')}. These are coverage gaps, not proof that the topic is absent elsewhere on the site.</p>}
   {issues.length===0?<div className="admin-empty">No structural integrity issues detected in this scan.</div>:<div className="admin-table">
