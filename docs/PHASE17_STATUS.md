@@ -12,7 +12,7 @@ Last evidence review: 2026-11-23 (hourly active execution)
 | Qur'an transliteration | Blocked | 0/6,236 populated. Tanzil terms are non-commercial and redistribution permission for this edition/use is unconfirmed. No import made. |
 | Hadith coverage audit | Completed (audit) | Malik 1,858: 29 Arabic and 40 English gaps; narrator/book/chapter metadata missing. Riyad 1,896: 11 narrator gaps; book numbers absent; chapter metadata and source refs present. |
 | Hadith metadata reconciliation | Blocked | CC0 structured-data candidate only. Malik count differs by 12 (candidate 1,846 vs local 1,858); release assets not accessible for exact matching. English translations sourced from Sunnah.com; rights not cleared. |
-| Prophet narratives & lessons | In progress | 14/25 have short Qur’an-based draft summaries and lessons; 11 remain blank. All drafts are pending editorial review and not scholarly-verified. |
+| Prophet narratives & lessons | Completed (draft coverage) | 25/25 entries have brief Qur’an-based summaries, lessons and references. All are pending editorial review and not scholarly-verified; this completes draft coverage, not scholarly review. |
 | Seerah timeline descriptions | Completed (draft content) | 9/9 descriptions exist and are marked Qur'an-based drafts; editorial review pending. No dates or unsupported chronology inferred. |
 | Companions | In progress | 18 entries remain in review/unverified. Abu Bakr reference-index article expanded with a short draft paraphrase of imported Riyad as-Salihin 1468; source link is attached and edition review remains pending. Other entries still need sourced expansion. |
 | Article sourcing | In progress | 29 articles; 2 published, 27 review, 0 verified; 41 article-source links. “What Is Hadith?” has 3 linked secondary references and remains unverified. |
@@ -61,3 +61,11 @@ Last evidence review: 2026-11-23 (hourly active execution)
 - SQL update only filled records whose story was empty and lessons were empty; no existing content was overwritten. Metadata explicitly retains `pending_editorial_review` and `not_scholarly_verified`.
 - Supabase verification confirmed 14/25 Prophet stories and lessons populated, 14 entries have reference metadata, and 14 are pending editorial review. The other 11 remain blank.
 - Current Vercel production deployment is READY on commit `f6a7985af5da82ecabc2c90dba8e8d7cb7df9688` (reflection-share text fix). One historical Qur’an import RLS error remains in the 7-day runtime aggregation; no new error groups.
+
+
+## Hourly execution update — 2026-11-23 (Prophet draft coverage milestone)
+
+- Added conditional Qur’an-based drafts for the remaining 11 Prophet reference entries: Al-Yasa, Dhul-Kifl, Ilyas, Isa, Lut, Muhammad, Shuayb, Sulayman, Yaqub, Yunus, and Zakariya. Selected verse text and QuranEnc English Saheeh translations were read from the local database before drafting.
+- Updates only filled blank stories/empty lessons; existing data was preserved. Every new entry retains Qur’an references, draft-source provenance, pending editorial review, and `not_scholarly_verified` status.
+- Supabase verification: 25/25 stories, 25/25 lessons, 25/25 reference lists; 0 blank stories; 25/25 explicitly pending editorial review and not scholarly verified.
+- Prophet narrative draft coverage is now complete. Scholarly/editorial review is still outstanding; this is not an authentication claim.
