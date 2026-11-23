@@ -381,3 +381,5 @@ html[data-theme="dark"] .verification-unverified{background:#3a3020;border-color
 /* Separate Arabic and English playback controls */
 .arabic-audio-button-english{background:var(--surface);color:var(--green);}
 .arabic-audio-button-stop{background:#8b3a3a;border-color:#8b3a3a;color:#fff;}
+
+.arabic-audio-button-story{width:100%;font-weight:800;letter-spacing:.01em;}
