@@ -17,7 +17,7 @@ const coreRoutes = [
   '/', '/explore', '/search', '/assistant', '/learn', '/dictionary',
   '/knowledge-graph', '/saved', '/quran', '/category/quran', '/hadith',
   '/hadith/library', '/category/prophets', '/prophets', '/companions',
-  '/seerah', '/category/fiqh', '/about', '/sources',
+  '/seerah', '/category/fiqh', '/duas', '/about', '/sources',
 ];
 
 function walk(dir) {
