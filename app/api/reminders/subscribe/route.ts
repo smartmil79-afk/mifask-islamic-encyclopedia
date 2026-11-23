@@ -22,11 +22,11 @@ export async function POST(request: Request) {
     const timezone = typeof body.timezone==='string' && body.timezone.length<=80 ? body.timezone : 'Africa/Lagos';
     const supabase = getSupabaseClient();
     if (!supabase) return NextResponse.json({error:'Subscription is temporarily unavailable. Please try again later.'},{status:503});
-    const {error} = await supabase.from('ie_reminder_subscribers').upsert({
+    const {error} = await supabase.from('ie_reminder_subscribers').insert({
       phone_e164: phone, timezone, preferred_time: preferredTime, reminder_types: types,
       weekdays, consent:true, consent_at:new Date().toISOString(), consent_source:'website_daily_reminders',
       status:'pending', updated_at:new Date().toISOString()
-    },{onConflict:'phone_e164'});
+    });
     if (error) {
       console.error('Reminder signup error',error.message);
       return NextResponse.json({error:'We could not save your subscription. Please try again.'},{status:500});
