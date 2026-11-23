@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "tsc --noEmit",
     "import:datasets": "node scripts/import-islamic-datasets.mjs",
-    "extract:milnoor": "node scripts/extract-milnoor-datasets.mjs"
+    "extract:milnoor": "node scripts/extract-milnoor-datasets.mjs",
+    "prebuild": "node scripts/route-smoke.mjs",
+    "routes:check": "node scripts/route-smoke.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",
