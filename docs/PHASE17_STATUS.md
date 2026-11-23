@@ -14,8 +14,8 @@ Last evidence review: 2026-11-23 (hourly active execution)
 | Hadith metadata reconciliation | Blocked | CC0 structured-data candidate only. Malik count differs by 12 (candidate 1,846 vs local 1,858); release assets not accessible for exact matching. English translations sourced from Sunnah.com; rights not cleared. |
 | Prophet narratives & lessons | Completed (draft coverage) | 25/25 entries have brief Qur’an-based summaries, lessons and references. All are pending editorial review and not scholarly-verified; this completes draft coverage, not scholarly review. |
 | Seerah timeline descriptions | Completed (draft content) | 9/9 descriptions exist and are marked Qur'an-based drafts; editorial review pending. No dates or unsupported chronology inferred. |
-| Companions | In progress | 18 entries remain in review/unverified. Abu Bakr reference-index article expanded with a short draft paraphrase of imported Riyad as-Salihin 1468; source link is attached and edition review remains pending. Other entries still need sourced expansion. |
-| Article sourcing | In progress | 29 articles; 2 published, 27 review, 0 verified; 41 article-source links. “What Is Hadith?” has 3 linked secondary references and remains unverified. |
+| Companions | In progress | 18 Companion articles (17 reference-index + Abu Bakr introduction) are in review/unverified; all 18 have source links. Mus'ab and al-Zubayr now have scholarly secondary references and expanded draft summaries; primary-report verification and editorial review remain pending. |
+| Article sourcing | In progress | 29 articles; 2 published, 27 review, 0 verified; 43 source links across all 29 articles, with 0 articles missing links and 0 links missing citation detail. “What Is Hadith?” has 3 linked secondary references and remains unverified. |
 | Verification workflow audit | Completed (code) | Checks verified articles for reviewer, verification timestamp and notes; checks Prophet story/lesson gaps, Seerah descriptions and Hadith metadata gaps. |
 | Navigation/browser test | In progress | Static smoke check previously passed 62 internal literals, 25 targets, 22 route templates. Authenticated functional browser test remains blocked by SSO. |
 | Production health | In progress | Current main deployment READY; production alias verified. One historical Qur'an import RLS error from 2026-11-22 remains in 7-day report. Existing data is complete, so no re-import needed. Service-role env key is not configured; do not weaken RLS. |
@@ -38,9 +38,9 @@ This snapshot supersedes older interim counts above.
 | Hadith dataset licensing | Blocked | Fawaz repo has Unlicense, but underlying translation rights remain collection-specific/unresolved; AhmedBaset/hadith-json is described as scraped from Sunnah.com and no explicit data license was located. Do not bulk import or copy narrator fields. |
 | Prophet narratives/lessons | Completed (draft coverage) | 25/25 stories and lessons; 25/25 references. 25/25 pending editorial review and not scholarly verified. |
 | Seerah | Completed (draft coverage) | 9/9 descriptions and sources; 9/9 pending editorial review and not scholarly verified. Chronology intentionally omitted. |
-| Companions | In progress | 1 CMS article under companions-* in review/unverified; Abu Bakr introduction/reference entries exist but remain unverified. Index at /companions currently names Zayd ibn Harithah only. |
+| Companions | In progress | 18 Companion articles (17 reference-index + Abu Bakr introduction), all in review/unverified and all linked to sources. Mus'ab and al-Zubayr have TDV encyclopedia links and draft expansions. The /companions page is intentionally a Qur'an-named index and lists Zayd only; the category/article collection still needs further content and review. |
 | Duas | In progress | 40 records; Arabic/English/source fields complete; transliteration missing in 40. 6 use review_status=pending, 34 carry a legacy pending flag. |
-| Articles | In progress | 29 total; 2 published/unverified, 27 review/unverified, 0 verified. 41 source-link rows across 27 articles. 0 missing reference_texts. |
+| Articles | In progress | 29 total; 2 published/unverified, 27 review/unverified, 0 verified. 43 source-link rows across 29 articles; 0 missing reference_texts, source links, or citation details. |
 | Article verification safeguards | Completed (code) | Verified status requires reviewer, date and notes; current DB has no verified articles. |
 | Dataset audit UI | Completed (code/deploy) | New checks for source provenance, Prophet/Seerah review state, dua review flags, article references and citation details; commit e56cca5 is READY and production aliases are assigned. |
 | Navigation/reader | In progress | Build-time route smoke test runs via prebuild; latest static test previously passed 65 literal links/26 targets/24 route templates. Authenticated interactive browser test is blocked by SSO. |
@@ -139,7 +139,7 @@ This snapshot supersedes older interim counts above.
 
 - Transliteration licensing: confirm MIFASK's intended use (commercial/non-commercial) and Tanzil edition-specific permission before importing.
 - Hadith metadata: release assets unavailable for exact matching; underlying translation rights remain unresolved. Do not import text or narrator fields without source/edition match.
-- Companion source-link gaps: Zubayr and Mus'ab require an exact report/edition selection and editorial review before sources can be attached.
+- Companion source-link gaps are closed: Zubayr and Mus'ab now have author-attributed TDV encyclopedia source links. Their specific claims and primary references still require editorial review.
 - Authenticated browser testing remains unavailable due SSO protection.
 - Deploy latest code after Vercel daily deployment cap resets; do not alter billing or bypass platform limits.
 
@@ -154,3 +154,12 @@ This snapshot supersedes older interim counts above.
 - Both article entries remain in review/unverified; editor must check individual claims and the cited primary sources before publication.
 - Corrected verification snapshot: 25/25 Prophet entries have metadata `editorial_status=pending_editorial_review` and `verification_status=not_scholarly_verified`. Earlier status counts using a different metadata key were inaccurate; the component audit uses the correct key.
 - Latest READY production commit remains `e56cca58227b1ec575a84b8d0eec8178c2e4592a`. The deployment quota-blocked audit changes are still awaiting quota reset; do not retry deployment before then.
+
+
+## Hourly execution update — 2026-11-23 (Companion drafts expanded)
+
+- Added two source-backed draft expansions to the Mus'ab ibn Umayr and al-Zubayr ibn al-Awwam CMS reference articles, appending rather than replacing their existing content. Both summaries paraphrase the linked TDV İslâm Ansiklopedisi entries and include cautions about primary-source checking and contested reports.
+- Database verification confirmed each article has 4 content items (2 existing + 2 added), remains `status=review` and `verification_status=unverified`, and records source/editorial notes. No verification labels were changed.
+- Updated current coverage: all 29 articles have at least one source-link row; total links 43; all citation details present. The two previous source-link gaps are resolved.
+- Prophet editorial status audit corrected: metadata keys are `editorial_status` and `verification_status`; 25/25 drafts remain pending review and not scholarly verified.
+- The latest checklist update is committed but not deployed due the still-active Vercel deployment quota block. Deployment API is not retried until quota reset.
