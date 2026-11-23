@@ -154,6 +154,9 @@ if (!fs.existsSync(quranReaderFile)) {
     ['expected Surah ayah count guard', 'expectedAyahCount'],
     ['online fallback', 'api.alquran.cloud/v1/surah/'],
     ['read-in-context action', 'Read in context'],
+    ['online search translation lookup', 'lookupOnlineTranslations'],
+    ['AlQuranCloud ayah translation endpoint', 'api.alquran.cloud/v1/ayah/'],
+    ['translation source attribution', 'className="ayah-translation-source"'],
   ];
   for (const [feature, marker] of requiredReaderMarkers) {
     if (!quranReaderSource.includes(marker)) {
