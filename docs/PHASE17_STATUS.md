@@ -14,11 +14,11 @@ Last evidence review: 2026-11-23 (hourly active execution)
 | Hadith metadata reconciliation | Blocked | CC0 structured-data candidate only. Malik count differs by 12 (candidate 1,846 vs local 1,858); release assets not accessible for exact matching. English translations sourced from Sunnah.com; rights not cleared. |
 | Prophet narratives & lessons | Completed (draft coverage) | 25/25 entries have brief Qur’an-based summaries, lessons and references. All are pending editorial review and not scholarly-verified; this completes draft coverage, not scholarly review. |
 | Seerah timeline descriptions | Completed (draft content) | 9/9 descriptions exist and are marked Qur'an-based drafts; editorial review pending. No dates or unsupported chronology inferred. |
-| Companions | In progress | 19 CMS articles in review/unverified, including the newly added Khalid ibn al-Walid draft. All Companion articles have source links; claim-level primary-source review remains pending. |
-| Article sourcing | In progress | 30 articles; 2 published, 28 review, 0 verified; 49 source links across all 30 articles, with 0 articles missing links and 0 links missing citation detail. “What Is Hadith?” has 3 linked secondary references and remains unverified. |
+| Companions | In progress | 19 CMS articles in review/unverified; recent draft expansions include Khalid ibn al-Walid and Uthman ibn Affan. All Companion articles have source links; claim-level primary-source review remains pending. |
+| Article sourcing | In progress | 30 articles; 2 published, 28 review, 0 verified; 51 source links across all 30 articles, with 0 articles missing links and 0 links missing citation detail. “What Is Hadith?” has 3 linked secondary references and remains unverified. |
 | Verification workflow audit | Completed (code) | Checks verified articles for reviewer, verification timestamp and notes; checks Prophet story/lesson gaps, Seerah descriptions and Hadith metadata gaps. |
 | Navigation/browser test | In progress | Static smoke check previously passed 62 internal literals, 25 targets, 22 route templates. Authenticated functional browser test remains blocked by SSO. |
-| Production health | In progress | Current main deployment READY; production alias verified. One historical Qur'an import RLS error from 2026-11-22 remains in 7-day report. Existing data is complete, so no re-import needed. Service-role env key is not configured; do not weaken RLS. |
+| Production health | In progress | Latest main deployment dpl_HfmdqCwg8SmRZSanCi9TbREeyvFN is READY on commit 06a2751; all three project aliases assigned. Last 30-minute runtime error/fatal log query returned no entries. Historical Qur'an-import RLS issue remains documented; do not weaken RLS. |
 
 ## Current audit snapshot — 2026-11-23
 
@@ -37,10 +37,10 @@ This snapshot supersedes older interim counts above.
 | Riyad metadata | In progress | 11 narrator gaps; book_number missing for all 1,896; chapter number/title present. |
 | Hadith dataset licensing | Blocked | Fawaz repo has Unlicense, but underlying translation rights remain collection-specific/unresolved; AhmedBaset/hadith-json is described as scraped from Sunnah.com and no explicit data license was located. Do not bulk import or copy narrator fields. |
 | Prophet narratives/lessons | Completed (draft coverage) | 25/25 stories and lessons; 25/25 references. 25/25 pending editorial review and not scholarly verified. |
-| Seerah | Completed (draft coverage) | 9/9 descriptions and sources; 9/9 pending editorial review and not scholarly verified. Chronology intentionally omitted. |
+| Seerah | Completed (draft coverage) | 9/9 descriptions and sources; metadata uses `editorial_status=needs_editorial_review` and `verification_status=not_scholarly_verified` for all 9. Chronology intentionally omitted. |
 | Companions | In progress | 19 CMS articles (18 prior + Khalid ibn al-Walid draft), all in review/unverified and linked to sources. The /companions page remains a Qur'an-named index; CMS collection expansion and editorial review continue. |
 | Duas | In progress | 40 records; Arabic/English/source fields complete; transliteration missing in 40. 6 use review_status=pending, 34 carry a legacy pending flag. |
-| Articles | In progress | 30 total; 2 published/unverified, 28 review/unverified, 0 verified. 49 source-link rows across 30 articles; 0 missing source links or citation details. |
+| Articles | In progress | 30 total; 2 published/unverified, 28 review/unverified, 0 verified. 51 source-link rows across 30 articles; 0 missing source links or citation details. |
 | Article verification safeguards | Completed (code) | Verified status requires reviewer, date and notes; current DB has no verified articles. |
 | Dataset audit UI | Completed (code/deploy) | New checks for source provenance, Prophet/Seerah review state, dua review flags, article references and citation details; commit e56cca5 is READY and production aliases are assigned. |
 | Navigation/reader | In progress | Build-time route smoke test runs via prebuild; latest static test previously passed 65 literal links/26 targets/24 route templates. Authenticated interactive browser test is blocked by SSO. |
