@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-23 (22:24 Africa/Lagos; hourly active execution)
+Last evidence review: 2026-11-23 (23:09 Africa/Lagos; hourly active execution)
 
 ## Checklist
 
@@ -14,16 +14,16 @@ Last evidence review: 2026-11-23 (22:24 Africa/Lagos; hourly active execution)
 | Hadith metadata | Blocked / In progress | Malik narrator/book/chapter/title missing for all 1,858. Riyad: 11 narrator gaps and 1,896 missing book numbers; chapter fields complete. Exact-edition/license-compatible metadata not established. |
 | Prophet narratives & lessons | Completed (draft coverage) | 25/25 populated; all pending editorial review, not scholarly verified. |
 | Seerah | Completed (draft coverage) | 9/9 descriptions populated; all pending review/not scholarly verified. |
-| Companions | In progress | 20 CMS Companion articles, all review/unverified. Continue source-backed expansions and primary-source review. |
-| Article source coverage | Completed (coverage only) | 31 articles; 56 source links; all 31 have linked sources; 0 missing citation details; no duplicate source URLs or article-source pairs. |
-| Article scholarly verification | In progress | 2 published/unverified, 29 review/unverified, 0 verified. |
+| Companions | In progress | 21 CMS Companion articles, all review/unverified. Continue source-backed expansions and primary-source review. |
+| Article source coverage | Completed (coverage only) | 32 articles; 57 source links; all 32 have linked sources; 0 citation-detail gaps; 0 duplicate article/source pairs and 0 duplicate non-null source URLs. |
+| Article scholarly verification | In progress | 2 published/unverified, 30 review/unverified, 0 verified. |
 | Verification workflow audit | Completed (code) | Required verifier, timestamp, and notes checks; provenance/review-gap checks retained. |
 | Duas | In progress | 40 records, 40 missing transliteration; English fields complete. |
 | Navigation/static regression | In progress | Latest static build smoke passed 67 internal links, 27 targets, 25 route templates, 0 dynamic hrefs skipped; TypeScript/build passed, 78/78 static pages generated. |
 | Authenticated reader tests | Blocked | SSO prevents authenticated interactive test; no bypass used. |
-| Production health | Completed (current check) | Deployment dpl_CtSyfv5rfoLN7AT83xGzceXtYfcD READY on commit 91f0c20; 3 aliases verified. Vercel runtime logs: no entries last 30m; preaggregated runtime errors: none last 24h. Supabase log query was rejected because severity is not a column; historical Qur'an-import RLS issue remains documented; do not weaken RLS. |
+| Production health | Completed (current check) | Deployment dpl_EyBzTafTERN1VZ1Bqe5V1f3miGSr READY on commit b16701b; 3 aliases verified. Vercel runtime logs: no entries last 30m; preaggregated runtime errors: none last 24h. Historical Qur'an-import RLS issue remains documented; do not weaken RLS. |
 
-## Current audit snapshot — 2026-11-23 (22:24 Africa/Lagos)
+## Current audit snapshot — 2026-11-23 (23:09 Africa/Lagos)
 
 | Workstream | Status | Current evidence / blocker |
 |---|---|---|
@@ -32,12 +32,12 @@ Last evidence review: 2026-11-23 (22:24 Africa/Lagos; hourly active execution)
 | Hadith | Blocked/in progress | 3,754 total. Malik 1,858: 29 Arabic gaps, 40 English gaps, all 1,858 missing narrator/book/chapter/title metadata. Riyad 1,896: 11 narrator gaps, all 1,896 book numbers missing; chapter fields complete. Exact edition/source rights unresolved; no import. |
 | Prophets | Draft coverage complete | 25/25 stories, lessons and references; all 25 pending editorial review/not scholarly verified. |
 | Seerah | Draft coverage complete | 9/9 descriptions; all pending editorial review/not scholarly verified. |
-| Companions | In progress | 20 CMS articles; all review/unverified. Source-backed expansions continue. |
+| Companions | In progress | 21 CMS articles; all review/unverified. Source-backed expansions continue. |
 | Duas | In progress | 40 records; 40 transliterations missing, English text complete. |
-| Articles | Source coverage complete; verification in progress | 31 total; 2 published/unverified, 29 review/unverified, 0 verified; 56 source-link rows, 0 missing source links, 0 missing citation details; no duplicate source URLs or article-source pairs. |
-| Source/revision audit | Completed for current snapshot | 43 source catalog records, 16 revision snapshots. |
+| Articles | Source coverage complete; verification in progress | 32 total; 2 published/unverified, 30 review/unverified, 0 verified; 57 source-link rows, 0 missing source links, 0 citation details missing; 0 duplicate article/source pairs and 0 duplicate non-null source URLs. |
+| Source/revision audit | In progress | 44 source records, 17 revisions; 2 generic placeholder source rows have NULL URLs and no article links. Duplicate-URL audit excludes NULL; 0 duplicate non-null URLs. |
 | Navigation | In progress | Static smoke/build passed; dynamic/authenticated reader checks blocked by SSO. |
-| Production | Healthy in current check | READY deployment dpl_CtSyfv5rfoLN7AT83xGzceXtYfcD, commit 91f0c20; all 3 aliases assigned. No Vercel runtime logs in last 30m; no preaggregated runtime errors in last 24h. |
+| Production | Healthy in current check | READY deployment dpl_EyBzTafTERN1VZ1Bqe5V1f3miGSr, commit b16701b; all 3 aliases assigned. No Vercel runtime logs in last 30m; no preaggregated runtime errors in last 24h. |
 
 ## Source/licensing review
 
@@ -286,3 +286,14 @@ Last evidence review: 2026-11-23 (22:24 Africa/Lagos; hourly active execution)
 - Production verification: deployment `dpl_CtSyfv5rfoLN7AT83xGzceXtYfcD` READY on commit `91f0c20ef9efa2d439f8f107d96280643951af28`. All three project aliases were confirmed assigned: main domain, team domain, and git-main domain. Build logs show compilation successful and 78/78 static pages generated; 67-link route-smoke evidence is retained from the latest build checkpoint. Nonfatal edge-runtime warning remains.
 - Vercel runtime logs show no entries in the last 30 minutes; preaggregated runtime-error query found none in the last 24 hours. A Supabase log query failed because the attempted `severity` column is not present; this is a query-schema limitation, not an error count. Authenticated browser tests remain blocked by SSO.
 - No destructive changes, RLS changes, credential use, billing changes, license-incompatible imports, or manual deployment attempts. Git integration will handle deployment of this checklist commit; verify READY/aliases after actual evidence.
+
+
+## Hourly execution update — 2026-11-23 (23:09 Africa/Lagos)
+
+- Inspected current main branch (`b16701ba3692530bba66cef3fe6ee3bc25ba0bfe`), Supabase CMS/data schemas, import/audit code, and latest production deployment before making changes.
+- Added the Companion draft `companion-abu-ubaydah-reference-index` for Abu Ubaydah ibn al-Jarrah using a paraphrase of Ahmet Önkal, “Ebû Ubeyde b. Cerrâh,” TDV İslâm Ansiklopedisi, vol. 10 (1994), pp. 249–250, https://islamansiklopedisi.org.tr/ebu-ubeyde-b-cerrah. It focuses on early Islam, migration, teaching/admin duties and the Najran mission; no battle detail or hadith text imported. A bibliography pointer is retained as unverified. Source catalog record, article-source link, and revision snapshot #1 were created. Direct DB verification: 4 content items, 2 reference entries, 1 source link, 1 revision, status=review, verification_status=unverified.
+- Fresh direct Supabase audit: 6,236 Qur’an verses (Arabic/English gaps=0, transliteration gaps=6,236, duplicate coordinates=0); 114 Surahs, metadata incomplete=0 and ayah-count sum=6,236. Prophets 25/25 stories and lessons, all 25 pending review/not scholarly verified. Seerah 9/9 descriptions, all pending review/not scholarly verified. Hadith Malik 1,858 (29 Arabic gaps, 40 English gaps, narrator/book/chapter/title missing across all 1,858); Riyad 1,896 (11 narrator gaps, 1,896 missing book number, chapter metadata complete). Duas 40, transliteration gaps=40.
+- Article audit: 32 articles, 2 published/unverified, 30 review/unverified, 0 verified; 57 source links, 0 articles without links, 0 citation-detail gaps, 0 duplicate article/source pairs. Source catalog 44 rows, revision snapshots 17. Corrected duplicate-URL metric: 0 duplicate non-null URLs; two generic source placeholder rows have NULL URLs and no article links. Earlier audit counted NULL as duplicate; that count was a false positive. No cleanup/deletion performed.
+- Licensing research on official Tanzil docs: FAQ says resources are available for non-commercial purposes; the English transliteration changelog shows 6,236 lines and a 2010 initial version/changes. No separate transliteration permission compatible with MIFASK’s intended redistribution was established, so transliteration remains blocked and no import occurred. Official docs: https://tanzil.net/docs/FAQ and https://tanzil.net/trans/log/en.transliteration.
+- Production verified: latest Git-triggered deployment `dpl_EyBzTafTERN1VZ1Bqe5V1f3miGSr` is READY for commit `b16701ba3692530bba66cef3fe6ee3bc25ba0bfe`. All three aliases are assigned (main, team, git-main). Build completed; static route smoke and 78/78 static page generation evidence retained from build. Runtime logs last 30m: no entries; preaggregated runtime errors last 24h: none.
+- Authenticated reader/navigation testing remains blocked by SSO. No credentials, RLS/security changes, destructive cleanup, billing changes, or manual deployment bypass.
