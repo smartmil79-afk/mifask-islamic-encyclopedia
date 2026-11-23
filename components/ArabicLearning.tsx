@@ -1,55 +1,15 @@
 'use client';
 import { useEffect, useState } from 'react';
-
-type Props={arabic:string;transliteration?:string;translation?:string;label?:string;audioMode?:'speech'|'recitation'};
+type Props={arabic:string;transliteration?:string;translation?:string;label?:string;audioMode?:'speech'|'recitation';storyText?:string;storyTitle?:string};
 type AudioLanguage='ar'|'en';
-export default function ArabicLearning({arabic,transliteration,translation,label,audioMode='speech'}:Props){
- const [showTrans,setShowTrans]=useState(true);
- const [speaking,setSpeaking]=useState(false);
- const [speakingLanguage,setSpeakingLanguage]=useState<AudioLanguage|null>(null);
- const [voices,setVoices]=useState<SpeechSynthesisVoice[]>([]);
- const hasAudio=typeof window!=='undefined' && 'speechSynthesis' in window;
- useEffect(()=>{
-  if(!hasAudio)return;
-  const load=()=>setVoices(window.speechSynthesis.getVoices());
-  load();
-  window.speechSynthesis.addEventListener('voiceschanged',load);
-  return ()=>window.speechSynthesis.removeEventListener('voiceschanged',load);
- },[hasAudio]);
- const chooseVoice=(lang:AudioLanguage)=>{
-  const matches=voices.filter(v=>v.lang.toLowerCase().startsWith(lang));
-  if(lang==='ar')return matches.find(v=>/arabic|ar-sa|ar-eg|saudi|egypt/i.test(v.name+' '+v.lang))||matches[0];
-  return matches.find(v=>/english.*(uk|united kingdom)|en-gb/i.test(v.name+' '+v.lang))||matches.find(v=>/english.*(us|united states)|en-us/i.test(v.name+' '+v.lang))||matches[0];
- };
- function play(text:string,lang:AudioLanguage){
-  if(!hasAudio||!text?.trim())return;
-  const synth=window.speechSynthesis;
-  synth.cancel();
-  // Some mobile browsers need the speech queue explicitly resumed after cancel.
-  synth.resume();
-  const utter=new SpeechSynthesisUtterance(text.trim());
-  utter.lang=lang==='ar'?'ar':'en';
-  utter.rate=lang==='ar'?0.82:0.92;
-  const voice=chooseVoice(lang);
-  if(voice)utter.voice=voice;
-  utter.onstart=()=>{setSpeaking(true);setSpeakingLanguage(lang)};
-  utter.onend=()=>{setSpeaking(false);setSpeakingLanguage(null)};
-  utter.onerror=()=>{setSpeaking(false);setSpeakingLanguage(null)};
-  setSpeakingLanguage(lang);
-  synth.speak(utter);
- }
- function stop(){if(hasAudio)window.speechSynthesis.cancel();setSpeaking(false);setSpeakingLanguage(null);}
- return <div className="arabic-learning" dir="auto">
-  {label&&<div className="arabic-learning-label">{label}</div>}
-  <div className="arabic-learning-script" dir="rtl" lang="ar">{arabic}</div>
-  {(transliteration||translation)&&<button type="button" className="arabic-learning-toggle" onClick={()=>setShowTrans(v=>!v)}>{showTrans?'Hide':'Show'} transliteration & translation</button>}
-  {showTrans&&<div className="arabic-learning-meaning">{transliteration&&<div><span className="arabic-learning-caption">Transliteration</span><p>{transliteration}</p></div>}{translation&&<div><span className="arabic-learning-caption">Translation</span><p>{translation}</p></div>}</div>}
-  {audioMode==='speech'&&<div className="arabic-learning-audio-controls">
-   <button type="button" className="arabic-audio-button" onClick={()=>play(arabic,'ar')} disabled={!hasAudio||!arabic?.trim()}>{speaking&&speakingLanguage==='ar'?'▶ Replay Arabic':'▶ Listen to Arabic'}</button>
-   {translation&&<button type="button" className="arabic-audio-button arabic-audio-button-english" onClick={()=>play(translation,'en')} disabled={!hasAudio||!translation.trim()}>{speaking&&speakingLanguage==='en'?'▶ Replay English':'▶ Listen to English'}</button>}
-   {speaking&&<button type="button" className="arabic-audio-button arabic-audio-button-stop" onClick={stop}>■ Stop audio</button>}
-   <small className="arabic-audio-note">Audio uses your device's speech voice. It is spoken audio, not a recorded recitation.</small>
-  </div>}
-  {audioMode==='recitation'&&<span className="arabic-audio-note">Recitation audio will be provided from a verified recitation source.</span>}
- </div>;
+export default function ArabicLearning({arabic,transliteration,translation,label,audioMode='speech',storyText,storyTitle}:Props){
+ const [showTrans,setShowTrans]=useState(true);const [speaking,setSpeaking]=useState(false);const [speakingLanguage,setSpeakingLanguage]=useState<AudioLanguage|null>(null);const [speakingStory,setSpeakingStory]=useState(false);const [voices,setVoices]=useState<SpeechSynthesisVoice[]>([]);
+ const hasAudio=typeof window!=='undefined'&&'speechSynthesis'in window;
+ useEffect(()=>{if(!hasAudio)return;const load=()=>setVoices(window.speechSynthesis.getVoices());load();window.speechSynthesis.addEventListener('voiceschanged',load);return()=>window.speechSynthesis.removeEventListener('voiceschanged',load);},[hasAudio]);
+ const chooseVoice=(lang:AudioLanguage)=>{const m=voices.filter(v=>v.lang.toLowerCase().startsWith(lang));if(lang==='ar')return m.find(v=>/arabic|ar-sa|ar-eg|saudi|egypt/i.test(v.name+' '+v.lang))||m[0];return m.find(v=>/english.*(uk|united kingdom)|en-gb/i.test(v.name+' '+v.lang))||m.find(v=>/english.*(us|united states)|en-us/i.test(v.name+' '+v.lang))||m[0];};
+ function play(text:string,lang:AudioLanguage){if(!hasAudio||!text?.trim())return;const synth=window.speechSynthesis;synth.cancel();synth.resume();const utter=new SpeechSynthesisUtterance(text.trim());utter.lang=lang==='ar'?'ar':'en';utter.rate=lang==='ar'?0.82:0.92;const voice=chooseVoice(lang);if(voice)utter.voice=voice;utter.onstart=()=>{setSpeaking(true);setSpeakingLanguage(lang);setSpeakingStory(false)};utter.onend=()=>{setSpeaking(false);setSpeakingLanguage(null);setSpeakingStory(false)};utter.onerror=()=>{setSpeaking(false);setSpeakingLanguage(null);setSpeakingStory(false)};setSpeakingLanguage(lang);setSpeakingStory(false);synth.speak(utter);}
+ function splitNarration(text:string){const sentences=text.replace(/\s+/g,' ').trim().match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[text];const chunks:string[]=[];let current='';for(const sentence of sentences){const s=sentence.trim();if(!s)continue;if((current+' '+s).length<=240){current=(current+' '+s).trim();continue;}if(current)chunks.push(current);if(s.length<=240)current=s;else{for(let i=0;i<s.length;i+=220)chunks.push(s.slice(i,i+220));current='';}}if(current)chunks.push(current);return chunks;}
+ function playStory(){if(!hasAudio||!storyText?.trim())return;const synth=window.speechSynthesis;synth.cancel();synth.resume();const chunks=splitNarration(storyText);let index=0;setSpeaking(true);setSpeakingLanguage('en');setSpeakingStory(true);const next=()=>{if(index>=chunks.length){setSpeaking(false);setSpeakingLanguage(null);setSpeakingStory(false);return;}const utter=new SpeechSynthesisUtterance(chunks[index++]);utter.lang='en';utter.rate=0.92;const voice=chooseVoice('en');if(voice)utter.voice=voice;utter.onend=()=>next();utter.onerror=()=>next();synth.speak(utter);};next();}
+ function stop(){if(hasAudio)window.speechSynthesis.cancel();setSpeaking(false);setSpeakingLanguage(null);setSpeakingStory(false);}
+ return <div className="arabic-learning" dir="auto">{label&&<div className="arabic-learning-label">{label}</div>}<div className="arabic-learning-script" dir="rtl" lang="ar">{arabic}</div>{(transliteration||translation)&&<button type="button" className="arabic-learning-toggle" onClick={()=>setShowTrans(v=>!v)}>{showTrans?'Hide':'Show'} transliteration & translation</button>}{showTrans&&<div className="arabic-learning-meaning">{transliteration&&<div><span className="arabic-learning-caption">Transliteration</span><p>{transliteration}</p></div>}{translation&&<div><span className="arabic-learning-caption">Translation</span><p>{translation}</p></div>}</div>}{audioMode==='speech'&&<div className="arabic-learning-audio-controls">{storyText&&<button type="button" className="arabic-audio-button arabic-audio-button-story" onClick={playStory} disabled={!hasAudio||!storyText.trim()}>{speaking&&speakingStory?'▶ Replay Prophet’s Story':'▶ Listen to Prophet’s Story'}</button>}<button type="button" className="arabic-audio-button" onClick={()=>play(arabic,'ar')} disabled={!hasAudio||!arabic?.trim()}>{speaking&&speakingLanguage==='ar'?'▶ Replay Arabic':'▶ Listen to Arabic'}</button>{translation&&<button type="button" className="arabic-audio-button arabic-audio-button-english" onClick={()=>play(translation,'en')} disabled={!hasAudio||!translation.trim()}>{speaking&&speakingLanguage==='en'&&!speakingStory?'▶ Replay English':'▶ Listen to English'}</button>}{speaking&&<button type="button" className="arabic-audio-button arabic-audio-button-stop" onClick={stop}>■ Stop audio</button>}<small className="arabic-audio-note">Audio uses your device's speech voice. Story narration reads the article history in English; it is not a recorded recitation.</small></div>}{audioMode==='recitation'&&<span className="arabic-audio-note">Recitation audio will be provided from a verified recitation source.</span>}</div>;
 }
