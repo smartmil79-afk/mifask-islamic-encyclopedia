@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-23 (20:45 Africa/Lagos; hourly active execution)
+Last evidence review: 2026-11-23 (22:24 Africa/Lagos; hourly active execution)
 
 ## Checklist
 
@@ -14,16 +14,16 @@ Last evidence review: 2026-11-23 (20:45 Africa/Lagos; hourly active execution)
 | Hadith metadata | Blocked / In progress | Malik narrator/book/chapter/title missing for all 1,858. Riyad: 11 narrator gaps and 1,896 missing book numbers; chapter fields complete. Exact-edition/license-compatible metadata not established. |
 | Prophet narratives & lessons | Completed (draft coverage) | 25/25 populated; all pending editorial review, not scholarly verified. |
 | Seerah | Completed (draft coverage) | 9/9 descriptions populated; all pending review/not scholarly verified. |
-| Companions | In progress | 19 CMS Companion articles, all review/unverified. Continue source-backed expansions and primary-source review. |
-| Article source coverage | Completed (coverage only) | 30 articles; 55 source links; all 30 have linked sources; 0 missing citation details. |
-| Article scholarly verification | In progress | 2 published/unverified, 28 review/unverified, 0 verified. |
+| Companions | In progress | 20 CMS Companion articles, all review/unverified. Continue source-backed expansions and primary-source review. |
+| Article source coverage | Completed (coverage only) | 31 articles; 56 source links; all 31 have linked sources; 0 missing citation details; no duplicate source URLs or article-source pairs. |
+| Article scholarly verification | In progress | 2 published/unverified, 29 review/unverified, 0 verified. |
 | Verification workflow audit | Completed (code) | Required verifier, timestamp, and notes checks; provenance/review-gap checks retained. |
 | Duas | In progress | 40 records, 40 missing transliteration; English fields complete. |
 | Navigation/static regression | In progress | Latest static build smoke passed 67 internal links, 27 targets, 25 route templates, 0 dynamic hrefs skipped; TypeScript/build passed, 78/78 static pages generated. |
 | Authenticated reader tests | Blocked | SSO prevents authenticated interactive test; no bypass used. |
-| Production health | Completed (current check) | Latest production deployment READY; 3 aliases verified; runtime logs 0 in last 30m and error aggregation 0 in last 24h. Historical Qur'an import RLS issue remains documented; do not weaken RLS. |
+| Production health | Completed (current check) | Deployment dpl_CtSyfv5rfoLN7AT83xGzceXtYfcD READY on commit 91f0c20; 3 aliases verified. Vercel runtime logs: no entries last 30m; preaggregated runtime errors: none last 24h. Supabase log query was rejected because severity is not a column; historical Qur'an-import RLS issue remains documented; do not weaken RLS. |
 
-## Current audit snapshot — 2026-11-23 (20:45 Africa/Lagos)
+## Current audit snapshot — 2026-11-23 (22:24 Africa/Lagos)
 
 | Workstream | Status | Current evidence / blocker |
 |---|---|---|
@@ -32,12 +32,12 @@ Last evidence review: 2026-11-23 (20:45 Africa/Lagos; hourly active execution)
 | Hadith | Blocked/in progress | 3,754 total. Malik 1,858: 29 Arabic gaps, 40 English gaps, all 1,858 missing narrator/book/chapter/title metadata. Riyad 1,896: 11 narrator gaps, all 1,896 book numbers missing; chapter fields complete. Exact edition/source rights unresolved; no import. |
 | Prophets | Draft coverage complete | 25/25 stories, lessons and references; all 25 pending editorial review/not scholarly verified. |
 | Seerah | Draft coverage complete | 9/9 descriptions; all pending editorial review/not scholarly verified. |
-| Companions | In progress | 19 CMS articles; all review/unverified. Source-backed expansions continue. |
+| Companions | In progress | 20 CMS articles; all review/unverified. Source-backed expansions continue. |
 | Duas | In progress | 40 records; 40 transliterations missing, English text complete. |
-| Articles | Source coverage complete; verification in progress | 30 total; 2 published/unverified, 28 review/unverified, 0 verified; 55 source-link rows, 0 missing source links, 0 missing citation details. |
-| Source/revision audit | Completed for current snapshot | 42 source catalog records, 15 revision snapshots. |
+| Articles | Source coverage complete; verification in progress | 31 total; 2 published/unverified, 29 review/unverified, 0 verified; 56 source-link rows, 0 missing source links, 0 missing citation details; no duplicate source URLs or article-source pairs. |
+| Source/revision audit | Completed for current snapshot | 43 source catalog records, 16 revision snapshots. |
 | Navigation | In progress | Static smoke/build passed; dynamic/authenticated reader checks blocked by SSO. |
-| Production | Healthy in current check | READY deployment dpl_62yV4hvvm4ycW7EAv51WuFLWG3Rw, commit 1e73589; all 3 aliases assigned. No runtime logs in last 30m; no runtime error clusters in last 24h. |
+| Production | Healthy in current check | READY deployment dpl_CtSyfv5rfoLN7AT83xGzceXtYfcD, commit 91f0c20; all 3 aliases assigned. No Vercel runtime logs in last 30m; no preaggregated runtime errors in last 24h. |
 
 ## Source/licensing review
 
@@ -273,3 +273,16 @@ Last evidence review: 2026-11-23 (20:45 Africa/Lagos; hourly active execution)
 - Fresh content counts: Qur’an 6,236 Arabic/English complete, 6,236 transliteration missing, 114 Surahs complete; Prophets 25/25 drafts; Seerah 9/9 drafts; Hadith 3,754 total with Malik 29 Arabic/40 English gaps and missing metadata on all 1,858, Riyad 11 narrator gaps and 1,896 missing book numbers; Duas 40/40 transliteration gaps.
 - Production verified: deployment dpl_62yV4hvvm4ycW7EAv51WuFLWG3Rw is READY on commit 1e73589aac0e4f032348ba4d2e59b5a8848d7fd6. Three aliases assigned (main domain, team domain, git-main domain). Static smoke test 67 links/27 targets/25 route templates, 0 dynamic links skipped; TypeScript/build passed; 78/78 static pages generated. Runtime logs last 30m: 0; runtime errors last 24h: 0.
 - Authenticated testing remains blocked by SSO. No deployment quota bypass, RLS change, credential use, billing change, or destructive action. Git integration may deploy this checklist commit; monitor status and confirm READY/aliases only with evidence.
+
+
+## Hourly execution update — 2026-11-23 (22:24 Africa/Lagos)
+
+- Schema inspection confirmed the existing CMS content model: `ie_articles` stores string-array content and references, `ie_sources` stores source provenance, `ie_article_sources` stores per-article citation details, and `ie_article_revisions` stores snapshots. No schema changes were needed.
+- Added a new Companion draft, Sa'id ibn Zayd رضي الله عنه (slug `companion-said-ibn-zayd-reference-index), from the named TDV İslâm Ansiklopedisi secondary entry by Mehmet Efendioğlu, “Saîd b. Zeyd,” vol. 35 (2008), pp. 580–581: https://islamansiklopedisi.org.tr/said-b-zeyd. Draft is paraphrased; TDV copyright terms were noted; no full text reproduced.
+- Direct DB verification: 5 content items, 2 reference entries, 1 source-link row, 1 source-catalog record, 1 revision snapshot. Article status remains review/unverified; references note that cited primary editions were not independently checked. Report variants and chronology are qualified.
+- Current audit: 31 articles; 2 published/unverified, 29 review/unverified, 0 verified; 56 source-link rows; 0 articles missing source links; 0 citation details missing. 43 source-catalog rows and 16 revision snapshots. Duplicate source URLs=0 and duplicate article/source pairs=0.
+- Qur'an integrity audit: 6,236 verses; Arabic/English missing=0; transliteration missing=6,236. 114 Surahs with metadata ayah-count sum 6,236; 0 surah verse-count mismatches; 0 duplicate (surah,ayah) coordinates. Transliteration remains blocked pending redistribution/license compatibility.
+- Prophet drafts: 25/25 stories, lessons, and references; all pending editorial review and not scholarly verified. Seerah: 9/9 descriptions; all pending review/not scholarly verified. Hadith counts unchanged: Malik 1,858 (29 Arabic gaps, 40 English gaps, all missing narrator/book/chapter/title metadata); Riyad 1,896 (11 narrator gaps, book number missing all, chapter fields complete). Duas: 40 transliteration gaps.
+- Production verification: deployment `dpl_CtSyfv5rfoLN7AT83xGzceXtYfcD` READY on commit `91f0c20ef9efa2d439f8f107d96280643951af28`. All three project aliases were confirmed assigned: main domain, team domain, and git-main domain. Build logs show compilation successful and 78/78 static pages generated; 67-link route-smoke evidence is retained from the latest build checkpoint. Nonfatal edge-runtime warning remains.
+- Vercel runtime logs show no entries in the last 30 minutes; preaggregated runtime-error query found none in the last 24 hours. A Supabase log query failed because the attempted `severity` column is not present; this is a query-schema limitation, not an error count. Authenticated browser tests remain blocked by SSO.
+- No destructive changes, RLS changes, credential use, billing changes, license-incompatible imports, or manual deployment attempts. Git integration will handle deployment of this checklist commit; verify READY/aliases after actual evidence.
