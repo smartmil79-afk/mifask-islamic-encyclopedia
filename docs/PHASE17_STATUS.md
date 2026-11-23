@@ -120,3 +120,25 @@ This snapshot supersedes older interim counts above.
 - Build-time route/navigation smoke test passed: 65 internal literal links, 26 unique targets, 24 route templates, 0 dynamic hrefs skipped; required header/footer links and category slugs passed.
 - TypeScript/build validation completed and deployment finished successfully. Direct authenticated browser functional testing remains blocked by SSO.
 - Recent runtime logs (30-minute window) had no error/fatal logs. The 24-hour error aggregation still shows only the historical Quran import RLS error; it is not a current repeat.
+
+
+## Hourly execution update — 2026-11-23 (source-link audit and deployment cap)
+
+- Current Supabase article-source audit: 29 articles, 2 published/unverified, 27 review/unverified, 0 verified; 41 source-link rows across 27 articles; 0 source-link rows missing citation_detail; 0 articles missing reference_texts.
+- Two Companion reference-index articles have no linked source records: Al-Zubayr and Mus'ab. Their reference text explicitly says no direct Qur'an verse was identified and report-level hadith source selection is pending. No generic source was attached and no narrative was invented.
+- Companion reference-index CMS records: 17, all in review and unverified. The static /companions page currently lists Zayd ibn Harithah only as the explicitly Qur'an-named Companion index entry.
+- Dua library: 40 records; Arabic, English and source fields complete; transliteration missing for all 40. Review metadata is mixed: 6 have review_status=pending and 34 carry the legacy editorial_review_status flag.
+- Open Hadith Data v1.1.0 was checked: README states structured data is CC0, while English translations are from Sunnah.com and rights are separate; collection counts are Malik 1,846 and Riyad 1,896. The downloadable release assets were not accessible in this run, so exact row matching was not performed and no metadata was imported.
+- Added cross-table audit counts for articles with no linked source record and companion reference articles with no source links. Added build-smoke markers so the source-link audit must remain present.
+- Latest main commit: be0f372e78e682972d7df834468c95a493b8a2a6 (includes audit component commit cd67335633e5f96c3793c3291568fb012934bde5 and smoke-test guard).
+- Vercel deployment of the latest main commit is BLOCKED by the team's daily deployment API limit (402; over 100 deployments today; retry after 24 hours). Vercel CLI is not installed in the current environment, and no local repository copy is available for CLI deployment. No billing/plan changes were made.
+- Last READY deployment remains commit e56cca58227b1ec575a84b8d0eec8178c2e4592a with production aliases verified. Latest code changes are committed but not yet deployed.
+- Runtime check: no error/fatal logs in the last 30 minutes; the 24-hour error aggregation still reports only the historical Qur'an-import RLS failure. No RLS policy changes.
+
+## Current blockers
+
+- Transliteration licensing: confirm MIFASK's intended use (commercial/non-commercial) and Tanzil edition-specific permission before importing.
+- Hadith metadata: release assets unavailable for exact matching; underlying translation rights remain unresolved. Do not import text or narrator fields without source/edition match.
+- Companion source-link gaps: Zubayr and Mus'ab require an exact report/edition selection and editorial review before sources can be attached.
+- Authenticated browser testing remains unavailable due SSO protection.
+- Deploy latest code after Vercel daily deployment cap resets; do not alter billing or bypass platform limits.
