@@ -263,3 +263,10 @@ This snapshot supersedes older interim counts above.
 - Source catalog record and article-source link added; reference text appended; pre-update revision snapshot #1 created. Direct verification: 5 content items, 5 reference strings, 3 source links (Qur’an, Bukhari pointer, TDV), 1 revision; article remains `status=review`, `verification_status=unverified`. No existing content overwritten.
 - Current article-source audit after this addition: 54 source-link rows across 30 articles; 0 articles missing linked sources; 0 citation details missing. Articles remain 2 published/unverified, 28 review/unverified, 0 verified. Source catalog is expected to be 41 records and revision history 14 total; verify these counts in the next direct audit.
 - Research source page confirms Ahmet Önkal author metadata, TDV publisher, print year 1998, and bibliographic references. Paraphrase only; licensing/reuse terms were not assessed, and primary-source/editorial review is pending.
+
+
+## Deployment follow-up — 2026-11-23 19:55 Africa/Lagos
+
+- Rechecked Git-triggered deployment for checklist commit `f4865b0374b5d95d7f88e26d42b9d30e7a7a2c35`: deployment `dpl_E8UEqg2wcsAPEZfeDKKFAtdQfpaA` is now READY; all three aliases are assigned, including the main production alias `mifask-islamic-encyclopedia-liha.vercel.app`. No manual deployment request was made.
+- Build log confirms route smoke passed (67 internal literal links, 27 unique targets, 25 route templates, 0 dynamic hrefs skipped), required header/footer/category checks passed, Next.js compiled, TypeScript passed, and 78/78 static pages generated. Nonfatal npm cache-dir and edge-runtime warnings remain.
+- Vercel runtime error aggregation: no errors in last 30 minutes or last 24 hours. A direct web fetch of the root and Qur'an reader routes was not accessible through the web research tool; this is not evidence of site downtime, and authenticated browser tests remain blocked by SSO.
