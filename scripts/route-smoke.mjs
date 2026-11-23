@@ -140,7 +140,7 @@ for (const requirement of requiredNavigation) {
 
 if (problems.length) {
   console.error('Route/navigation smoke check FAILED:');
-  for (const item of problems.slice(0, 30) console.error('- ' + item.file + ': ' + item.href + ' -> ' + item.pathname);
+  for (const item of problems.slice(0, 30)) console.error('- ' + item.file + ': ' + item.href + ' -> ' + item.pathname);
   if (problems.length > 30) console.error('… and ' + (problems.length - 30) + ' more');
   process.exit(1);
 }
