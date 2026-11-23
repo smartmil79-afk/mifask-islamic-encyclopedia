@@ -353,3 +353,6 @@ html[data-theme="dark"] .verification-unverified{background:#3a3020;border-color
 @media(max-width:480px){.reflection-whatsapp-direct{padding:5px 8px;font-size:10px}}
 
 .gallery-actions .gallery-share-whatsapp,.gallery-actions .gallery-share-facebook{display:inline-flex;align-items:center;gap:6px;font-weight:700;text-decoration:none}.gallery-actions .gallery-share-whatsapp{background:#1b9d5b;border-color:#1b9d5b;color:#fff}.gallery-actions .gallery-share-facebook{background:#1877f2;border-color:#1877f2;color:#fff}.gallery-actions .gallery-share-whatsapp:hover,.gallery-actions .gallery-share-facebook:hover{filter:brightness(.92)}
+
+/* Reflection popup social actions: visible, compact, and responsive */
+.reflection-foot{flex-wrap:wrap;justify-content:flex-start;row-gap:9px}.reflection-socials{display:flex!important;align-items:center;gap:6px;flex-wrap:wrap;width:100%;flex-basis:100%;margin-top:3px}.reflection-share-label{font-size:10px;color:rgba(255,255,255,.78)}.reflection-foot .reflection-whatsapp-direct{display:inline-flex!important;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;background:#20a763!important;border:1px solid #20a763!important;color:#fff!important;font-size:11px;font-weight:700;text-decoration:none;white-space:nowrap}.reflection-foot .reflection-whatsapp-direct:hover{filter:brightness(.94)}
