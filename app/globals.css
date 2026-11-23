@@ -341,3 +341,10 @@ html[data-theme="dark"] .verification-unverified{background:#3a3020;border-color
 @media(max-width:560px){.gallery-stage{border-radius:18px}.gallery-arrow{width:38px;height:38px;font-size:23px}.gallery-arrow.prev{left:8px}.gallery-arrow.next{right:8px}.gallery-thumbnails button{flex-basis:90px}.gallery-actions button,.gallery-actions a{font-size:11px;padding:9px 11px}}
 
 .reflection-foot{flex-wrap:wrap;justify-content:flex-start}.reflection-foot button.reflection-share{background:#d9bd7d;color:#123b2d;border-color:#d9bd7d;font-weight:700;box-shadow:0 5px 16px rgba(0,0,0,.12)}.reflection-foot button.reflection-share:hover{transform:translateY(-1px);filter:brightness(1.06)}.reflection-brand{display:block;margin-top:12px;text-align:right;color:#d9bd7d;font-size:10px;letter-spacing:1px;text-transform:uppercase}
+
+/* Dropdown hover/focus stability fix */
+.nav-group{position:relative;padding-bottom:8px;margin-bottom:-8px}
+.nav-group .nav-submenu{top:calc(100% - 1px);padding-top:10px;opacity:0;transform:translateY(-4px);visibility:hidden;pointer-events:none}
+.nav-group[open] .nav-submenu,.nav-group:hover .nav-submenu,.nav-group:focus-within .nav-submenu{opacity:1;transform:translateY(0);visibility:visible;pointer-events:auto}
+.nav-group:hover>summary,.nav-group:focus-within>summary{color:var(--green)}
+.nav-group .nav-submenu:before{top:-2px;height:12px}
