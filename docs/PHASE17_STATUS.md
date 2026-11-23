@@ -20,6 +20,47 @@ Last evidence review: 2026-11-23 (hourly active execution)
 | Navigation/browser test | In progress | Static smoke check previously passed 62 internal literals, 25 targets, 22 route templates. Authenticated functional browser test remains blocked by SSO. |
 | Production health | In progress | Current main deployment READY; production alias verified. One historical Qur'an import RLS error from 2026-11-22 remains in 7-day report. Existing data is complete, so no re-import needed. Service-role env key is not configured; do not weaken RLS. |
 
+## Current audit snapshot — 2026-11-23
+
+This snapshot supersedes older interim counts above.
+
+| Workstream | Status | Current evidence / blocker |
+|---|---|---|
+| Qur'an Arabic text | Completed | 6,236 verses; 0 missing Arabic. |
+| Qur'an English translation | Completed (coverage) | 6,236 fields populated; QuranEnc English Saheeh v1.1.2 attribution/version is retained. Republication terms require unchanged text, publisher/source and version attribution, footnotes retained, updates, and no inappropriate ads. |
+| Surah metadata | Completed (coverage) | 114/114 complete. |
+| Qur'an transliteration | Blocked | 0/6,236. Tanzil lists an en.transliteration resource, but the exact license for redistribution in MIFASK's deployment/use has not been established; no import. |
+| Hadith source provenance | Completed (coverage audit) | 3,754 records; all have source_refs dataset, edition, and source URL. |
+| Muwatta Malik text gaps | In progress | 1,858 total; 29 missing Arabic; 40 missing English. |
+| Muwatta Malik metadata | Blocked | 1,858 missing narrator and book/chapter/title metadata; no verified edition-matched metadata dataset cleared for import. |
+| Riyad as-Salihin text | Completed (coverage) | 1,896; Arabic/English complete. |
+| Riyad metadata | In progress | 11 narrator gaps; book_number missing for all 1,896; chapter number/title present. |
+| Hadith dataset licensing | Blocked | Fawaz repo has Unlicense, but underlying translation rights remain collection-specific/unresolved; AhmedBaset/hadith-json is described as scraped from Sunnah.com and no explicit data license was located. Do not bulk import or copy narrator fields. |
+| Prophet narratives/lessons | Completed (draft coverage) | 25/25 stories and lessons; 25/25 references. 25/25 pending editorial review and not scholarly verified. |
+| Seerah | Completed (draft coverage) | 9/9 descriptions and sources; 9/9 pending editorial review and not scholarly verified. Chronology intentionally omitted. |
+| Companions | In progress | 1 CMS article under companions-* in review/unverified; Abu Bakr introduction/reference entries exist but remain unverified. Index at /companions currently names Zayd ibn Harithah only. |
+| Duas | In progress | 40 records; Arabic/English/source fields complete; transliteration missing in 40. 6 use review_status=pending, 34 carry a legacy pending flag. |
+| Articles | In progress | 29 total; 2 published/unverified, 27 review/unverified, 0 verified. 41 source-link rows across 27 articles. 0 missing reference_texts. |
+| Article verification safeguards | Completed (code) | Verified status requires reviewer, date and notes; current DB has no verified articles. |
+| Dataset audit UI | In progress | New checks committed for source provenance, Prophet/Seerah review state, dua review flags, article references and citation details; deployment verification pending. |
+| Navigation/reader | In progress | Build-time route smoke test runs via prebuild; latest static test previously passed 65 literal links/26 targets/24 route templates. Authenticated interactive browser test is blocked by SSO. |
+| Production health | In progress | Last production deployment READY on commit 981d22c; new audit-code commit e56cca5 is BUILDING. Current runtime error report shows only the historical Quran-import RLS error. Do not weaken RLS. |
+
+## Source/licensing review
+
+- Tanzil Arabic text: official text license is CC BY 3.0; use verbatim, include attribution, link to Tanzil and preserve notice. Source: https://tanzil.net/docs/Text_License
+- Tanzil transliteration: en.transliteration source/changelog exists (6,236 lines), but permission for redistribution in this deployment is not confirmed. The FAQ describes resources as non-commercial: https://tanzil.net/docs/FAQ and resource page https://tanzil.net/trans/log/en.transliteration. Keep import blocked until deployment-use/license compatibility is confirmed.
+- QuranEnc English Saheeh: republishing is allowed under its terms if content remains unmodified, publisher/source and version are clearly stated, transcript information/footnotes are retained, updates are followed, and inappropriate ads are not displayed. Terms: https://quranenc.com/en/home/about/terms
+- Fawaz Ahmed Hadith API: repository identifies Unlicense; this does not automatically resolve rights of underlying collection translations. Repository: https://github.com/fawazahmed0/hadith-api
+- AhmedBaset hadith-json: README describes data scraped from Sunnah.com and documents english.narrator in its structure, but no explicit data license was located. Repository: https://github.com/AhmedBaset/hadith-json. Do not copy text or narrator fields pending rights and exact-edition matching.
+
+## Current code/deployment update
+
+- Dataset audit enhancement commit: e56cca58227b1ec575a84b8d0eec8178c2e4592a
+- Added checks for missing Hadith source dataset/edition/URL; Prophet and Seerah editorial/not-verified flags; current and legacy Dua review flags; missing article reference texts; and missing citation details.
+- Supabase direct counts above are the verification source for this snapshot. The deployment has not yet been verified READY for this commit.
+
+
 ## Safe changes this review
 
 - Added draft narratives and lessons for Nuh, Ibrahim, Yusuf, and Musa, using exact selected Qur'an references already stored and local QuranEnc English Saheeh text as source context. Drafts are paraphrases, not verified religious rulings; editorial review remains required.
