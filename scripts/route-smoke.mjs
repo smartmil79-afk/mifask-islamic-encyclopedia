@@ -165,6 +165,27 @@ if (!fs.existsSync(quranReaderFile)) {
   }
 }
 
+// Guard the editorial integrity audit against regressions in linked-source
+// coverage. Textual reference strings are not substitutes for source records.
+const adminPageFile = path.join(root, 'app', 'admin', 'page.tsx');
+const editorialIntegrityFile = path.join(root, 'components', 'EditorialIntegrity.tsx');
+if (!fs.existsSync(adminPageFile) || !fs.existsSync(editorialIntegrityFile)) {
+  problems.push({ file: 'editorial-source-smoke', href: 'integrity audit components', pathname: 'missing file' });
+} else {
+  const adminSource = fs.readFileSync(adminPageFile, 'utf8');
+  const editorialSource = fs.readFileSync(editorialIntegrityFile, 'utf8');
+  const requiredEditorialMarkers = [
+    [adminSource, 'linked-source query', "from('ie_article_sources')"],
+    [adminSource, 'linked-source count attached to articles', 'source_count'],
+    [editorialSource, 'linked-source coverage summary', 'Linked source records:'],
+    [editorialSource, 'text-only citation warning', 'Textual references alone are not source records'],
+    [editorialSource, 'verified articles source-link check', 'Verified article has fewer than two linked source records'],
+  ];
+  for (const [source, feature, marker] of requiredEditorialMarkers) {
+    if (!source.includes(marker)) problems.push({ file: 'editorial-source-smoke', href: feature, pathname: 'required editorial audit feature missing' });
+  }
+}
+
 if (problems.length) {
   console.error('Route/navigation smoke check FAILED:');
   for (const item of problems.slice(0, 30)) console.error('- ' + item.file + ': ' + item.href + ' -> ' + item.pathname);
