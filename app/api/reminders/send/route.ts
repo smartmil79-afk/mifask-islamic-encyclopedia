@@ -15,7 +15,7 @@ function localParts(date:Date,timeZone:string) {
   return Object.fromEntries(parts.map(p=>[p.type,p.value]));
 }
 export async function GET(req:Request) {
-  const secret=process.env.REMINDERS_CRON_SECRET;
+  const secret=process.env.REMINDERS_CRON_SECRET||process.env.CRON_SECRET;
   if(!secret||req.headers.get('authorization')!==`Bearer ${secret}`) return NextResponse.json({error:'Unauthorized'},{status:401});
   const db=serviceDb();
   const token=process.env.WHATSAPP_ACCESS_TOKEN;
