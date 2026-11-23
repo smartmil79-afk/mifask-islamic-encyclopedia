@@ -42,9 +42,9 @@ This snapshot supersedes older interim counts above.
 | Duas | In progress | 40 records; Arabic/English/source fields complete; transliteration missing in 40. 6 use review_status=pending, 34 carry a legacy pending flag. |
 | Articles | In progress | 29 total; 2 published/unverified, 27 review/unverified, 0 verified. 41 source-link rows across 27 articles. 0 missing reference_texts. |
 | Article verification safeguards | Completed (code) | Verified status requires reviewer, date and notes; current DB has no verified articles. |
-| Dataset audit UI | In progress | New checks committed for source provenance, Prophet/Seerah review state, dua review flags, article references and citation details; deployment verification pending. |
+| Dataset audit UI | Completed (code/deploy) | New checks for source provenance, Prophet/Seerah review state, dua review flags, article references and citation details; commit e56cca5 is READY and production aliases are assigned. |
 | Navigation/reader | In progress | Build-time route smoke test runs via prebuild; latest static test previously passed 65 literal links/26 targets/24 route templates. Authenticated interactive browser test is blocked by SSO. |
-| Production health | In progress | Last production deployment READY on commit 981d22c; new audit-code commit e56cca5 is BUILDING. Current runtime error report shows only the historical Quran-import RLS error. Do not weaken RLS. |
+| Production health | In progress | Audit-code deployment e56cca5 is READY and aliases are assigned. Runtime error report shows only the historical Quran-import RLS error. Do not weaken RLS. |
 
 ## Source/licensing review
 
@@ -58,7 +58,7 @@ This snapshot supersedes older interim counts above.
 
 - Dataset audit enhancement commit: e56cca58227b1ec575a84b8d0eec8178c2e4592a
 - Added checks for missing Hadith source dataset/edition/URL; Prophet and Seerah editorial/not-verified flags; current and legacy Dua review flags; missing article reference texts; and missing citation details.
-- Supabase direct counts above are the verification source for this snapshot. The deployment has not yet been verified READY for this commit.
+- Supabase direct counts above are the verification source for this snapshot. Deployment dpl_2ugFxP9n1rpSjTbxt5xMkzwJ4qYy for commit e56cca5 is READY; main production aliases were verified assigned.
 
 
 ## Safe changes this review
@@ -110,3 +110,13 @@ This snapshot supersedes older interim counts above.
 - Updates only filled blank stories/empty lessons; existing data was preserved. Every new entry retains Qur’an references, draft-source provenance, pending editorial review, and `not_scholarly_verified` status.
 - Supabase verification: 25/25 stories, 25/25 lessons, 25/25 reference lists; 0 blank stories; 25/25 explicitly pending editorial review and not scholarly verified.
 - Prophet narrative draft coverage is now complete. Scholarly/editorial review is still outstanding; this is not an authentication claim.
+
+
+## Deployment verification — 2026-11-23
+
+- Audit enhancement commit `e56cca58227b1ec575a84b8d0eec8178c2e4592a` is READY in Vercel.
+- Deployment ID: `dpl_2ugFxP9n1rpSjTbxt5xMkzwJ4qYy`.
+- Aliases verified: `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`.
+- Build-time route/navigation smoke test passed: 65 internal literal links, 26 unique targets, 24 route templates, 0 dynamic hrefs skipped; required header/footer links and category slugs passed.
+- TypeScript/build validation completed and deployment finished successfully. Direct authenticated browser functional testing remains blocked by SSO.
+- Recent runtime logs (30-minute window) had no error/fatal logs. The 24-hour error aggregation still shows only the historical Quran import RLS error; it is not a current repeat.
