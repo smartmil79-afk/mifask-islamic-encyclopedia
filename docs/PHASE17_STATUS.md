@@ -14,7 +14,7 @@ Last evidence review: 2026-11-23
 | Hadith metadata reconciliation | Blocked | CC0 structured-data candidate only. Malik count differs by 12 (candidate 1,846 vs local 1,858); release assets not accessible for exact matching. English translations sourced from Sunnah.com; rights not cleared. |
 | Prophet narratives & lessons | In progress | 4/25 (Nuh, Ibrahim, Yusuf, Musa) have short Qur'an-based draft summaries and lessons. 21 remain blank. All four are pending editorial review and not scholarly-verified. |
 | Seerah timeline descriptions | Completed (draft content) | 9/9 descriptions exist and are marked Qur'an-based drafts; editorial review pending. No dates or unsupported chronology inferred. |
-| Companions | Pending | 18 reference-index entries; no published or verified biography. Needs sourced content and review. |
+| Companions | In progress | 18 entries remain in review/unverified. Abu Bakr reference-index article expanded with a short draft paraphrase of imported Riyad as-Salihin 1468; source link is attached and edition review remains pending. Other entries still need sourced expansion. |
 | Article sourcing | In progress | 29 articles; 2 published, 27 review, 0 verified; 41 article-source links. “What Is Hadith?” has 3 linked secondary references and remains unverified. |
 | Verification workflow audit | Completed (code) | Checks verified articles for reviewer, verification timestamp and notes; checks Prophet story/lesson gaps, Seerah descriptions and Hadith metadata gaps. |
 | Navigation/browser test | In progress | Static smoke check previously passed 62 internal literals, 25 targets, 22 route templates. Authenticated functional browser test remains blocked by SSO. |
@@ -24,6 +24,7 @@ Last evidence review: 2026-11-23
 
 - Added draft narratives and lessons for Nuh, Ibrahim, Yusuf, and Musa, using exact selected Qur'an references already stored and local QuranEnc English Saheeh text as source context. Drafts are paraphrases, not verified religious rulings; editorial review remains required.
 - Preserved the existing reference lists and merged draft provenance/review metadata without overwriting non-empty story/lesson fields.
+- Expanded the Abu Bakr companion draft with a paraphrase of the locally imported Riyad as-Salihin 1468 report. Existing source link retained; article remains in review and unverified.
 - Verified current coverage counts directly in Supabase: 6,236 Qur'an verses with Arabic/English complete; transliteration absent; 114 complete Surah records; 4 Prophet drafts and 21 empty; 9 Seerah descriptions; 29 articles with 41 source links.
 
 ## Deployment evidence
@@ -40,6 +41,6 @@ Last evidence review: 2026-11-23
 
 1. Continue Prophet drafts only from exact source passages; preserve review status and citations.
 2. Reconcile Hadith book/chapter/narrator metadata using accessible CC0 structured data, exact number matching, and no translation import.
-3. Expand Companion entries using traceable primary references; keep them draft until reviewed.
+3. Expand remaining Companion entries using traceable primary references; keep them draft until reviewed.
 4. Continue article source-quality review and authenticated navigation/reader regression testing.
 5. Investigate the historical Qur'an-import RLS failure only with an authenticated test session; do not alter policy or add privileged credentials without explicit approval.
