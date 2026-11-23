@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-23
+Last evidence review: 2026-11-23 (hourly active execution)
 
 ## Checklist
 
@@ -12,7 +12,7 @@ Last evidence review: 2026-11-23
 | Qur'an transliteration | Blocked | 0/6,236 populated. Tanzil terms are non-commercial and redistribution permission for this edition/use is unconfirmed. No import made. |
 | Hadith coverage audit | Completed (audit) | Malik 1,858: 29 Arabic and 40 English gaps; narrator/book/chapter metadata missing. Riyad 1,896: 11 narrator gaps; book numbers absent; chapter metadata and source refs present. |
 | Hadith metadata reconciliation | Blocked | CC0 structured-data candidate only. Malik count differs by 12 (candidate 1,846 vs local 1,858); release assets not accessible for exact matching. English translations sourced from Sunnah.com; rights not cleared. |
-| Prophet narratives & lessons | In progress | 4/25 (Nuh, Ibrahim, Yusuf, Musa) have short Qur'an-based draft summaries and lessons. 21 remain blank. All four are pending editorial review and not scholarly-verified. |
+| Prophet narratives & lessons | In progress | 7/25 (Nuh, Ibrahim, Yusuf, Musa, Ayyub, Yahya, Dawud) have short Qur'an-based draft summaries and lessons. 18 remain blank. All seven are pending editorial review and not scholarly-verified. |
 | Seerah timeline descriptions | Completed (draft content) | 9/9 descriptions exist and are marked Qur'an-based drafts; editorial review pending. No dates or unsupported chronology inferred. |
 | Companions | In progress | 18 entries remain in review/unverified. Abu Bakr reference-index article expanded with a short draft paraphrase of imported Riyad as-Salihin 1468; source link is attached and edition review remains pending. Other entries still need sourced expansion. |
 | Article sourcing | In progress | 29 articles; 2 published, 27 review, 0 verified; 41 article-source links. “What Is Hadith?” has 3 linked secondary references and remains unverified. |
@@ -44,3 +44,12 @@ Last evidence review: 2026-11-23
 3. Expand remaining Companion entries using traceable primary references; keep them draft until reviewed.
 4. Continue article source-quality review and authenticated navigation/reader regression testing.
 5. Investigate the historical Qur'an-import RLS failure only with an authenticated test session; do not alter policy or add privileged credentials without explicit approval.
+
+
+## Hourly execution update — 2026-11-23
+
+- Added three additional short Prophet drafts in Supabase: Ayyub (Qur’an 21:83–84; 38:41–44), Yahya (Qur’an 3:39; 19:7–15), and Dawud (Qur’an 2:251; 34:10–11; 38:17–26).
+- Draft wording was cross-checked against the stored local Arabic and QuranEnc English Saheeh verse records. Content remains explicitly pending editorial review and not scholarly verified.
+- Safe update was conditional on each record having an empty story; no existing narratives were overwritten. Verification query confirmed 7/25 stories populated and 18/25 still empty.
+- No Qur’an/Hadith text was imported and no license or verification claims were upgraded.
+- Production monitor: current production deployment list includes READY deployments; runtime error aggregation reports only the historical Qur’an import RLS failure in the 24-hour window. SSO still prevents direct authenticated reader/navigation testing.
