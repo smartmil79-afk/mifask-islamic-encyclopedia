@@ -23,14 +23,17 @@ async function shareReflectionImage(q:any){
   ctx.drawImage(bitmap,0,0);
   const jpgBlob=await new Promise<Blob>((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('JPG conversion failed')),'image/jpeg',0.92));
   const file=new File([jpgBlob],'MIFASK-reflection.jpg',{type:'image/jpeg'});
+  const site=origin+'/reflection/'+id;
+  const message=q.text+' — '+q.ref+'\nMIFASK Islamic Encyclopedia\n'+site;
   if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-   await navigator.share({files:[file],title:'MIFASK Islamic Encyclopedia'});
+   await navigator.share({files:[file],title:'MIFASK Islamic Encyclopedia',text:message,url:site});
    return;
   }
   const downloadUrl=URL.createObjectURL(jpgBlob);
   const a=document.createElement('a');a.href=downloadUrl;a.download='MIFASK-reflection.jpg';a.click();
   setTimeout(()=>URL.revokeObjectURL(downloadUrl),10000);
-  alert('JPG card downloaded. Attach the image in WhatsApp.');
+  window.open('https://wa.me/?text='+encodeURIComponent(message),'_blank');
+  alert('JPG card downloaded. Attach the image in WhatsApp; the message includes a clickable MIFASK link.');
  }catch(e){console.error('Unable to share reflection JPG:',e);alert('Could not create the JPG card. Please try again.')}
 }
 function copyReflection(q:any){const origin='https://mifask-islamic-encyclopedia-liha.vercel.app';const id=q.ref.replace(/[^0-9]/g,'-').replace(/^-|-$/g,'');const text=q.text+' — '+q.ref+'\nMIFASK Islamic Encyclopedia\n'+origin+'/reflection/'+id;try{navigator.clipboard.writeText(text).then(()=>alert('Reflection and MIFASK link copied!')).catch(()=>fallbackCopy(text))}catch{fallbackCopy(text)}}
