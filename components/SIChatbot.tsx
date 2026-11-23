@@ -10,7 +10,7 @@ export default function SIChatbot(){
    const words=terms(q);const hits:Hit[]=[];
    const searches=words.slice(0,3).map(w=>Promise.all([
     db.from('ie_articles').select('title,summary,slug,content,reference_texts').eq('status','published').ilike('title',`%${w}%`).limit(3),
-    db.from('ie_quran_verses').select('surah_number,ayah_number,arabic,translations').filter('translations::text','ilike',`%${w}%`).limit(3),
+    db.from('ie_quran_verses').select('surah_number,ayah_number,arabic,translations') .ilike('translations->>en',`%${w}%`).limit(3),
     db.from('ie_hadiths').select('collection_key,hadith_number,narrator,arabic,translations,source_refs').filter('translations::text','ilike',`%${w}%`).limit(3)
    ]));
    const res=await Promise.all(searches);
