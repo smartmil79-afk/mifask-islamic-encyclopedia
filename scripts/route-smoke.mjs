@@ -25,7 +25,7 @@ const coreRoutes = [
 const requiredNavigation = [
   {
     file: path.join(root, 'components', 'Header.tsx'),
-    links: ['/quran', '/duas', '/hadith', '/prophets', '/companions', '/seerah'],
+    links: ['/quran', '/duas', '/hadith', '/category/prophets', '/companions', '/seerah'],
   },
   {
     file: path.join(root, 'components', 'Footer.tsx'),
