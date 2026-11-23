@@ -186,3 +186,13 @@ This snapshot supersedes older interim counts above.
 - Prophet dataset remains 25/25 narratives and lessons populated, all pending editorial review/not scholarly verified. Seerah remains 9/9 descriptions and source refs present.
 - Hadith audit: Malik 1,858 records (29 Arabic gaps, 40 English gaps; narrator/book/chapter/title fields absent across the imported set); Riyad 1,896 (11 narrator gaps, book numbers missing for all; Arabic/English and chapter metadata present). No bulk update performed because exact edition reconciliation is unavailable.
 - Production read-only check: latest READY production deployment is dpl_CjKB5RRxEUcQqNESDQU9baMzdTbK, commit f6f440596d1cffe896dfd5198a52efe5aa373fc2. Three aliases mapped successfully, including mifask-islamic-encyclopedia-liha.vercel.app. Runtime aggregation still shows only the historical Qur'an-import RLS error (2026-11-22); no new failure group. No deployment attempted because the known daily quota block is still being honored.
+
+
+## Hourly execution update — 2026-11-23 (Bilal ibn Rabah source-backed draft)
+
+- Checked Mustafa Fayda's TDV İslâm Ansiklopedisi entry “Bilâl-i Habeşî” (vol. 6, 1992, pp. 152–153; updated 2025-07-28). The page includes bibliography and source attribution and states full-text republication is prohibited; MIFASK uses paraphrase only.
+- Added the source-catalog record and linked it to Bilal's existing reference-index article. Appended two draft paragraphs covering the entry's account of Abu Bakr's manumission of Bilal, Bilal's role as the Prophet's muezzin, participation in the early community, the conquest-of-Makkah adhan report, and later Syria accounts. Claims remain draft and require primary-source verification.
+- Revision snapshot saved before update. Database verification: Bilal article has 4 content items, 3 reference strings, 3 linked source records, 1 revision; status=review and verification_status=unverified.
+- Re-audited source coverage: 29/29 articles linked, 45 total source links. Salman al-Farsi remains 4 content items, 3 references, 2 source links, 1 revision, review/unverified.
+- Bilal source URL: https://islamansiklopedisi.org.tr/bilal-i-habesi
+- No article was published or marked verified.
