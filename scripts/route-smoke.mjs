@@ -178,7 +178,7 @@ if (!fs.existsSync(adminPageFile) || !fs.existsSync(editorialIntegrityFile)) {
     [adminSource, 'linked-source query', "from('ie_article_sources')"],
     [adminSource, 'linked-source count attached to articles', 'source_count'],
     [editorialSource, 'linked-source coverage summary', 'Linked source records:'],
-    [editorialSource, 'text-only citation warning', 'Textual references alone are not source records'],
+    [editorialSource, 'text-only citation warning', 'textual references alone are not source records'],
     [editorialSource, 'verified articles source-link check', 'Verified article has fewer than two linked source records'],
   ];
   for (const [source, feature, marker] of requiredEditorialMarkers) {
