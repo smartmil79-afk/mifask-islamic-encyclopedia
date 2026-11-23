@@ -37,7 +37,7 @@ export async function GET(req:Request) {
   for(const s of due) {
     const day=localParts(now,s.timezone||'Africa/Lagos');
     const scheduled=`${day.year}-${day.month}-${day.day} ${day.hour}:${day.minute}`;
-    const {data:existing}=await db.from('ie_reminder_delivery_logs').select('id,status').eq('subscriber_id',s.id).eq('scheduled_for',scheduled).maybeSingle();
+    const {data:existing}=await db.from('ie_reminder_delivery_logs').select('id,status').eq('subscriber_id',s.id).eq('scheduled_for_local',scheduled).maybeSingle();
     if(existing){results.push({subscriber:s.id,status:'already_logged'});continue;}
     const contentType=(s.reminder_types||[])[0]||'reflection';
     const components=[];
@@ -47,7 +47,7 @@ export async function GET(req:Request) {
     const response=await fetch(`https://graph.facebook.com/${graphVersion}/${phoneId}/messages`,{method:'POST',headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},body:JSON.stringify(payload)});
     const data=await response.json().catch(()=>({}));
     const ok=response.ok&&data.messages?.[0]?.id;
-    const log={subscriber_id:s.id,phone_e164:s.phone_e164,content_type:contentType,content_reference:'daily-template',provider_message_id:data.messages?.[0]?.id||null,status:ok?'sent':'failed',error_message:ok?null:JSON.stringify(data).slice(0,1000),scheduled_for:scheduled,sent_at:ok?now.toISOString():null};
+    const log={subscriber_id:s.id,phone_e164:s.phone_e164,content_type:contentType,content_reference:'daily-template',provider_message_id:data.messages?.[0]?.id||null,status:ok?'sent':'failed',error_message:ok?null:JSON.stringify(data).slice(0,1000),scheduled_for:now.toISOString(),scheduled_for_local:scheduled,sent_at:ok?now.toISOString():null};
     const {error:logError}=await db.from('ie_reminder_delivery_logs').insert(log);
     if(ok) await db.from('ie_reminder_subscribers').update({last_sent_at:now.toISOString()}).eq('id',s.id);
     results.push({subscriber:s.id,status:ok?'sent':'failed',providerError:ok?undefined:data.error?.message,logError:logError?.message});
