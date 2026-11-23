@@ -17,7 +17,9 @@ const coreRoutes = [
   '/knowledge-graph', '/saved', '/quran', '/category/quran', '/hadith',
   '/hadith/library', '/category/hadith', '/category/prophets', '/prophets',
   '/companions', '/category/companions', '/seerah', '/category/seerah',
-  '/category/fiqh', '/duas', '/category/duas', '/about', '/sources',
+  '/category/fiqh', '/duas', '/category/duas', '/category/aqeedah',
+  '/category/history', '/category/scholars', '/category/muslim-life',
+  '/category/dictionary', '/about', '/sources',
 ];
 
 const requiredNavigation = [
@@ -62,14 +64,14 @@ function matchesRoute(template, pathname) {
     } else if (segment.startsWith('[') && segment.endsWith(']')) {
       pattern += '/[^/]+';
     } else {
-      pattern += '/' + segment.replace(/[.*+?^$()|[\\]\\\\]/g, '\\\\$&');
+      pattern += '/' + segment.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
     }
   }
   if (!segments.length) pattern = '^/';
   return new RegExp(pattern + '/?$').test(pathname);
 }
 
-const hrefPattern = /\\bhref\\s*=\\s*(?:\"([^\"]+)\"|'([^']+)'|\\{\\s*(['\"]) (.*?)\\3\\s*\\})/g;
+const hrefPattern = /\bhref\s*=\s*(?:"([^"]+)"|'([^']+)'|\{\s*(['"])(.*?)\3\s*\})/g;
 const problems = [];
 const checked = new Set();
 let scanned = 0;
@@ -83,11 +85,11 @@ for (const dir of sourceDirs) {
     let match;
     while ((match = hrefPattern.exec(source)) !== null) {
       const value = match[1] ?? match[2] ?? match[4];
-      if (!value || value.includes('${')) { skippedDynamic++; continue; }
+      if (!value || value.includes('$' + '{')) { skippedDynamic++; continue; }
       if (!value.startsWith('/') || value.startsWith('//')) continue;
-      if (/^\\/(?:api|_next)(?:\\/|$)/.test(value)) continue;
-      const pathname = new URL(value, 'https://mifask.invalid').pathname.replace(/\\/$/, '') || '/';
-      if (/\\.[a-z0-9]{2,5}$/i.test(pathname)) continue;
+      if (/^\/(?:api|_next)(?:\/|$)/.test(value)) continue;
+      const pathname = new URL(value, 'https://mifask.invalid').pathname.replace(/\/$/, '') || '/';
+      if (/\.[a-z0-9]{2,5}$/i.test(pathname)) continue;
       scanned++;
       const key = pathname;
       if (checked.has(key)) continue;
@@ -99,17 +101,16 @@ for (const dir of sourceDirs) {
   }
 }
 
-// Ensure every category slug declared in lib/content.ts resolves through the
-// App Router's category template. This catches category links absent from the
-// core-route list when new content categories are added.
+// Check every category slug declared in lib/content.ts against the route
+// template so newly added categories cannot silently point at missing pages.
 const categoriesFile = path.join(root, 'lib', 'content.ts');
 if (fs.existsSync(categoriesFile)) {
   const content = fs.readFileSync(categoriesFile, 'utf8');
-  const categoryBlock = content.match(/export const categories\\s*:\\s*Category\\[\\]\\s*=\\s*\\[([\\s\\S]*?)\\n\\];/);
+  const categoryBlock = content.match(/export const categories\s*:\s*Category\[\]\s*=\s*\[([\s\S]*?)\n\];/);
   if (!categoryBlock) {
     problems.push({ file: 'lib/content.ts', href: 'categories declaration', pathname: 'unparsed category list' });
   } else {
-    const categoryIds = [...categoryBlock[1].matchAll(/\\bid\\s*:\\s*['\"]([^'\"]+)['\"]/g)].map((m) => m[1]);
+    const categoryIds = [...categoryBlock[1].matchAll(/\bid\s*:\s*['"]([^'"]+)['"]/g)].map((m) => m[1]);
     for (const slug of categoryIds) {
       const route = '/category/' + slug;
       if (!routeTemplates.some((template) => matchesRoute(template, route))) {
@@ -132,17 +133,15 @@ for (const requirement of requiredNavigation) {
   }
   const source = fs.readFileSync(requirement.file, 'utf8');
   for (const link of requirement.links) {
-    const escaped = link.replace(/[.*+?^$()|[\\]\\\\]/g, '\\\\$&');
-    if (!new RegExp('\\bhref\\s*=\\s*[\"\\']' + escaped + '[\"\\']').test(source)) {
-      problems.push({ file: path.relative(root, requirement.file), href: link, pathname: 'required navigation link missing' });
-    }
+    const found = source.includes('href="' + link + '"') || source.includes("href='" + link + "'");
+    if (!found) problems.push({ file: path.relative(root, requirement.file), href: link, pathname: 'required navigation link missing' });
   }
 }
 
 if (problems.length) {
   console.error('Route/navigation smoke check FAILED:');
-  for (const item of problems.slice(0, 30) console.error(`- ${item.file}: ${item.href} -> ${item.pathname}`);
-  if (problems.length > 30) console.error(`… and ${problems.length - 30} more`);
+  for (const item of problems.slice(0, 30) console.error('- ' + item.file + ': ' + item.href + ' -> ' + item.pathname);
+  if (problems.length > 30) console.error('… and ' + (problems.length - 30) + ' more');
   process.exit(1);
 }
-console.log(`Route/navigation smoke check passed: ${scanned} internal literal links, ${checked.size} unique targets, ${routeTemplates.length} route templates, ${skippedDynamic} dynamic hrefs skipped, required header/footer links present, category slugs checked.`);
+console.log('Route/navigation smoke check passed: ' + scanned + ' internal literal links, ' + checked.size + ' unique targets, ' + routeTemplates.length + ' route templates, ' + skippedDynamic + ' dynamic hrefs skipped, required header/footer links present, category slugs checked.');
