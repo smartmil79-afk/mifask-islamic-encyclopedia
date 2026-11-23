@@ -142,3 +142,15 @@ This snapshot supersedes older interim counts above.
 - Companion source-link gaps: Zubayr and Mus'ab require an exact report/edition selection and editorial review before sources can be attached.
 - Authenticated browser testing remains unavailable due SSO protection.
 - Deploy latest code after Vercel daily deployment cap resets; do not alter billing or bypass platform limits.
+
+
+## Hourly execution update — 2026-11-23 (Companion source coverage milestone)
+
+- Reviewed scholarly-reference entries for Mus'ab ibn Umayr and al-Zubayr ibn al-Awwam using TDV İslâm Ansiklopedisi pages. Both entries identify authors and publisher and include bibliographic references; source pages are Turkish-language.
+- Added two source-catalog records with bibliographic citation, URL, notes, and reliability caveats. Linked each record to its matching Companion reference-index article. No source text was copied and neither article was marked verified.
+- Supabase verification confirmed both Companion articles now have one linked source each; article source-link coverage is 29/29 with 0 articles lacking a source-link record. Total source links now 43 (previous 41 + 2). Citation details are populated for all links.
+- Mus'ab source: Hüseyin Algül, “Mus‘ab b. Umeyr,” TDV İslâm Ansiklopedisi (2020), https://islamansiklopedisi.org.tr/musab-b-umeyr.
+- Zubayr source: Mehmet Efendioğlu, “Zübeyr b. Avvâm,” TDV İslâm Ansiklopedisi (2013), https://islamansiklopedisi.org.tr/zubeyr-b-avvam.
+- Both article entries remain in review/unverified; editor must check individual claims and the cited primary sources before publication.
+- Corrected verification snapshot: 25/25 Prophet entries have metadata `editorial_status=pending_editorial_review` and `verification_status=not_scholarly_verified`. Earlier status counts using a different metadata key were inaccurate; the component audit uses the correct key.
+- Latest READY production commit remains `e56cca58227b1ec575a84b8d0eec8178c2e4592a`. The deployment quota-blocked audit changes are still awaiting quota reset; do not retry deployment before then.
