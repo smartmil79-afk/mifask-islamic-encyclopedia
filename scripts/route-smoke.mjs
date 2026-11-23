@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 /**
- * Build-time smoke check for internal literal links.
- * It verifies app-router page targets referenced by app/components TSX files
- * and a core route inventory. Dynamic href expressions are skipped because
- * their values are runtime data; their route templates are covered separately.
+ * Build-time smoke check for internal literal links, category slugs, and
+ * essential navigation entries. Dynamic href expressions are skipped because
+ * their values are runtime data; route templates are checked separately.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -16,8 +15,20 @@ const sourceExtensions = new Set(['.tsx', '.ts', '.jsx', '.js']);
 const coreRoutes = [
   '/', '/explore', '/search', '/assistant', '/learn', '/dictionary',
   '/knowledge-graph', '/saved', '/quran', '/category/quran', '/hadith',
-  '/hadith/library', '/category/prophets', '/prophets', '/companions',
-  '/seerah', '/category/fiqh', '/duas', '/about', '/sources',
+  '/hadith/library', '/category/hadith', '/category/prophets', '/prophets',
+  '/companions', '/category/companions', '/seerah', '/category/seerah',
+  '/category/fiqh', '/duas', '/category/duas', '/about', '/sources',
+];
+
+const requiredNavigation = [
+  {
+    file: path.join(root, 'components', 'Header.tsx'),
+    links: ['/quran', '/duas', '/hadith', '/prophets', '/companions', '/seerah'],
+  },
+  {
+    file: path.join(root, 'components', 'Footer.tsx'),
+    links: ['/explore', '/duas', '/about', '/sources'],
+  },
 ];
 
 function walk(dir) {
@@ -51,14 +62,14 @@ function matchesRoute(template, pathname) {
     } else if (segment.startsWith('[') && segment.endsWith(']')) {
       pattern += '/[^/]+';
     } else {
-      pattern += '/' + segment.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
+      pattern += '/' + segment.replace(/[.*+?^$()|[\\]\\\\]/g, '\\\\$&');
     }
   }
   if (!segments.length) pattern = '^/';
   return new RegExp(pattern + '/?$').test(pathname);
 }
 
-const hrefPattern = /\bhref\s*=\s*(?:"([^"]+)"|'([^']+)'|\{\s*(['"])(.*?)\3\s*\})/g;
+const hrefPattern = /\\bhref\\s*=\\s*(?:\"([^\"]+)\"|'([^']+)'|\\{\\s*(['\"]) (.*?)\\3\\s*\\})/g;
 const problems = [];
 const checked = new Set();
 let scanned = 0;
@@ -74,9 +85,9 @@ for (const dir of sourceDirs) {
       const value = match[1] ?? match[2] ?? match[4];
       if (!value || value.includes('${')) { skippedDynamic++; continue; }
       if (!value.startsWith('/') || value.startsWith('//')) continue;
-      if (/^\/(?:api|_next)(?:\/|$)/.test(value)) continue;
-      const pathname = new URL(value, 'https://mifask.invalid').pathname.replace(/\/$/, '') || '/';
-      if (/\.[a-z0-9]{2,5}$/i.test(pathname)) continue;
+      if (/^\\/(?:api|_next)(?:\\/|$)/.test(value)) continue;
+      const pathname = new URL(value, 'https://mifask.invalid').pathname.replace(/\\/$/, '') || '/';
+      if (/\\.[a-z0-9]{2,5}$/i.test(pathname)) continue;
       scanned++;
       const key = pathname;
       if (checked.has(key)) continue;
@@ -88,16 +99,50 @@ for (const dir of sourceDirs) {
   }
 }
 
+// Ensure every category slug declared in lib/content.ts resolves through the
+// App Router's category template. This catches category links absent from the
+// core-route list when new content categories are added.
+const categoriesFile = path.join(root, 'lib', 'content.ts');
+if (fs.existsSync(categoriesFile)) {
+  const content = fs.readFileSync(categoriesFile, 'utf8');
+  const categoryBlock = content.match(/export const categories\\s*:\\s*Category\\[\\]\\s*=\\s*\\[([\\s\\S]*?)\\n\\];/);
+  if (!categoryBlock) {
+    problems.push({ file: 'lib/content.ts', href: 'categories declaration', pathname: 'unparsed category list' });
+  } else {
+    const categoryIds = [...categoryBlock[1].matchAll(/\\bid\\s*:\\s*['\"]([^'\"]+)['\"]/g)].map((m) => m[1]);
+    for (const slug of categoryIds) {
+      const route = '/category/' + slug;
+      if (!routeTemplates.some((template) => matchesRoute(template, route))) {
+        problems.push({ file: 'category-inventory', href: route, pathname: route });
+      }
+    }
+  }
+}
+
 for (const route of coreRoutes) {
   if (!routeTemplates.some((template) => matchesRoute(template, route))) {
     problems.push({ file: 'core-route-inventory', href: route, pathname: route });
   }
 }
 
+for (const requirement of requiredNavigation) {
+  if (!fs.existsSync(requirement.file)) {
+    problems.push({ file: path.relative(root, requirement.file), href: 'required navigation file', pathname: 'missing file' });
+    continue;
+  }
+  const source = fs.readFileSync(requirement.file, 'utf8');
+  for (const link of requirement.links) {
+    const escaped = link.replace(/[.*+?^$()|[\\]\\\\]/g, '\\\\$&');
+    if (!new RegExp('\\bhref\\s*=\\s*[\"\\']' + escaped + '[\"\\']').test(source)) {
+      problems.push({ file: path.relative(root, requirement.file), href: link, pathname: 'required navigation link missing' });
+    }
+  }
+}
+
 if (problems.length) {
-  console.error('Route smoke check FAILED. Missing app-router targets:');
-  for (const item of problems.slice(0, 30)) console.error(`- ${item.file}: ${item.href} -> ${item.pathname}`);
+  console.error('Route/navigation smoke check FAILED:');
+  for (const item of problems.slice(0, 30) console.error(`- ${item.file}: ${item.href} -> ${item.pathname}`);
   if (problems.length > 30) console.error(`… and ${problems.length - 30} more`);
   process.exit(1);
 }
-console.log(`Route smoke check passed: ${scanned} internal literal links, ${checked.size} unique targets, ${routeTemplates.length} route templates, ${skippedDynamic} dynamic hrefs skipped.`);
+console.log(`Route/navigation smoke check passed: ${scanned} internal literal links, ${checked.size} unique targets, ${routeTemplates.length} route templates, ${skippedDynamic} dynamic hrefs skipped, required header/footer links present, category slugs checked.`);
