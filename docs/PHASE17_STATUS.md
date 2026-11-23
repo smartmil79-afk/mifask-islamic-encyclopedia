@@ -173,3 +173,16 @@ This snapshot supersedes older interim counts above.
 - Prophet editorial status audit corrected: metadata keys are `editorial_status` and `verification_status`; 25/25 drafts remain pending review and not scholarly verified.
 - Production runtime log counts for the last 30 minutes show no error/fatal entries. The 24-hour error summary still contains only the historical Qur'an-import RLS error.
 - Latest checklist update is committed but not deployed due the still-active Vercel deployment quota block. Deployment API is not retried until quota reset.
+
+
+## Hourly execution update — 2026-11-23 (Salman al-Farsi source-backed draft)
+
+- Research checked TDV İslâm Ansiklopedisi entry “Selmân-ı Fârisî” by İbrahim Hatiboğlu (2009), vol. 36, pp. 441–443. The source page states its copyright: full republication is prohibited; short quotations require attribution and active link. This update uses paraphrase only.
+- Added a source-catalog record and linked it to the existing Salman al-Farsi reference-index article. Added two short, cautious draft paragraphs covering the source's account of his search for religious teachers, arrival in Medina/acceptance of Islam, enslavement/manumission, trench campaign, and later administration. Chronology and individual reports remain subject to primary-source review.
+- Created a revision snapshot before the additive update. Verification query confirmed 4 content items, 3 reference strings, 2 source links (Riyad pointer and TDV encyclopedia), and 1 revision. Article remains status=review and verification_status=unverified.
+- Source-link coverage rechecked: 29/29 articles linked; 44 total source links; no source-link gaps. Do not interpret linked sources as scholarly verification.
+- Source page: https://islamansiklopedisi.org.tr/selman-i-farisi
+- Qur'an database audit remains 114 Surahs, 6,236 verses, Arabic/English populated, all 6,236 transliteration fields empty; 114/114 Surah Arabic names present. Transliteration remains blocked pending license permission/compatibility.
+- Prophet dataset remains 25/25 narratives and lessons populated, all pending editorial review/not scholarly verified. Seerah remains 9/9 descriptions and source refs present.
+- Hadith audit: Malik 1,858 records (29 Arabic gaps, 40 English gaps; narrator/book/chapter/title fields absent across the imported set); Riyad 1,896 (11 narrator gaps, book numbers missing for all; Arabic/English and chapter metadata present). No bulk update performed because exact edition reconciliation is unavailable.
+- Production read-only check: latest READY production deployment is dpl_CjKB5RRxEUcQqNESDQU9baMzdTbK, commit f6f440596d1cffe896dfd5198a52efe5aa373fc2. Three aliases mapped successfully, including mifask-islamic-encyclopedia-liha.vercel.app. Runtime aggregation still shows only the historical Qur'an-import RLS error (2026-11-22); no new failure group. No deployment attempted because the known daily quota block is still being honored.
