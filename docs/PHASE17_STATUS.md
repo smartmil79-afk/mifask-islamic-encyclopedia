@@ -163,3 +163,13 @@ This snapshot supersedes older interim counts above.
 - Updated current coverage: all 29 articles have at least one source-link row; total links 43; all citation details present. The two previous source-link gaps are resolved.
 - Prophet editorial status audit corrected: metadata keys are `editorial_status` and `verification_status`; 25/25 drafts remain pending review and not scholarly verified.
 - The latest checklist update is committed but not deployed due the still-active Vercel deployment quota block. Deployment API is not retried until quota reset.
+
+
+## Hourly execution update — 2026-11-23 (Companion drafts expanded)
+
+- Added two source-backed draft expansions to the Mus'ab ibn Umayr and al-Zubayr ibn al-Awwam CMS reference articles, appending rather than replacing their existing content. Both summaries paraphrase the linked TDV İslâm Ansiklopedisi entries and include cautions about primary-source checking and contested reports.
+- Database verification confirmed each article has 4 content items (2 existing + 2 added), remains `status=review` and `verification_status=unverified`, and records source/editorial notes. No verification labels were changed.
+- Updated current coverage: all 29 articles have at least one source-link row; total links 43; all citation details present. The two previous source-link gaps are resolved.
+- Prophet editorial status audit corrected: metadata keys are `editorial_status` and `verification_status`; 25/25 drafts remain pending review and not scholarly verified.
+- Production runtime log counts for the last 30 minutes show no error/fatal entries. The 24-hour error summary still contains only the historical Qur'an-import RLS error.
+- Latest checklist update is committed but not deployed due the still-active Vercel deployment quota block. Deployment API is not retried until quota reset.
