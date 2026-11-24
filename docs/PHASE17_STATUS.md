@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-24 (12:30 Africa/Lagos; direct GitHub main/repository, Supabase schema/data/source-import audit, and Vercel production/alias/runtime verification).
+Last evidence review: 2026-11-24 (14:11 Africa/Lagos; direct GitHub main/repository, Supabase schema/data/source-import audit, and Vercel production/alias/runtime verification).
 
 ## Checklist
 
@@ -554,3 +554,25 @@ Last evidence review: 2026-11-24 (12:30 Africa/Lagos; direct GitHub main/reposit
 3. Establish exact Malik/Riyad editions and underlying translation rights before text or metadata backfill.
 4. Review the 40 Dua transliteration gaps only against a rights-compatible, source-verifiable dataset; do not assume the existing English translation object's provenance grants transliteration rights.
 5. Keep authenticated reader testing blocked until legitimate SSO access is available.
+
+
+## Hourly execution update — 2026-11-24 14:11 Africa/Lagos
+
+- Re-read GitHub main and the current Phase 17 checklist, README, package.json, and `scripts/route-smoke.mjs`. Current production Git deployment is `dpl_6BHRodQ4jJ767Fv1QkHAv1euMAs6`, READY on commit `1472ee13cc440536e212c4a8c4615b0add552d15`. GitHub combined status for that commit reports the Vercel check as success.
+- Inspected all 35 public table definitions, including keys and foreign-key relationships. All 20 public `ie_*` tables have RLS enabled; no DDL, RLS, or policy changes.
+- Fresh direct read-only Supabase audit:
+  - Qur'an: 6,236 verses; Arabic gaps=0; correct nested `translations->'en'->>'text'` gaps=0; edition/version/publisher/source_url gaps=0; transliteration gaps=6,236; duplicate verse coordinates=0. Surahs=114; required metadata gaps=0; ayah sum=6,236.
+  - Hadith: Malik=1,858 (Arabic gaps=29, English gaps=40, narrator/book/chapter/chapter-title gaps=1,858 each, edition/source_edition gaps=1,858); Riyad=1,896 (Arabic/English gaps=0, narrator gaps=11, book_number gaps=1,896, chapter/chapter-title gaps=0, edition/source_edition gaps=1,896). All 3,754 have source-import links. `ie_hadith_books`=0.
+  - Prophets=25; story gaps=0; empty lesson arrays=0; all 25 have `editorial_status=pending_editorial_review` and `verification_status=not_scholarly_verified`. Seerah=9; description gaps=0; all 9 have `editorial_status=needs_editorial_review` and `verification_status=not_scholarly_verified`.
+  - Articles=37; all 37 unverified; reference-text gaps=0; source links=62; source rows=49; articles without linked sources=0; orphan source links=0; revisions=22; orphan revisions=0.
+  - Duas=40; Arabic gaps=0; correct nested English text gaps=0; transliteration gaps=40. Names of Allah=99; adhkar=34 (prior field-coverage audit complete; no new verification claim).
+  - Source imports=18; original `content_hash` NULL in all 18. No database writes were made.
+- Inspected exact source-import manifests and collection metadata:
+  - QuranEnc English Saheeh imports identify version 1.1.2, Noor International Center, and the stored republishing conditions to reproduce unchanged, retain publisher/source/version/transcript information, follow updates, and avoid inappropriate ads. This manifest is provenance evidence, not a fresh independent legal opinion.
+  - Malik manifest points to the mutable jsDelivr `@1` URL. The 29 Arabic / 40 English missing-record audit was performed against pinned Fawaz API commit `df57907be35291c91ad6a6691180e22ca9920784`; that audit commit does not prove the original full import came from that revision. The import manifest's `source_hash` is NULL.
+  - Riyad manifest points to pinned AhmedBaset `hadith-json` commit `70b83d6d21995bb32f8d7271cd75501be5a922a`, but its `source_hash` is NULL and underlying translation rights/exact edition remain unresolved. Collection metadata saying `independent_copy=true` is not a rights grant. No text or metadata was imported.
+  - The active “Duas & Adhkar” article category has 0 CMS articles, while the dedicated `ie_duas` and `ie_adhkar` tables contain 40 and 34 records respectively; these are distinct content surfaces, not a count contradiction.
+- Re-inspected `scripts/route-smoke.mjs` and package scripts. The build precheck covers core routes, category slugs, Header/Footer navigation, Qur'an local search/translation/completeness markers, and linked-source integrity markers. Latest recorded execution evidence remains 67 internal links, 27 targets, 25 route templates, 0 dynamic hrefs skipped, TypeScript passed, and 78/78 static pages; this script was inspected but not re-executed in this run.
+- Vercel: project `prj_L7pZ4eDx1kM6plWkl7W8or3V3BAE` latest production deployment `dpl_6BHRodQ4jJ767Fv1QkHAv1euMAs6` is READY on commit `1472ee13`; deployment metadata and alias listing confirm main, team, and git-main aliases. Runtime error aggregation (24h)=no clusters; production error/fatal logs (30m)=no entries. Supabase unified logs for 12:11–13:11 UTC returned 3 pgbouncer rows with 0 error/fatal message matches and no other source rows; this is a bounded result, not a comprehensive service-wide zero-error claim.
+- Vercel project SSO protection is enabled for all deployments except custom domains. Authenticated reader/browser testing remains blocked; no bypass attempted.
+- No religious content was added because available Hadith and transliteration candidates still lack sufficient edition/rights evidence. No destructive changes, credentials, billing changes, manual deployments, or quota bypass.
