@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-24 (15:31 Africa/Lagos; direct GitHub main/repository, Supabase schema/data/source audit, new Amanah draft and post-write verification, and Vercel production/alias/runtime verification).
+Last evidence review: 2026-11-24 (16:08 Africa/Lagos; direct GitHub main/status, Supabase schema/data/import-manifest and security/performance-advisor audit, Vercel production/alias/runtime verification).
 
 ## Checklist
 
@@ -27,6 +27,31 @@ Last evidence review: 2026-11-24 (15:31 Africa/Lagos; direct GitHub main/reposit
 | Authenticated reader tests | Blocked | Project SSO protection is enabled for all deployments except custom domains; no bypass used. |
 | Production health | READY / aliases verified | `dpl_9idqwbiWedw9YD5jEfu312SJzHMU` READY on commit `2e105a7347fd6937975612f9b9998b88fbc03634`; deployment response and alias listing confirm main, team, and git-main aliases. Vercel runtime error aggregation 24h: no errors; production error/fatal logs 30m: no entries. Current route-smoke source inspected; latest recorded static smoke remains 67 links, 27 targets, 25 templates, 0 dynamic hrefs skipped, TypeScript passed, 78/78 pages. Authenticated reader tests remain SSO-blocked (15:31). |
 
+
+
+## Hourly execution update — 2026-11-24 16:08 Africa/Lagos
+
+- GitHub main/repository re-inspected. Latest main commit before this update is `98087bf2b85ca625aae36ed3a99b1b52f53bf722` (15:31 Amanah draft and verification); the only file in that commit is `docs/PHASE17_STATUS.md`. README remains aligned with the deployed application and correctly distinguishes field coverage from scholarly verification.
+- Direct Supabase schema inspection: 35 public tables, including 20 `ie_*` tables; all 20 encyclopedia tables retain RLS. Relevant article/source/revision/import/Qur'an/Hadith/Prophet/Seerah/Dua/adhkar schemas and keys were inspected before the read-only audit. No database writes, DDL, policy changes, credential changes, or destructive operations this run.
+- Direct SQL integrity audit: Qur'an 6,236 verses; Arabic gaps=0; nested `translations.en.text` gaps=0; English edition/version/publisher/source_url gaps=0; transliteration gaps=6,236; unique verse coordinates=6,236. Surahs=114; required metadata gaps=0; ayah sum=6,236.
+- Hadith: Malik 1,858 (Arabic gaps=29, English gaps=40, narrator/book_number/chapter_number/chapter_title gaps=1,858 each, edition/source-edition metadata gaps=1,858); Riyad 1,896 (Arabic/English gaps=0, narrator gaps=11, book_number gaps=1,896, chapter_number/chapter_title gaps=0, edition/source-edition metadata gaps=1,896). Both collections have unique hadith_number values within their collection. `ie_hadith_books` remains empty. No text or metadata imported.
+- New provenance detail: Malik and Riyad `source_manifest` objects contain a `source_hash` key but its value is NULL for both; their `content_hash` fields are also NULL. Malik's import path uses mutable jsDelivr `@1`; Riyad uses pinned Git commit `70b83d6d21995bb32f8d7271cd75501be5a922a`, but has no stored source hash. The pinned Riyad path does not itself establish translation rights. All 18 import rows still have NULL `content_hash`; original source files are unavailable and no checksums were fabricated.
+- Prophet records: 25/25 stories and lessons present; 0 editorial/verification flag mismatches. Seerah: 9/9 descriptions present; 0 flag mismatches. Duas: 40, Arabic/English gaps=0, transliteration gaps=40. Adhkar: 34, Arabic/transliteration gaps=0.
+- Article/source audit: 38 articles (2 published, 36 review); all 38 remain `unverified`; 50 source rows (2 NULL-URL placeholders preserved; 48 distinct non-NULL URLs); 63 article-source links; blank source title/citation/notes/reliability note=0; blank link citation detail=0; duplicate pairs=0; orphan links=0; 23 revisions; orphan revisions=0. Category counts: Companions=22, Dictionary=5, Aqeedah=1, Fiqh=2, Hadith=1, Muslim Life=1, Prophets=3, Qur'an=1, Seerah=2, History=0, Scholars=0, Duas=0.
+- Supabase advisors: health lints=0. Security/performance findings were recorded without changing access: `ie_reminder_delivery_logs` has RLS enabled and no policies (default-deny; no policy added); the security advisor flags SECURITY DEFINER function execution and leaked-password protection disabled. Inspected `ie_bootstrap_first_admin()`: authenticated execution is constrained by a fixed account allowlist, advisory transaction lock, and one-time empty-admin-table check. Inspected `ie_record_analytics(text,text)`: anon/authenticated execution accepts only `article_view` or `search`, and article views are limited to published slugs; public analytics-count manipulation/rate limiting still merits review. Neither function nor grants were changed. Performance advisor counts: 26 unindexed foreign keys, 23 auth RLS init-plan warnings, 18 multiple-permissive-policy warnings, 10 unused indexes. No indexes or policies changed.
+- Supabase unified logs for 15:08–16:08 UTC returned 2 `postgres_logs` rows only; this is a bounded source inventory, not a comprehensive zero-error count. No database writes occurred.
+- Vercel current production remains READY: `dpl_9idqwbiWedw9YD5jEfu312SJzHMU` on commit `2e105a7347fd6937975612f9b9998b88fbc03634`; deployment alias listing confirms main, team, and git-main aliases; project-domain inventory confirms the main production domain is verified. Runtime error aggregation (24h)=none; production error/fatal runtime logs (30m)=none.
+- The latest GitHub main commit `98087bf2b85ca625aae36ed3a99b1b52f53bf722` has a GitHub Vercel status of `failure` whose target URL identifies Vercel's build-rate-limit page. Vercel exact-SHA deployment listing returned zero records. Do not label this commit's deployment BUILDING/QUEUED/READY or claim aliases; existing production remains on the verified prior deployment. No manual deployment or quota bypass.
+- Authenticated reader testing remains SSO-blocked; no bypass used. No new transliteration/Hadith import because redistribution rights, exact editions, and source hashes remain unresolved.
+
+## Next priorities after 16:08 audit
+
+1. Preserve the no-bypass rule while waiting for Vercel Git build capacity; verify the exact commit deployment only if Vercel creates a record.
+2. Obtain permission for Qur'an transliteration and Dua transliteration sources before importing.
+3. Pin Malik to an immutable source revision and recover original source artifacts/hashes if available; resolve Riyad edition and translation rights.
+4. Review SECURITY DEFINER analytics exposure/rate limiting and the broader Supabase security advisories without changing grants or RLS until a safe, approved remediation is established.
+5. Continue source-backed Companion/Islamic knowledge editorial work; keep all new drafts review/unverified.
+6. Complete authenticated reader/navigation regression only when legitimate SSO access is available.
 
 ## Hourly execution update — 2026-11-24 07:16 Africa/Lagos
 
