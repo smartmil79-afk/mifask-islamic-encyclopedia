@@ -25,7 +25,7 @@ Last evidence review: 2026-11-24 (07:16 Africa/Lagos; direct GitHub/Supabase/Ver
 | Database/RLS protection | Completed (inspection only) | All 20 public `ie_*` tables have RLS enabled; no DDL or policy changes (06:09 audit). |
 | Navigation/static regression | In progress | Latest READY build smoke: 67 internal links, 27 targets, 25 route templates, 0 dynamic hrefs skipped; TypeScript/build passed; 78/78 static pages generated. Authenticated tests remain SSO-blocked. |
 | Authenticated reader tests | Blocked | Project SSO protection is enabled for all deployments except custom domains; no bypass used. |
-| Production health | Completed (07:16 verification) | READY deployment `dpl_8obybGtDuENSWbmsLpx6UkS5GZ85` on commit `812533ec5f4cf989e944dc6d39782bc2a8c6b774`; all 3 aliases confirmed. Vercel runtime errors 24h: none; production error/fatal logs 30m: no entries. This checklist update will trigger Git integration; verify its deployment separately. Historical Qur'an-import RLS issue remains; do not weaken RLS. |
+| Production health | Completed for current live deployment; latest checklist deployment pending | READY deployment `dpl_8obybGtDuENSWbmsLpx6UkS5GZ85` on commit `812533ec5f4cf989e944dc6d39782bc2a8c6b774`; all 3 aliases confirmed. New checklist commit `7662f4bdac495aa8c607032d89c4bbc71bb3fb46` triggered deployment `dpl_FaxBQcKxUJ3xciwygysisHxMqC25`, BUILDING at 07:16; aliases remain on prior READY deployment. Vercel runtime errors 24h: none; production error/fatal logs 30m: no entries. Historical Qur'an-import RLS issue remains; do not weaken RLS. |
 
 
 ## Hourly execution update — 2026-11-24 07:16 Africa/Lagos
@@ -42,6 +42,7 @@ Last evidence review: 2026-11-24 (07:16 Africa/Lagos; direct GitHub/Supabase/Ver
 - Schema/security audit: all 20 public ie_* tables have RLS enabled. No DDL, RLS, policy, credential, billing, or destructive changes.
 - Post-write Supabase unified-log query for 06:16–06:25 UTC returned no rows. This is a bounded empty log result, not a comprehensive assertion that all Supabase services had zero errors. Vercel runtime-error aggregation for 24h found no errors; production error/fatal logs for 30m returned no entries.
 - Production deployment dpl_8obybGtDuENSWbmsLpx6UkS5GZ85 on commit 812533ec5f4cf989e944dc6d39782bc2a8c6b774 is READY. Deployment alias listing confirms all three project aliases (main, team, git-main) assigned. Latest recorded route smoke remains 67 links, 27 targets, 25 templates, 0 dynamic hrefs skipped; TypeScript/build passed and 78/78 static pages generated. Authenticated browser tests remain blocked by SSO; no bypass used.
+- The checklist commit 7662f4bdac495aa8c607032d89c4bbc71bb3fb46 triggered Git deployment dpl_FaxBQcKxUJ3xciwygysisHxMqC25. Exact-SHA deployment listing and build events show BUILDING after cloning main and starting `vercel build`; no READY state or aliases claimed. The previous READY deployment retains all three aliases.
 - No transliteration or Hadith imports were made. Tanzil permission for MIFASK transliteration redistribution/use and exact Hadith edition/translation rights remain unresolved.
 
 
