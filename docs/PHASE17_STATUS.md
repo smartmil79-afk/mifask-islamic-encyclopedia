@@ -1,29 +1,29 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-24 (02:35 Africa/Lagos; direct Supabase/GitHub/Vercel audit).
+Last evidence review: 2026-11-24 (03:38 Africa/Lagos; direct Supabase/GitHub/Vercel audit).
 
 ## Checklist
 
 | Workstream | Status | Current evidence / next action |
 |---|---|---|
-| Qur'an Arabic text | Completed (coverage/integrity) | 6,236 verses; Arabic blanks=0; duplicate coordinates=0. |
-| Qur'an English translation | Completed (coverage/provenance) | 6,236 English texts present; edition/version/publisher and verse source metadata gaps=0; QuranEnc English Saheeh v1.1.2. |
-| Surah metadata | Completed (coverage/integrity) | 114/114; Arabic/transliterated/English names, revelation type and ayah counts complete; sum=6,236; mismatches=0. |
+| Qur'an Arabic text | Completed (coverage/integrity) | 6,236 verses; Arabic blanks=0; duplicate coordinates=0 (03:38 audit). |
+| Qur'an English translation | Completed (coverage/provenance) | 6,236 English texts present; edition/version/publisher and verse source metadata gaps=0; QuranEnc English Saheeh v1.1.2 (03:38 audit). |
+| Surah metadata | Completed (coverage/integrity) | 114/114; Arabic/transliterated/English names, revelation type and ayah counts complete; sum=6,236; mismatches=0 (03:38 audit). |
 | Qur'an transliteration | Blocked | 0/6,236; Tanzil non-commercial terms and permission for MIFASK redistribution/use are not cleared. |
 | Hadith text coverage | In progress | Malik 1,858: 29 Arabic and 40 English gaps; Riyad 1,896 Arabic/English complete. |
 | Hadith metadata | Blocked / In progress | Malik narrator/book/chapter/title missing all 1,858; Riyad 11 narrator gaps and book_number missing all 1,896; chapter/title complete; hadith-books table empty. Exact edition/rights unresolved. |
-| Prophet narratives & lessons | Completed (draft coverage only) | 25/25 stories/lessons; review/verification flags correct on all; pending editorial review/not scholarly verified. |
-| Seerah | Completed (draft coverage only) | 9/9 descriptions; review/verification flags correct on all; pending editorial review/not scholarly verified. |
-| Companions | In progress | 22 CMS articles; all review/unverified. Latest source-backed drafts retain primary-source/editorial review notes. |
-| Islamic knowledge/dictionary | In progress | Added `ihsan-reference-index` from Mustafa Çağrıcı, TDV İslâm Ansiklopedisi (2000); 4 paraphrased content items, 3 references, 1 source link and revision #1; review/unverified. |
-| Article source coverage | Completed (coverage only) | 34 articles; 59 links; 0 missing source links/citation details; 0 duplicate pairs/duplicate non-null URLs. |
-| Article scholarly verification | In progress | 2 published/unverified; 32 review/unverified; 0 verified. |
+| Prophet narratives & lessons | Completed (draft coverage only) | 25/25 stories/lessons; review/verification flags correct on all; pending editorial review/not scholarly verified (03:38 audit). |
+| Seerah | Completed (draft coverage only) | 9/9 descriptions; review/verification flags correct on all; pending editorial review/not scholarly verified (03:38 audit). |
+| Companions | In progress | 22 CMS articles; all review/unverified. Latest source-backed drafts retain primary-source/editorial review notes (03:38 audit). |
+| Islamic knowledge/dictionary | In progress | 2 dictionary articles: ihsan-reference-index and new tawakkul-reference-index; Tawakkul is a 4-paragraph paraphrased draft, 4 references, 1 source link and revision #1; review/unverified. |
+| Article source coverage | Completed (coverage only) | 35 articles; 60 links; 0 missing source links/citation details; 0 duplicate article-source pairs/duplicate non-null URLs (03:38 audit). |
+| Article scholarly verification | In progress | 2 published/unverified; 33 review/unverified; 0 verified (03:38 audit). |
 | Provenance/checksum audit | In progress | 18 import records; all source-file hashes NULL. Filtered `dataset_key=quran-english-saheeh`, `import_version=1.1.2`: 12 completed batches sum 6,236, 0 skipped, and 6,236 verse rows linked; one failed 0-row batch 1–10 followed by a successful retry. Separate QuranEnc supplication import adds 34 records; broad source-name filter incorrectly totals 6,270 if not dataset-key filtered. Canonical database content MD5 recorded below (not original source checksum). |
-| Source/revision audit | In progress | 46 source records (2 unlinked NULL-URL placeholders preserved); 19 revision snapshots. |
+| Source/revision audit | In progress | 47 source records (2 unlinked NULL-URL placeholders preserved); 20 revision snapshots (03:38 audit). |
 | Duas | In progress | 40 records; transliteration missing 40; English fields complete. |
-| Navigation/static regression | In progress | Route smoke passed 67 links, 27 targets, 25 route templates, 0 dynamic hrefs skipped; TypeScript/build passed; 78/78 static pages generated. |
+| Navigation/static regression | In progress | Latest completed build smoke: 67 links, 27 targets, 25 route templates, 0 dynamic hrefs skipped; TypeScript/build passed; 78/78 static pages generated. Authenticated tests SSO-blocked. |
 | Authenticated reader tests | Blocked | Project SSO protection blocks authenticated browser testing; no bypass. |
-| Production health | Completed (02:35 verification) | READY deployment dpl_4qstFMKDxBu3kj6Cq87Krnrysyvj, commit a9c503c; all 3 aliases confirmed. Runtime errors 24h=0; error/fatal logs 30m empty. New checklist commit from this run will trigger Git integration; verify READY/aliases separately. Historical Qur'an-import RLS issue remains, do not weaken RLS. |
+| Production health | Completed (03:38 verification) | READY deployment dpl_AcwL3G6ygpw9Wspu8BKdTUVfxUYu, commit f6b49831; all 3 aliases confirmed. Runtime error clusters 24h: none; runtime logs 30m: no entries. This checklist update will trigger Git integration; verify its READY/aliases separately. Historical Qur'an-import RLS issue remains, do not weaken RLS. |
 
 
 ## Audit snapshot — 2026-11-24 (00:52 Africa/Lagos; superseded by 02:04 update)
@@ -365,3 +365,14 @@ Last evidence review: 2026-11-24 (02:35 Africa/Lagos; direct Supabase/GitHub/Ver
 - SQL/log QA: four recent Postgres errors were identified: one prior read-only probe used nonexistent `arabic_text` (schema field is `arabic`); one initial insert failed JSON parsing and was retried using `jsonb_build_array`; two read-only audit queries failed due nested aggregates and an omitted `sort_order` field, then the corrected audit succeeded. Failed statements had no side effects; successful Ihsan insertion and current counts were directly verified. No further SQL error after the corrected insert/audit in this check. Avoid repeating malformed query patterns.
 - Production: READY deployment `dpl_4qstFMKDxBu3kj6Cq87Krnrysyvj`, commit `a9c503ce6efd9f71eefdb5f1db7cb95a9abd0517`; all 3 aliases confirmed. Build completed successfully; prior route-smoke evidence remains 67 links/27 targets/25 templates/0 dynamic hrefs skipped, TypeScript passed and 78/78 static pages generated. Runtime error clusters 24h: none; error/fatal logs 30m: no entries.
 - Authenticated reader/navigation testing remains SSO-blocked; do not bypass. No destructive actions, RLS/security changes, credentials, billing changes, or manual deployment bypass.
+
+## Hourly execution update — 2026-11-24 03:38 Africa/Lagos
+
+- Inspected GitHub main: current checklist blob SHA before update was 6a37297b8c4419c31b619b9c1810bce5dccef027; latest main commit was f6b49831e22e46c0f1c97d61daab85a86f839983. Read docs/PHASE17_STATUS.md and repository README; no code or schema changes were needed this run.
+- Inspected Supabase schema before writing. Relevant tables and columns confirmed: ie_articles.content JSONB, reference_texts text[], ie_article_sources, ie_sources, ie_article_revisions.snapshot JSONB; dictionary category exists. All 20 public ie_* tables have RLS enabled per prior direct schema audit; no policy/schema changes.
+- Added new dictionary draft tawakkul-reference-index (article id ad4cb754-c50f-4e6f-8ce5-d5cc8623e0c3) based on Mustafa Çağrıcı, “Tevekkül,” TDV İslâm Ansiklopedisi, vol. 41 (2012), pp. 1–2, section 1, https://islamansiklopedisi.org.tr/tevekkul#1. Source record id bf8680e1-c205-4163-847c-6663100c7798; source-link row and revision #1 id c8572bda-b950-4258-b1a2-3497468e8689. Four paraphrased content items and four reference entries; status review, verification unverified. No Hadith text copied/imported. Source metadata checked on the TDV page.
+- Checked local QuranEnc Saheeh v1.1.2 Arabic/English records for Qur'an 3:159, 65:3, 12:67, and 12:86–87 before adding references; the draft paraphrases, does not reproduce verse text, and flags interpretive/editorial review pending.
+- Direct post-write verification: Tawakkul article 4 content items, 4 references, 1 linked source, 1 catalog record, 1 revision snapshot. Aggregate audit: 6,236 verses; Arabic/English gaps 0; transliteration gaps 6,236; 114 Surahs; ayah sum 6,236; Surah metadata gaps 0; Prophets 25/25 draft flags; Seerah 9/9 draft flags; 35 articles (2 published/unverified, 33 review/unverified, 0 verified); 60 source links; no articles without sources/citation gaps; duplicate article/source pairs 0; duplicate source URLs 0; 47 source records (2 NULL-URL placeholders preserved); 20 revisions; Dictionary 2; Companions 22.
+- Hadith audit unchanged: Malik 1,858 (29 Arabic gaps, 40 English gaps, narrator/book/chapter/title metadata missing all); Riyad 1,896 (Arabic/English complete, 11 narrator gaps, book number missing all, chapter/title complete); ie_hadith_books 0 rows. Exact edition/rights remain unresolved. Duas 40, transliteration missing 40.
+- Production: Vercel deployment dpl_AcwL3G6ygpw9Wspu8BKdTUVfxUYu READY on commit f6b49831e22e46c0f1c97d61daab85a86f839983; all 3 aliases verified. Runtime error aggregation 24h found no clusters; runtime logs last 30m returned no entries. Supabase unified logs for 02:05–02:45 UTC returned 3 pgbouncer rows with 0 error rows; no other sources were returned, so this is not reported as a comprehensive zero-error count.
+- Authenticated browser tests remain SSO-blocked. No RLS weakening, destructive changes, credentials, billing changes, or manual deployment/quota bypass. This docs commit will be monitored for its Git-triggered deployment.
