@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-24 (06:09 Africa/Lagos; direct Supabase/GitHub/Vercel audit).
+Last evidence review: 2026-11-24 (07:16 Africa/Lagos; direct GitHub/Supabase/Vercel audit).
 
 ## Checklist
 
@@ -15,17 +15,35 @@ Last evidence review: 2026-11-24 (06:09 Africa/Lagos; direct Supabase/GitHub/Ver
 | Prophet narratives & lessons | Completed (draft coverage only) | 25/25 stories/lessons; 0 gaps and 0 review/verification flag mismatches; all pending editorial review/not scholarly verified (06:09 audit). |
 | Seerah | Completed (draft coverage only) | 9/9 descriptions; 0 gaps and 0 review/verification flag mismatches; all needs editorial review/not scholarly verified (06:09 audit). |
 | Companions | In progress | 22 CMS articles; all review/unverified. Source/primary-text editorial review remains pending. |
-| Islamic knowledge/dictionary | In progress | 3 dictionary drafts: Ihsan, Tawakkul and Sabr. New Sabr draft: 4 paraphrased paragraphs, 6 references, 1 source link, revision #1; review/unverified (06:09 audit). |
-| Article source coverage | Completed (coverage only) | 36 articles; 61 links; 0 missing source links/citation details; 0 duplicate article-source pairs/non-null URLs (06:09 audit). |
-| Article scholarly verification | In progress | 2 published/unverified; 34 review/unverified; 0 verified (06:09 audit). |
+| Islamic knowledge/dictionary | In progress | 4 dictionary drafts: Ihsan, Tawakkul, Sabr and Adalet. New Adalet draft: 4 paraphrased paragraphs, 4 reference entries, 1 source link, revision #1; review/unverified (07:16 audit). |
+| Article source coverage | Completed (coverage only) | 37 articles; 62 links; 0 articles without sources; 0 missing citation details; 0 duplicate non-null source URLs. ie_article_sources primary key prevents duplicate article/source pairs (07:16 audit). |
+| Article scholarly verification | In progress | 2 published/unverified; 35 review/unverified; 0 verified (07:16 audit). |
 | Provenance/checksum audit | In progress | 18 import records; all original `content_hash` values NULL. QuranEnc English Saheeh v1.1.2: 12 completed batches, 6,236 imported, 0 skipped; original source files unavailable, so no source hashes invented. |
-| Source/revision audit | In progress | 48 source records (2 unlinked NULL-URL placeholders preserved); 61 article-source links; 21 revision snapshots; no duplicate non-null URLs (06:09 audit). |
+| Source/revision audit | In progress | 49 source records (2 NULL-URL placeholders preserved); 62 article-source links; 22 revision snapshots; 0 duplicate non-null URLs (07:16 audit). |
 | Duas | In progress | 40 records; transliteration missing 40; English gaps=0 (06:09 audit). |
 | Names of Allah | Completed (coverage only) | 99 records; transliteration gaps=0 and meaning-object gaps=0; not individually scholarly-reviewed (06:09 audit). |
 | Database/RLS protection | Completed (inspection only) | All 20 public `ie_*` tables have RLS enabled; no DDL or policy changes (06:09 audit). |
 | Navigation/static regression | In progress | Latest READY build smoke: 67 internal links, 27 targets, 25 route templates, 0 dynamic hrefs skipped; TypeScript/build passed; 78/78 static pages generated. Authenticated tests remain SSO-blocked. |
 | Authenticated reader tests | Blocked | Project SSO protection is enabled for all deployments except custom domains; no bypass used. |
-| Production health | Completed (06:09 verification) | READY deployment `dpl_7fAERUeue7Cu6V7uXRPeu1dgFNfL` on commit `c4fbafe`; all 3 aliases confirmed. Vercel runtime errors 24h: none; production error/fatal logs 30m: none. This checklist update will trigger Git integration; verify its deployment separately. Historical Qur'an-import RLS issue remains; do not weaken RLS. |
+| Production health | Completed (07:16 verification) | READY deployment `dpl_8obybGtDuENSWbmsLpx6UkS5GZ85` on commit `812533ec5f4cf989e944dc6d39782bc2a8c6b774`; all 3 aliases confirmed. Vercel runtime errors 24h: none; production error/fatal logs 30m: no entries. This checklist update will trigger Git integration; verify its deployment separately. Historical Qur'an-import RLS issue remains; do not weaken RLS. |
+
+
+## Hourly execution update — 2026-11-24 07:16 Africa/Lagos
+
+- Inspected the current default-branch PHASE17_STATUS.md, repository README, public encyclopedia schema, source/article/revision constraints, and latest production deployment. Vercel identifies main commit 812533ec5f4cf989e944dc6d39782bc2a8c6b774; deployment dpl_8obybGtDuENSWbmsLpx6UkS5GZ85 is READY.
+- Added a new Islamic Dictionary editorial draft, adalet-reference-index, based only on the Ahlâk section attributed to Mustafa Çağrıcı in “Adâlet,” TDV İslâm Ansiklopedisi, vol. 1 (1988), pp. 341–343: https://islamansiklopedisi.org.tr/adalet#1-ahlak. The Fiqh and Hadith sections by other authors were deliberately excluded from this draft.
+- Draft content: 4 paraphrased paragraphs; 4 reference entries (the TDV section and Qur’an 5:8, 6:152, 49:13); one source catalog row; one article-source link; revision #1. Article id b8cadebc-3e15-4dd6-8512-6cdfd78ed752; source id 3e742ce7-ee8d-455c-85c5-4e95755a49dd; revision id 766a5b67-a5cb-4aed-a7f7-e9b10251afdb. Direct post-write verification confirmed all 4 content items, all 4 references, the source URL/citation, and the revision snapshot containing all 4 items. Status remains review / unverified; no scripture or Hadith wording was copied.
+- Local Qur’an Arabic and QuranEnc English Saheeh v1.1.2 records for 5:8, 6:152 and 49:13 were checked before references were recorded; verse text is not reproduced in the article.
+- Direct Supabase audit: 37 articles (2 published/unverified, 35 review/unverified, 0 verified); 62 source links; 0 articles without sources; 0 missing citation details; 49 source catalog rows (2 NULL-URL placeholders preserved); 0 duplicate non-null source URLs; 22 revision snapshots. Seven source records are reused by more than one article; this is not a duplicate article/source pair. The article-source composite primary key enforces pair uniqueness.
+- Qur’an audit: 6,236 verses; Arabic gaps=0; nested English translations.en.text gaps=0; English edition/version/publisher/source_url gaps=0; transliteration gaps=6,236. Surahs=114; required metadata gaps=0; ayah sum=6,236; per-Surah verse-count mismatches=0.
+- Prophets: 25/25 stories and lessons; 0 gaps and 0 editorial/verification flag mismatches. Seerah: 9/9 descriptions; 0 gaps and 0 flag mismatches. Names of Allah: 99 records, transliteration gaps=0, meaning gaps=0. Duas: 40 records, English gaps=0, transliteration gaps=40.
+- Hadith: Malik 1,858 (29 Arabic gaps, 40 English gaps, narrator/book/chapter/title gaps across all 1,858); Riyad 1,896 (Arabic/English complete, 11 narrator gaps, book_number missing all 1,896, chapter/title complete); ie_hadith_books remains empty. Exact editions and underlying translation rights remain unresolved; no import.
+- Import provenance: 18 source-import records; all 18 original content_hash fields remain NULL. Original source files are unavailable, so no source hashes were invented.
+- Schema/security audit: all 20 public ie_* tables have RLS enabled. No DDL, RLS, policy, credential, billing, or destructive changes.
+- Post-write Supabase unified-log query for 06:16–06:25 UTC returned no rows. This is a bounded empty log result, not a comprehensive assertion that all Supabase services had zero errors. Vercel runtime-error aggregation for 24h found no errors; production error/fatal logs for 30m returned no entries.
+- Production deployment dpl_8obybGtDuENSWbmsLpx6UkS5GZ85 on commit 812533ec5f4cf989e944dc6d39782bc2a8c6b774 is READY. Deployment alias listing confirms all three project aliases (main, team, git-main) assigned. Latest recorded route smoke remains 67 links, 27 targets, 25 templates, 0 dynamic hrefs skipped; TypeScript/build passed and 78/78 static pages generated. Authenticated browser tests remain blocked by SSO; no bypass used.
+- No transliteration or Hadith imports were made. Tanzil permission for MIFASK transliteration redistribution/use and exact Hadith edition/translation rights remain unresolved.
+
 
 
 ## Audit snapshot — 2026-11-24 (00:52 Africa/Lagos; superseded by 02:04 update)
