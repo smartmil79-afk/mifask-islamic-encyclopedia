@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-24 (02:05 Africa/Lagos; direct Supabase/GitHub/Vercel audit).
+Last evidence review: 2026-11-24 (02:06 Africa/Lagos; direct Supabase/GitHub/Vercel audit).
 
 ## Checklist
 
@@ -22,7 +22,7 @@ Last evidence review: 2026-11-24 (02:05 Africa/Lagos; direct Supabase/GitHub/Ver
 | Duas | In progress | 40 records; transliteration missing 40; English fields complete. |
 | Navigation/static regression | In progress | Route smoke passed 67 links, 27 targets, 25 route templates, 0 dynamic hrefs skipped; TypeScript/build passed; 78/78 static pages generated. |
 | Authenticated reader tests | Blocked | Project SSO protection blocks authenticated browser testing; no bypass. |
-| Production health | Completed for last READY; latest checklist build in progress | READY deployment dpl_FUDWvsi8sgvfuKkpZDWYJLu5qj4B, commit 7401cc0; all 3 aliases verified. Runtime errors 24h=0; error/fatal logs 30m empty. Latest audit commit d5146e8 is BUILDING; route smoke passed. Historical Qur'an import RLS error remains; do not weaken RLS. |
+| Production health | Completed (02:06 verification) | READY deployment dpl_8rBZZWpmnAP8ynh8g4gFd6hDjcJv, commit d5146e8; all 3 aliases independently confirmed via hostname lookups. Runtime errors 24h=0; error/fatal logs 30m empty. Latest checklist commit 54ce304 is QUEUED; historical Qur'an-import RLS issue remains, do not weaken RLS. |
 
 
 ## Audit snapshot — 2026-11-24 (00:52 Africa/Lagos; superseded by 02:04 update)
@@ -341,3 +341,10 @@ Last evidence review: 2026-11-24 (02:05 Africa/Lagos; direct Supabase/GitHub/Ver
 - Git-triggered production build `dpl_8rBZZWpmnAP8ynh8g4gFd6hDjcJv` for checklist commit `d5146e866dc88ff2877476292fb85b09aa10fcca` is still BUILDING. Vercel build events show the route/navigation smoke check passed (67 internal literal links, 27 targets, 25 templates, 0 dynamic hrefs skipped; required header/footer and category slugs checked), and `npm run build` has started. Not READY, not alias-verified. The last READY deployment remains commit `7401cc0` with all three aliases assigned.
 - Runtime errors 24h: no clusters. Production error/fatal logs 30m: no entries. Authenticated browser reader testing remains SSO-blocked.
 - One initial read-only SQL probe assumed `arabic_text` on `ie_quran_verses`; schema inspection corrected the actual field to `arabic` and translation JSON to `translations->>'en'`. The probe failed before any write; the corrected audit passed. Future queries must inspect schema first.
+
+
+## Deployment verification — 2026-11-24 02:06 Africa/Lagos
+
+- Git-triggered deployment `dpl_8rBZZWpmnAP8ynh8g4gFd6hDjcJv` for commit `d5146e866dc88ff2877476292fb85b09aa10fcca` is now READY. Build logs show route smoke passed (67 links, 27 targets, 25 templates, 0 dynamic hrefs skipped) and production build started/completed successfully.
+- Independently looked up all 3 host aliases; each resolves to the READY `dpl_8rBZZWpmnAP8ynh8g4gFd6hDjcJv`: `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. The aliases previously listed on READY `dpl_FUDWvsi8sgvfuKkpZDWYJLu5qj4B` are now assigned to dpl_8r; a deployment-alias list call for the former returned empty, consistent with reassignment.
+- Checklist commit `54ce30474f6ec9467acdf4638eb9c874ac60ff34` is currently QUEUED for a Git-integrated production build; not yet READY/alias verified. No manual deploy.
