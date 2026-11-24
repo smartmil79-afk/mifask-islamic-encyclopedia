@@ -767,3 +767,29 @@ Last evidence review: 2026-11-24 (21:14 Africa/Lagos; GitHub main commit 47d433d
 5. Review the public analytics function's abuse/rate-limit exposure and Supabase advisor findings without weakening RLS or changing grants until a separately validated remediation is available.
 6. Verify the next Git-triggered deployment by exact commit SHA and aliases; no manual deployment or quota bypass.
 7. Complete authenticated reader/navigation testing only when legitimate SSO access becomes available.
+
+
+
+## Hourly execution update — 2026-11-24 23:20 Africa/Lagos
+
+- GitHub main/repository re-inspected. Main is at `e27a144fafb44bab5283865e095cdc38162d66a7` (21:43 Phase 17 audit commit) before this update. Repository default branch is `main`; repository is accessible with push permission. The current README and Phase 17 checklist were fetched from main.
+- Supabase project `honsqapwikfghoubwhcf` is `ACTIVE_HEALTHY` (Postgres 17.11.0.003). Verbose schema inspection found 35 public tables; all 35 have RLS enabled, including all 20 public `ie_*` tables. Relevant Quran, Hadith, Prophet, Seerah, Dua, Adhkar, article, source, revision and import columns, primary keys and foreign keys were inspected before the direct SQL audit. No DDL, policy, grant, credential, billing or destructive changes.
+- Direct read-only SQL audit: Qur'an 6,236 verses; Arabic gaps=0; nested `translations.en.text` gaps=0; English edition/version/publisher/source_url gaps=0; transliteration gaps=6,236; unique verse coordinates=6,236. Surahs=114; required metadata gaps=0; ayah sum=6,236.
+- Hadith JSON shape was audited using `translations->>'en'` (English is a string in this table). Malik=1,858: Arabic gaps=29, English gaps=40, narrator/book_number/chapter_number/chapter_title gaps=1,858 each, edition/source_edition metadata gaps=1,858. Riyad=1,896: Arabic/English gaps=0, narrator gaps=11, book_number gaps=1,896, chapter_number/chapter_title gaps=0, edition/source_edition metadata gaps=1,896. Both collections have unique hadith_number values within collection; `ie_hadith_books` remains empty. No Hadith text or metadata imported.
+- Prophet records=25: story gaps=0, empty/malformed lesson arrays=0, editorial/verification flag mismatches=0. Seerah=9: description gaps=0, editorial/verification flag mismatches=0. Duas=40: Arabic/English gaps=0, transliteration gaps=40. Adhkar=34: Arabic/transliteration gaps=0. Names of Allah=99: Arabic/transliteration/meaning gaps=0 (field coverage only, not individual scholarly verification).
+- Article/source/revision audit: 39 articles (2 published, 37 review; 39 unverified, 0 verified; 39 unique slugs); 51 source rows (2 NULL-URL placeholders preserved, 49 distinct non-NULL URLs, no blank title/citation/notes/reliability notes); 64 article-source links (0 duplicate pairs, 0 blank citation details); 25 revisions (0 orphan revisions, 0 non-object snapshots). No articles were promoted to verified.
+- Import provenance: 18 source-import rows; all 18 content_hash values NULL; 16 manifests omit the source_hash key and 2 contain it with JSON null. Original source artifacts are unavailable; no hashes fabricated.
+- Vercel current production deployment `dpl_XtHL61HzhSnhZ1GnQvmf6rRXrUDd` is READY on the exact GitHub main commit `e27a144fafb44bab5283865e095cdc38162d66a7`. Deployment metadata and alias inventory confirm the main, team and git-main aliases all point to this deployment. GitHub combined Vercel status for the commit is success.
+- Build events for this deployment: `scripts/route-smoke.mjs` passed with 67 internal literal links, 27 unique targets, 25 route templates, 0 dynamic hrefs skipped, and required header/footer/category slug checks passed; Next.js 15.5.29 compiled successfully; TypeScript/lint check completed; 78/78 static pages generated; deployment completed. Non-blocking warnings remain for unknown npm `cache-dir` configuration and one edge-runtime page not being statically generated.
+- Vercel runtime error aggregation (24h)=no errors; production error/fatal runtime logs (30m)=no entries. Supabase unified-log query for 22:15–23:15 UTC returned no rows; this bounded empty result is not a comprehensive zero-error guarantee.
+- Authenticated reader tests remain SSO-blocked; no bypass. No database writes this run. No transliteration or Hadith imports because redistribution permissions, exact editions and original import hashes remain unresolved.
+- The prior deployment `dpl_XtHL61HzhSnhZ1GnQvmf6rRXrUDd` had previously been shown as INITIALIZING in the earlier checkpoint; fresh exact deployment metadata now confirms READY and all three aliases. No manual deployment or quota bypass was used.
+
+## Next priorities after 23:20 audit
+
+1. Obtain explicit compatible permission for Qur'an and Dua transliteration before importing.
+2. Recover original QuranEnc and Hadith source artifacts, then establish authentic checksums; do not derive hashes from unrelated local data.
+3. Resolve Malik's mutable source reference, exact Riyad edition and underlying translation redistribution rights.
+4. Continue source-backed Companion and Islamic knowledge editorial work while retaining review/unverified flags.
+5. Review SECURITY DEFINER analytics exposure and Supabase advisor findings without weakening RLS or changing grants until a safe, approved remediation is demonstrated.
+6. Complete authenticated reader tests only when legitimate SSO access is available.
