@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-24 (02:06 Africa/Lagos; direct Supabase/GitHub/Vercel audit).
+Last evidence review: 2026-11-24 (02:35 Africa/Lagos; direct Supabase/GitHub/Vercel audit).
 
 ## Checklist
 
@@ -15,14 +15,15 @@ Last evidence review: 2026-11-24 (02:06 Africa/Lagos; direct Supabase/GitHub/Ver
 | Prophet narratives & lessons | Completed (draft coverage only) | 25/25 stories/lessons; review/verification flags correct on all; pending editorial review/not scholarly verified. |
 | Seerah | Completed (draft coverage only) | 9/9 descriptions; review/verification flags correct on all; pending editorial review/not scholarly verified. |
 | Companions | In progress | 22 CMS articles; all review/unverified. Latest source-backed drafts retain primary-source/editorial review notes. |
-| Article source coverage | Completed (coverage only) | 33 articles; 58 links; 0 missing source links/citation details; 0 duplicate pairs/duplicate non-null URLs. |
-| Article scholarly verification | In progress | 2 published/unverified; 31 review/unverified; 0 verified. |
+| Islamic knowledge/dictionary | In progress | Added `ihsan-reference-index` from Mustafa Çağrıcı, TDV İslâm Ansiklopedisi (2000); 4 paraphrased content items, 3 references, 1 source link and revision #1; review/unverified. |
+| Article source coverage | Completed (coverage only) | 34 articles; 59 links; 0 missing source links/citation details; 0 duplicate pairs/duplicate non-null URLs. |
+| Article scholarly verification | In progress | 2 published/unverified; 32 review/unverified; 0 verified. |
 | Provenance/checksum audit | In progress | 18 import records; all source-file hashes NULL. Filtered `dataset_key=quran-english-saheeh`, `import_version=1.1.2`: 12 completed batches sum 6,236, 0 skipped, and 6,236 verse rows linked; one failed 0-row batch 1–10 followed by a successful retry. Separate QuranEnc supplication import adds 34 records; broad source-name filter incorrectly totals 6,270 if not dataset-key filtered. Canonical database content MD5 recorded below (not original source checksum). |
-| Source/revision audit | In progress | 45 source records (2 unlinked NULL-URL placeholders preserved); 18 revision snapshots. |
+| Source/revision audit | In progress | 46 source records (2 unlinked NULL-URL placeholders preserved); 19 revision snapshots. |
 | Duas | In progress | 40 records; transliteration missing 40; English fields complete. |
 | Navigation/static regression | In progress | Route smoke passed 67 links, 27 targets, 25 route templates, 0 dynamic hrefs skipped; TypeScript/build passed; 78/78 static pages generated. |
 | Authenticated reader tests | Blocked | Project SSO protection blocks authenticated browser testing; no bypass. |
-| Production health | Completed (02:06 verification) | READY deployment dpl_8rBZZWpmnAP8ynh8g4gFd6hDjcJv, commit d5146e8; all 3 aliases independently confirmed via hostname lookups. Runtime errors 24h=0; error/fatal logs 30m empty. Latest checklist commit 54ce304 is QUEUED; historical Qur'an-import RLS issue remains, do not weaken RLS. |
+| Production health | Completed (02:35 verification) | READY deployment dpl_4qstFMKDxBu3kj6Cq87Krnrysyvj, commit a9c503c; all 3 aliases confirmed. Runtime errors 24h=0; error/fatal logs 30m empty. New checklist commit from this run will trigger Git integration; verify READY/aliases separately. Historical Qur'an-import RLS issue remains, do not weaken RLS. |
 
 
 ## Audit snapshot — 2026-11-24 (00:52 Africa/Lagos; superseded by 02:04 update)
@@ -348,3 +349,19 @@ Last evidence review: 2026-11-24 (02:06 Africa/Lagos; direct Supabase/GitHub/Ver
 - Git-triggered deployment `dpl_8rBZZWpmnAP8ynh8g4gFd6hDjcJv` for commit `d5146e866dc88ff2877476292fb85b09aa10fcca` is now READY. Build logs show route smoke passed (67 links, 27 targets, 25 templates, 0 dynamic hrefs skipped) and production build started/completed successfully.
 - Independently looked up all 3 host aliases; each resolves to the READY `dpl_8rBZZWpmnAP8ynh8g4gFd6hDjcJv`: `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. The aliases previously listed on READY `dpl_FUDWvsi8sgvfuKkpZDWYJLu5qj4B` are now assigned to dpl_8r; a deployment-alias list call for the former returned empty, consistent with reassignment.
 - Checklist commit `54ce30474f6ec9467acdf4638eb9c874ac60ff34` is currently QUEUED for a Git-integrated production build; not yet READY/alias verified. No manual deploy.
+
+
+## Hourly execution snapshot — 2026-11-24 02:35 Africa/Lagos
+
+- Repository/main checkpoint at start of run: `a9c503ce6efd9f71eefdb5f1db7cb95a9abd0517`. This checklist update is a separate commit; Git integration should create a deployment. Do not claim that the new documentation commit is live until READY and aliases are independently verified.
+- Schema inspection: 20 public `ie_*` tables; RLS enabled on all 20. No schema, policy, or security changes.
+- Added `ihsan-reference-index` to the previously empty Islamic Dictionary category. Article id `eb113de1-9ac8-4702-84e1-bfc83899cba5`; 4 paraphrased draft content items; 3 reference texts; category dictionary; `status=review`, `verification_status=unverified`. Revision #1 id `19eb09a8-2824-4ef6-8171-91a9e2ba97e2` is saved. Source catalog id `76f1fbfb-4a8d-4d36-a9e2-03c7ef5493c1`, one article-source link, source URL `https://islamansiklopedisi.org.tr/ihsan--iyilik`. Author: Mustafa Çağrıcı; TDV İslâm Ansiklopedisi, 2000. Text is paraphrased; no Qur’an text or Hadith text copied; cited hadith editions not independently checked.
+- Direct Supabase verification: 34 articles (2 published/unverified, 32 review/unverified, 0 verified); 59 source links; 0 articles without source links; 0 duplicate article/source pairs; 0 links to null-URL sources; 46 source rows (2 null-URL placeholders preserved); 0 duplicate non-null source URLs; 19 revisions; Dictionary category now 1 article.
+- Qur’an: 6,236 verses, Arabic/English gaps 0, transliteration gaps 6,236; 114 Surahs, metadata gaps 0, ayah sum 6,236. Transliteration remains blocked pending redistribution/use permission.
+- Hadith: Malik 1,858 (29 Arabic gaps, 40 English gaps, narrator/book/chapter/title missing across all 1,858); Riyad 1,896 (Arabic/English complete, 11 narrator gaps, book number missing all 1,896, chapter/title complete); hadith-books table 0 rows. Exact edition and underlying redistribution rights unresolved; no import.
+- Prophets: 25/25 story and lessons complete; correct metadata key `review_required=true` and `editorial_status=pending_editorial_review` for all 25; `verification_status=not_scholarly_verified` for all 25. Seerah: 9/9 descriptions; `editorial_status=needs_editorial_review` and not scholarly verified for all 9. Previous audit using an incorrect Prophets status key returned 0; corrected audit now confirms 25 pending-review flags.
+- Duas: 40 records; transliteration missing 40; English gaps 0. Companions CMS: 22 articles, all review/unverified. Article categories: History 0, Scholars 0, Duas 0; Dictionary now 1.
+- Import provenance: 18 source-import rows, all `content_hash` NULL; QuranEnc English Saheeh v1.1.2 has 13 batch records, 12 completed batches imported=6,236/skipped=0, plus one failed zero-row batch with successful retry. Separate Qur’anic supplication import adds 34 records. Original source files not available; do not invent file checksums.
+- SQL/log QA: four recent Postgres errors were identified: one prior read-only probe used nonexistent `arabic_text` (schema field is `arabic`); one initial insert failed JSON parsing and was retried using `jsonb_build_array`; two read-only audit queries failed due nested aggregates and an omitted `sort_order` field, then the corrected audit succeeded. Failed statements had no side effects; successful Ihsan insertion and current counts were directly verified. No further SQL error after the corrected insert/audit in this check. Avoid repeating malformed query patterns.
+- Production: READY deployment `dpl_4qstFMKDxBu3kj6Cq87Krnrysyvj`, commit `a9c503ce6efd9f71eefdb5f1db7cb95a9abd0517`; all 3 aliases confirmed. Build completed successfully; prior route-smoke evidence remains 67 links/27 targets/25 templates/0 dynamic hrefs skipped, TypeScript passed and 78/78 static pages generated. Runtime error clusters 24h: none; error/fatal logs 30m: no entries.
+- Authenticated reader/navigation testing remains SSO-blocked; do not bypass. No destructive actions, RLS/security changes, credentials, billing changes, or manual deployment bypass.
