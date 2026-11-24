@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-24 (02:04 Africa/Lagos; direct Supabase/GitHub/Vercel audit).
+Last evidence review: 2026-11-24 (02:05 Africa/Lagos; direct Supabase/GitHub/Vercel audit).
 
 ## Checklist
 
@@ -22,7 +22,7 @@ Last evidence review: 2026-11-24 (02:04 Africa/Lagos; direct Supabase/GitHub/Ver
 | Duas | In progress | 40 records; transliteration missing 40; English fields complete. |
 | Navigation/static regression | In progress | Route smoke passed 67 links, 27 targets, 25 route templates, 0 dynamic hrefs skipped; TypeScript/build passed; 78/78 static pages generated. |
 | Authenticated reader tests | Blocked | Project SSO protection blocks authenticated browser testing; no bypass. |
-| Production health | Completed (02:04 verification) | READY deployment dpl_FUDWvsi8sgvfuKkpZDWYJLu5qj4B, commit 7401cc0; all 3 aliases verified. Vercel runtime errors 24h=0; error/fatal runtime log group 30m empty. Current main checklist commit 7401cc0 is deployed READY. Historical Qur'an import RLS error remains; do not weaken RLS. |
+| Production health | Completed for last READY; latest checklist build in progress | READY deployment dpl_FUDWvsi8sgvfuKkpZDWYJLu5qj4B, commit 7401cc0; all 3 aliases verified. Runtime errors 24h=0; error/fatal logs 30m empty. Latest audit commit d5146e8 is BUILDING; route smoke passed. Historical Qur'an import RLS error remains; do not weaken RLS. |
 
 
 ## Audit snapshot — 2026-11-24 (00:52 Africa/Lagos; superseded by 02:04 update)
@@ -333,3 +333,11 @@ Last evidence review: 2026-11-24 (02:04 Africa/Lagos; direct Supabase/GitHub/Ver
 - Other direct audit results: Prophet drafts=25 with 0 story/lesson gaps and all 25 correct review/not-verified flags; Seerah=9 descriptions complete and all 9 flags correct. Hadith=3,754: Malik 1,858 (29 Arabic/40 English gaps; narrator/book/chapter/title missing all 1,858); Riyad 1,896 (Arabic/English complete, 11 narrator gaps, book number missing all, chapter number/title complete); Hadith-books table=0. Duas=40 (40 transliteration gaps, English gaps=0). Articles=33 (2 published/unverified, 31 review/unverified, 0 verified), 58 source links, 0 source/citation gaps, 0 duplicate pairs/duplicate non-null URLs; sources=45 (2 NULL URL placeholders preserved), revisions=18.
 - Vercel production deployment `dpl_FUDWvsi8sgvfuKkpZDWYJLu5qj4B` is READY on commit `7401cc055d8734c2dda1f234c363164be1149dcf`; deployment readback and alias-list readback confirm all three aliases: `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. Runtime error aggregation 24h reports no errors; error/fatal logs for the last 30m are empty.
 - No new content was imported this run because license/edition blockers remain; this run delivered audit/reproducibility evidence instead. Authenticated browser tests remain SSO-blocked. No destructive changes, RLS/security changes, credentials, billing changes, or manual deployment.
+
+
+## Build checkpoint — 2026-11-24 02:05 Africa/Lagos
+
+- Verified 20 public `ie_*` tables by schema listing; RLS is enabled on all 20 (none disabled). No schema or policy changes.
+- Git-triggered production build `dpl_8rBZZWpmnAP8ynh8g4gFd6hDjcJv` for checklist commit `d5146e866dc88ff2877476292fb85b09aa10fcca` is still BUILDING. Vercel build events show the route/navigation smoke check passed (67 internal literal links, 27 targets, 25 templates, 0 dynamic hrefs skipped; required header/footer and category slugs checked), and `npm run build` has started. Not READY, not alias-verified. The last READY deployment remains commit `7401cc0` with all three aliases assigned.
+- Runtime errors 24h: no clusters. Production error/fatal logs 30m: no entries. Authenticated browser reader testing remains SSO-blocked.
+- One initial read-only SQL probe assumed `arabic_text` on `ie_quran_verses`; schema inspection corrected the actual field to `arabic` and translation JSON to `translations->>'en'`. The probe failed before any write; the corrected audit passed. Future queries must inspect schema first.
