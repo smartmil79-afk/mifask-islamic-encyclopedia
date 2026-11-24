@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-24 (18:13 Africa/Lagos; direct GitHub main/status, Supabase schema/data/content write verification, source-backed Companion draft, Vercel deployment/build/alias/runtime verification).
+Last evidence review: 2026-11-24 (18:58 Africa/Lagos; direct GitHub main/status, Supabase schema/data/source audit, README inventory correction, Vercel deployment/build/alias/runtime verification).
 
 ## Checklist
 
@@ -25,7 +25,7 @@ Last evidence review: 2026-11-24 (18:13 Africa/Lagos; direct GitHub main/status,
 | Database/RLS protection | Completed (inspection only) | Inspected all 35 public tables; all 20 public `ie_*` tables have RLS enabled; no DDL or policy changes (11:29). |
 | Navigation/static regression | In progress | Latest production build `dpl_31pECP4fER5Zq9tK5gaqj6tnGK4h` ran `scripts/route-smoke.mjs`: 67 internal literal links, 27 unique targets, 25 route templates, 0 dynamic hrefs skipped, required header/footer links and category slugs present; TypeScript passed; 78/78 static pages generated. No authenticated browser test due SSO (18:13). |
 | Authenticated reader tests | Blocked | Project SSO protection is enabled for all deployments except custom domains; no bypass used. |
-| Production health | READY / aliases verified | `dpl_31pECP4fER5Zq9tK5gaqj6tnGK4h` READY on main commit `28747c7a823b659783f96fc64686e0b238f2b0bc`; deployment details and alias endpoints confirm main, team, and git-main aliases all map to this deployment. Vercel runtime error aggregation 24h: no errors; production error/fatal logs 30m: no entries. Build completed and route-smoke passed (18:13). Authenticated reader tests remain SSO-blocked; no bypass. |
+| Production health | READY / aliases verified | `dpl_Ev2LJVYshmxKU1ZmteAwriVVdfJz` READY on main commit `1ab74ceb972a334f67ed4c2d2054266e28875f85`; exact-SHA deployment listing, deployment metadata, and alias listing agree on the main, team, and git-main aliases. Build events confirm route-smoke passed (67 internal literal links, 27 unique targets, 25 route templates, 0 dynamic hrefs skipped), Next.js compiled, type checking passed, 78/78 static pages generated, and deployment completed. Runtime error aggregation 24h: no errors; production error/fatal logs 30m: no entries. Authenticated reader tests remain SSO-blocked; no bypass. (18:58). |
 
 
 
@@ -666,3 +666,28 @@ Last evidence review: 2026-11-24 (18:13 Africa/Lagos; direct GitHub main/status,
 4. Review analytics rate/abuse protections and Supabase SECURITY DEFINER/performance findings without weakening RLS or changing grants without a separately validated remediation.
 5. Verify the next documentation-triggered Git deployment by exact commit SHA; do not claim READY or aliases until Vercel evidence exists.
 6. Complete authenticated reader/navigation regression only when legitimate SSO access is available.
+
+
+## Hourly execution update — 2026-11-24 18:58 Africa/Lagos
+
+- GitHub main inspected before this checkpoint: commit `1ab74ceb972a334f67ed4c2d2054266e28875f85`. Re-read `docs/PHASE17_STATUS.md`, `README.md`, and `scripts/route-smoke.mjs`. The README had a stale Companions count (22); direct Supabase now confirms 23 Companion-category articles. Updated the README count to 23 in commit `c8e61fbbdd44506d7d8b3b3053c1f8e64b43ed53`. No other README inventory claim was changed.
+- Direct Supabase schema inspection before content/data audit: verified exact columns/types for `ie_articles`, `ie_categories`, `ie_sources`, `ie_article_sources`, `ie_article_revisions`, `ie_quran_verses`, `ie_quran_surahs`, `ie_hadiths`, `ie_hadith_books`, `ie_hadith_collections`, `ie_prophets`, `ie_seerah_events`, `ie_duas`, `ie_adhkar`, `ie_names_of_allah`, and `ie_source_imports`. Confirmed Hadith English `translations->'en'` is a JSON string, Dua English `translations->'en'` is an object with nested `text`, and Qur'an English `translations->'en'` is an object with nested `text`. All 20 public `ie_*` tables have RLS enabled; 0 have FORCE ROW LEVEL SECURITY. No DDL, policy, grant, credential, or security changes.
+- Fresh direct Supabase integrity audit: Qur'an=6,236 verses; Arabic gaps=0; nested English text gaps=0; edition/version/publisher/source_url gaps=0; transliteration gaps=6,236; unique verse coordinates=6,236. Surahs=114; required metadata gaps=0; ayah-count sum=6,236.
+- Hadith: Malik=1,858 (Arabic gaps=29; English gaps=40; narrator/book_number/chapter_number/chapter_title gaps=1,858 each; edition/source_edition gaps=1,858); Riyad=1,896 (Arabic/English gaps=0; narrator gaps=11; book_number gaps=1,896; chapter_number/chapter_title gaps=0; edition/source_edition gaps=1,896). Unique hadith_number values within each collection; English JSON shape is string for all records; `ie_hadith_books`=0. No Hadith text or metadata imported.
+- Prophets=25; story/lesson gaps=0; all 25 exact metadata flags match `review_required=true`, `editorial_status=pending_editorial_review`, `verification_status=not_scholarly_verified`. Seerah=9; description gaps=0; all 9 exact flags match `editorial_status=needs_editorial_review` and `verification_status=not_scholarly_verified`.
+- Duas=40 (Arabic gaps=0; nested English text gaps=0; English translation JSON object shape correct; transliteration gaps=40). Adhkar=34 (Arabic/transliteration gaps=0). Names of Allah=99 (transliteration gaps=0; non-empty meaning-object gaps=0).
+- Articles=39 (2 published, 37 review; all 39 unverified, 0 verified). Category counts: The Companions=23, Islamic Dictionary=5, Aqeedah=1, Fiqh=2, Hadith & Sunnah=1, Muslim Life=1, Seerah=2, The Prophets=3, The Qur’an=1; Duas & Adhkar, Islamic History, and Scholars CMS categories=0. Dedicated Dua/Adhkar records remain separate from CMS categories.
+- Source/revision audit: sources=51; NULL-URL placeholders=2 preserved; distinct non-NULL URLs=49; source title/citation gaps=0; source notes gaps=0; reliability-note gaps=0; article-source links=64; link citation-detail gaps=0; orphan article/source links=0; duplicate article/source pairs=0; revisions=25; non-object snapshots=0; orphan revisions=0. No content write was needed this run.
+- Import provenance: 18 source-import rows; all 18 `content_hash` NULL and all 18 `source_manifest.source_hash` NULL. Original source artifacts unavailable; no hashes invented. Malik import source remains mutable jsDelivr `@1`; Riyad path is pinned but its edition/translation rights and original source hash remain unresolved.
+- Vercel exact-SHA deployment listing, `get_deployment`, and alias listing confirm `dpl_Ev2LJVYshmxKU1ZmteAwriVVdfJz` is READY for commit `1ab74ceb972a334f67ed4c2d2054266e28875f85`. Main production alias `mifask-islamic-encyclopedia-liha.vercel.app`, team alias, and git-main alias all resolve to this deployment. Build events confirm route-smoke passed (67 internal literal links, 27 unique targets, 25 route templates, 0 dynamic hrefs skipped); Next.js 15.5.29 compiled; type checking passed; 78/78 static pages generated; deployment completed. Non-blocking warnings: npm unknown `cache-dir` setting and edge-runtime page not statically generated. Vercel runtime errors (24h)=none; production error/fatal logs (30m)=none.
+- Supabase unified logs query for 2026-11-24 17:28–17:58 UTC returned no rows. This is a bounded empty result, not a comprehensive zero-error guarantee. Authenticated reader testing remains SSO-blocked; no bypass used.
+- No database writes this run. No transliteration or Hadith imports because intended redistribution rights, exact editions, and original source hashes remain unresolved.
+
+## Next priorities after 18:58 audit
+
+1. Continue source-backed Companion and Islamic knowledge work only after checking existing slugs, sources, rights, and edition fit; keep drafts review/unverified.
+2. Obtain compatible Qur'an/Dua transliteration redistribution permission before import.
+3. Recover immutable Malik provenance and original source artifacts; establish exact Riyad edition and translation rights before any Hadith backfill.
+4. Review Supabase SECURITY DEFINER analytics exposure and performance/security advisories without weakening RLS or changing grants absent a validated, approved remediation.
+5. Verify any new Git-triggered deployment by exact commit SHA and alias evidence; no manual deployment or quota bypass.
+6. Complete authenticated reader/navigation testing only when legitimate SSO access becomes available.
