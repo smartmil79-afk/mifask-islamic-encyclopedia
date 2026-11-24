@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-24 (11:29 Africa/Lagos; direct GitHub main/repository, Supabase schema/data/source-import audit, and Vercel production/alias/runtime verification).
+Last evidence review: 2026-11-24 (12:30 Africa/Lagos; direct GitHub main/repository, Supabase schema/data/source-import audit, and Vercel production/alias/runtime verification).
 
 ## Checklist
 
@@ -25,7 +25,7 @@ Last evidence review: 2026-11-24 (11:29 Africa/Lagos; direct GitHub main/reposit
 | Database/RLS protection | Completed (inspection only) | Inspected all 35 public tables; all 20 public `ie_*` tables have RLS enabled; no DDL or policy changes (11:29). |
 | Navigation/static regression | In progress | Inspected `scripts/route-smoke.mjs`: core route templates, category slugs, required Header/Footer links, Qur'an reader local-search/translation/completeness markers, and editorial source-integrity markers. Latest recorded build smoke remains 67 links, 27 targets, 25 templates, 0 dynamic hrefs skipped; TypeScript passed; 78/78 pages. No authenticated browser test due SSO. |
 | Authenticated reader tests | Blocked | Project SSO protection is enabled for all deployments except custom domains; no bypass used. |
-| Production health | READY / aliases verified | `dpl_knjWE6gAw4cGTjFMnWaGb6WEzyD6` READY on commit `2f0d124aaec8c52df1d78ef76ad45e2d85a04a05`; deployment response confirms all 3 aliases. Vercel runtime error aggregation 24h: no clusters; production error/fatal logs 30m: no entries. Supabase logs 10:00–10:30 UTC: 1 edge, 3 pgbouncer, 2 postgres rows; 0 event-message error/fatal matches (bounded search only). SSO blocks authenticated reader tests (11:29). |
+| Production health | READY / aliases verified | `dpl_GwwLeraCFWoVJnLSH88ZG1ikGZip` READY on commit `69e698d5a106d667b8553fec98df09721b5d82c8`; deployment response and alias listing confirm main, team, and git-main aliases. Runtime error aggregation 24h: no clusters; production error/fatal logs 30m: no entries. Current build logs confirm 67 links, 27 targets, 25 route templates, 0 dynamic hrefs skipped, TypeScript/build passed, and 78/78 static pages. Supabase unified-log query 11:30–12:30 UTC returned no rows (bounded only). SSO blocks authenticated reader tests (12:30). |
 
 
 ## Hourly execution update — 2026-11-24 07:16 Africa/Lagos
@@ -524,4 +524,33 @@ Last evidence review: 2026-11-24 (11:29 Africa/Lagos; direct GitHub main/reposit
 2. Continue source-backed Companion/Islamic-knowledge additions where primary-source and rights evidence is sufficient; retain review/unverified status.
 3. Seek explicit Tanzil transliteration permission for MIFASK's intended use before any import.
 4. Resolve exact Malik/Riyad editions, underlying translation rights, and record-level metadata provenance before backfill.
+5. Keep authenticated reader testing blocked until legitimate SSO access is available.
+
+
+## Hourly execution update — 2026-11-24 12:30 Africa/Lagos
+
+- Re-read GitHub main: current commit before this update was `69e698d5a106d667b8553fec98df09721b5d82c8` (“Record Phase 17 11:29 Supabase audit and README remediation”), parent `6b0474449d3bd1aa36e8b9244026965faf48fe2c`. Re-read the corrected README, package.json, route-smoke script, and this checklist. README accurately describes the deployed Next.js/Supabase content system and documents the browser-safe publishable/anon key boundary; no privileged key is documented for frontend use.
+- Inspected all 35 public table definitions and constraints. All 20 public `ie_*` tables have RLS enabled. No schema or policy changes.
+- Direct read-only Supabase audit:
+  - Qur'an: 6,236 verses; Arabic gaps=0; correct nested English path `translations->'en'->>'text'` gaps=0; edition/version/publisher/source_url gaps=0; transliteration gaps=6,236; unique verse coordinates=6,236.
+  - Surahs: 114; required metadata gaps=0; declared ayah sum=6,236; per-Surah count mismatches=0.
+  - Duas: 40; Arabic gaps=0; transliteration gaps=40. Important JSON-shape confirmation: `translations->'en'` is an object, not a string; keys include `text`, `edition`, `version`, `publisher`, `source_url`, and `footnotes`. Correct nested English `text` gaps=0. Hadith English `translations->'en'` is a string; do not apply the Qur'an/Dua JSON path to Hadith.
+  - Hadith: Malik 1,858 (Arabic gaps=29; English gaps=40; narrator/book/chapter/chapter-title gaps=1,858 each; edition/source_edition gaps=1,858); Riyad 1,896 (Arabic/English gaps=0; narrator gaps=11; book_number gaps=1,896; chapter/chapter-title gaps=0; edition/source_edition gaps=1,896). Unique hadith_number values match record counts in both collections. `ie_hadith_books`=0. No metadata backfill/import: exact edition and underlying translation rights remain unresolved.
+  - Prophets: 25; story gaps=0; empty lesson arrays=0; all 25 pending editorial review and not scholarly verified.
+  - Seerah: 9; description gaps=0; all 9 have `editorial_status=needs_editorial_review` and `verification_status=not_scholarly_verified`.
+  - Articles: 37; 2 published, 35 review/other; all 37 unverified; 0 verified; reference_texts gaps=0. Article-source links=62; citation-detail gaps=0; duplicate pairs=0.
+  - Sources: 49 rows; 47 non-NULL URL rows and 47 distinct non-NULL URLs; duplicate non-NULL URLs=0; 2 NULL-URL placeholders preserved. All source title/citation/notes/reliability-note fields populated. An initial diagnostic expression subtracted distinct non-NULL URLs from all source rows and misleadingly counted the two NULL placeholders as apparent duplicates; a corrected separate non-NULL row/distinct count and grouped duplicate query confirm zero duplicate URLs.
+  - Revisions: 22; orphan revisions=0. Categories: Companions=22, Dictionary=4, Fiqh=2, Qur'an=1, Hadith=1, Seerah=2, Aqeedah=1, Prophets=3, Muslim Life=1; Duas, History, and Scholars CMS categories currently have 0 articles.
+  - Names of Allah: 99; transliteration gaps=0; meaning-object gaps=0. Adhkar: 34; Arabic and transliteration gaps=0.
+  - Source imports: 18 rows, all 18 original content_hash fields NULL. QuranEnc English Saheeh v1.1.2: 12 completed batches, imported=6,236, skipped=0, plus one failed zero-row initial batch. Other recorded datasets: Malik 1,858 (version 2026-11-21), Riyad 1,896 (version 2026-11-21), Prophet reference index 25 (v1.0), Quranic duas 34 (v1.1.2), Seerah reference index 3 (v1.0). Original source files unavailable; no hashes fabricated.
+- Vercel exact-SHA deployment lookup: `dpl_GwwLeraCFWoVJnLSH88ZG1ikGZip` is production READY for commit `69e698d5a106d667b8553fec98df09721b5d82c8`; get-deployment and alias listing confirm all 3 aliases (main, team, git-main). Build events: route smoke passed 67 internal literal links, 27 unique targets, 25 route templates, 0 dynamic hrefs skipped; required Header/Footer links and category slugs passed; Next.js compilation succeeded; type checking completed; 78/78 static pages generated. Non-blocking build warnings: npm `cache-dir` config is unknown to the current npm version; an edge-runtime page is not statically generated. Deployment reached READY.
+- Vercel runtime error aggregation for 24h found no clusters; production error/fatal runtime logs for 30m returned no entries. Supabase unified-log query for 11:30–12:30 UTC returned no rows; this is a bounded empty result, not a comprehensive historical zero-error claim.
+- No database content writes or imports this run. No RLS/security changes, credentials, billing changes, destructive operations, manual deployments, or quota bypass. Authenticated reader/browser tests remain blocked by SSO; no bypass attempted.
+
+### Next run priorities (12:30 checkpoint)
+
+1. Continue source-backed Companion and Islamic-knowledge additions only where primary-source provenance and rights are sufficiently clear; preserve review/unverified status.
+2. Obtain explicit Tanzil transliteration permission for MIFASK's intended use before importing.
+3. Establish exact Malik/Riyad editions and underlying translation rights before text or metadata backfill.
+4. Review the 40 Dua transliteration gaps only against a rights-compatible, source-verifiable dataset; do not assume the existing English translation object's provenance grants transliteration rights.
 5. Keep authenticated reader testing blocked until legitimate SSO access is available.
