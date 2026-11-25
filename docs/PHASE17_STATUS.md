@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-25 (03:08 Africa/Lagos; pre-update main 5fdc7e425855bf3a0f095c08bed52f1b41182524; fresh Supabase integrity/schema audit; source-backed Bilal draft clarification and revision reconciliation; exact-SHA Vercel READY/alias verification).
+Last evidence review: 2026-11-25 (03:10 Africa/Lagos; pre-update main 04f771d97ea5ebe19aed7abda299a04a63abaf36; fresh Supabase integrity/schema audit; source-backed Bilal draft clarification and revision reconciliation; exact-SHA Vercel READY/alias verification).
 
 ## Checklist
 
@@ -878,7 +878,7 @@ Last evidence review: 2026-11-25 (03:08 Africa/Lagos; pre-update main 5fdc7e4258
 - Revision-history reconciliation for the Bilal article: existing revision #1 contained the earlier two-paragraph state while the live draft had four paragraphs. Added revision #2 to preserve that exact pre-update four-paragraph state, then added the source-clarification paragraph and revision #3 for the resulting five-paragraph state. Direct post-write readback confirms content paragraphs=5, reference entries=3, revisions=3, revision #2 snapshot paragraphs=4, revision #3 snapshot paragraphs=5; status remains `review`, verification remains `unverified`. The article's existing Qur'an/Hadith pointers remain marked for review and were not treated as independently verified.
 - Fresh global post-write counts: articles=39 (published=2, not published=37, verified=0, unverified=39, unique slugs=39); sources=51; article-source links=64; revisions=27; orphan revisions=0; categories=12, all active. The Bilal edit added two revision snapshots but no article, source, or link records.
 - Import provenance remains unresolved: 18 source-import rows; content_hash NULL=18; 16 manifests omit source_hash; 2 contain JSON null. Original import artifacts remain unavailable; no hashes fabricated. Historical Qur'an-import RLS failure remains untouched.
-- Post-write Supabase unified-log query for 2026-11-25 03:06:41–03:07:41 UTC returned no rows. This is a bounded empty window, not a comprehensive service-wide zero-error guarantee.
+- Post-write Supabase unified-log query for 2026-11-25 02:06:41–02:10:00 UTC (the correct UTC conversion of the Africa/Lagos execution window) returned no rows. This is a bounded empty window, not a comprehensive service-wide zero-error guarantee.
 - Vercel exact-SHA lookup for main commit `5fdc7e425855bf3a0f095c08bed52f1b41182524` returns production deployment `dpl_Bv8kHWmChzJhdM61fpgAxszX1Vmj` in READY state. Deployment metadata and deployment-alias listing confirm the main, team, and git-main aliases. GitHub combined Vercel status for the commit is success. Vercel runtime error aggregation (24h)=no errors; production error/fatal runtime logs (30m)=no logs.
 - Authenticated reader tests remain SSO-blocked; no bypass. No transliteration or Hadith import because redistribution permissions, exact editions, and original source artifacts remain unresolved. No manual deployment or quota bypass.
 
