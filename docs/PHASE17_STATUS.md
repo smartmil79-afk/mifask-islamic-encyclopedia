@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-25 (01:04 Africa/Lagos; base GitHub main commit 684a705274c2fe8864a72d30fe5f8b0afc61f2df; direct current-schema/content/provenance SQL audit; exact-SHA Vercel production, build events, aliases and runtime verification).
+Last evidence review: 2026-11-25 (02:09 Africa/Lagos; pre-update GitHub main e92ee3c8cc7a416246ee2b4e623a7ee2ec798093; direct schema/data/import/category/RLS audit; exact-SHA Vercel READY deployment, build events, aliases and runtime verification).
 
 ## Checklist
 
