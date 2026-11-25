@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-24 (21:14 Africa/Lagos; GitHub main commit 47d433da9ae0523f562be73c9e68e2ed4b88d378; direct public-schema/RLS and content/provenance SQL audits; current Vercel READY deployment, aliases, build events and runtime verification; official transliteration/translation terms rechecked).
+Last evidence review: 2026-11-25 (01:04 Africa/Lagos; base GitHub main commit 684a705274c2fe8864a72d30fe5f8b0afc61f2df; direct current-schema/content/provenance SQL audit; exact-SHA Vercel production, build events, aliases and runtime verification).
 
 ## Checklist
 
@@ -817,3 +817,27 @@ Last evidence review: 2026-11-24 (21:14 Africa/Lagos; GitHub main commit 47d433d
 5. Review analytics abuse/rate-limit exposure and Supabase advisor findings without weakening RLS or changing grants.
 6. Verify the next Git-triggered deployment by exact commit SHA and aliases; no manual deployment or quota bypass.
 7. Complete authenticated reader/navigation testing only when legitimate SSO access becomes available.
+
+
+## Hourly execution update — 2026-11-25 01:04 Africa/Lagos
+
+- GitHub main/repository re-inspected. Main branch exists; base commit is `684a705274c2fe8864a72d30fe5f8b0afc61f2df`. README and package scripts were fetched from main. README inventory remains 23 Companion CMS articles and accurately distinguishes draft/reference coverage from scholarly verification. `scripts/route-smoke.mjs` is wired as both `prebuild` and `routes:check`; it checks internal literal links, route templates, category slugs, required header/footer navigation, Qur'an reader implementation markers and editorial source-integrity markers.
+- Supabase project `honsqapwikfghoubwhcf` reports `ACTIVE_HEALTHY`, PostgreSQL 17.11. Re-inspected all 35 public tables and the exact current columns for articles, categories, source catalog, article-source links, revision snapshots, import manifests, Qur'an verses/Surahs, Hadith, Prophets, Seerah, Duas and adhkar. All 35 public tables have RLS enabled, including all 20 `ie_*` tables. Current schema names are `ie_hadiths` (with `collection_key` malik/riyad), `ie_sources`, `ie_article_sources`, and `ie_article_revisions`; this run used these actual names rather than older logical/table labels. No database writes, DDL, policy/grant changes, credential/billing changes, or destructive operations.
+- Direct read-only SQL audit: Qur'an 6,236 verses; Arabic gaps=0; correct nested `translations.en.text` gaps=0; edition/version/publisher/source_url gaps=0; transliteration gaps=6,236; duplicate (surah_number, ayah_number) coordinates=0. Surahs=114; required name/revelation/ayah metadata gaps=0; ayah-count sum=6,236.
+- Hadith `ie_hadiths.translations->'en'` is JSON string for both collections (verified with `jsonb_typeof`); correct English check is `translations->>'en'`. Malik=1,858 (Arabic gaps=29, English gaps=40, narrator/book_number/chapter_number/chapter_title gaps=1,858 each; edition/source_edition metadata gaps=1,858). Riyad=1,896 (Arabic/English gaps=0, narrator gaps=11, book_number gaps=1,896, chapter_number/chapter_title gaps=0; edition/source_edition metadata gaps=1,896). Unique hadith_number values equal record counts in each collection. `ie_hadith_books`=0. No text or metadata imported because exact editions, source provenance and underlying translation rights remain unresolved.
+- Prophet records=25: story gaps=0, empty lesson arrays=0, editorial/verification flag mismatches=0. Seerah=9: description gaps=0, editorial/verification flag mismatches=0. Duas=40: Arabic/English gaps=0, transliteration gaps=40. Adhkar=34: Arabic/transliteration gaps=0. Prior Names of Allah inventory remains 99 records with required fields populated; field coverage is not individual scholarly verification.
+- Article/source/revision audit: 39 articles (2 published, 37 not published; all 39 unverified; 0 verified; 39 unique slugs); 51 source rows (2 NULL-URL placeholders preserved, 49 distinct non-NULL URLs, no blank title/citation/notes/reliability notes); 64 article-source links (0 blank citation details, 0 duplicate pairs, 0 orphan article links); 25 revisions (0 orphan revisions, 0 non-object snapshots). No article/source content was modified.
+- Import provenance: 18 source-import rows; all 18 content_hash values NULL; 16 manifests omit the source_hash key and 2 contain JSON null. Original source artifacts unavailable; no hashes fabricated.
+- Vercel project `prj_L7pZ4eDx1kM6plWkl7W8or3V3BAE` latest production deployment is `dpl_2B35ydKCPgcJ46c9ddD7zVpDLjvh`, READY on exact main commit `684a705274c2fe8864a72d30fe5f8b0afc61f2df`. Deployment metadata and deployment alias listing confirm the main, team and git-main aliases all assigned to this deployment. Build events explicitly show route-smoke passed (67 internal literal links, 27 unique targets, 25 route templates, 0 dynamic hrefs skipped, required header/footer links and category slugs checked); Next.js 15.5.29 compiled successfully in 4.9s; lint/type-check stage ran; 78/78 static pages generated; deployment completed. Non-blocking warnings remain: unknown npm `cache-dir` configuration and an edge-runtime page that cannot be statically generated.
+- Vercel runtime error aggregation (24h)=no errors; production error/fatal runtime logs (30m)=no entries. Supabase unified logs for 2026-11-24 23:34–2026-11-25 00:04 UTC returned no rows; this is a bounded empty result, not a comprehensive service-wide zero-error guarantee.
+- Authenticated reader tests remain SSO-blocked; no bypass. No transliteration/Hadith imports because redistribution permissions, exact editions and original source provenance remain unresolved. No manual deployment or quota bypass.
+
+## Next priorities after 01:04 audit
+
+1. Obtain explicit compatible permission for Qur'an and Dua transliteration before importing.
+2. Recover original QuranEnc and Hadith source artifacts; establish authentic checksums only from original artifacts.
+3. Resolve Malik's mutable source reference, exact Riyad edition and underlying translation redistribution rights; do not fill missing Hadith metadata by inference.
+4. Continue source-backed Companion and Islamic knowledge editorial work only after source, rights and duplicate checks; preserve review/unverified status and revision snapshots.
+5. Review analytics abuse/rate-limit exposure and Supabase advisor findings without weakening RLS or changing grants.
+6. Verify the next Git-triggered deployment by exact commit SHA and aliases; no manual deployment or quota bypass.
+7. Complete authenticated reader/navigation tests only when legitimate SSO access becomes available.
