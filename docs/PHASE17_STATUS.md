@@ -1,6 +1,6 @@
 # Phase 17 — Content Completion & Verification
 
-Last evidence review: 2026-11-25 (05:31 Africa/Lagos; pre-update main 174812120544536acf1c2cf844cecea32779e1a2; direct Supabase content write/readback, schema/RLS/source/provenance/security audit; Vercel exact-SHA READY + three aliases and main-domain resolution verified).
+Last evidence review: 2026-11-25 (06:40 Africa/Lagos; pre-update main 6b1b94b485679092ccffa120cd1b5b49d1c25279; Uthman source-backed content and revision snapshots 2–3 verified in Supabase; 35/35 public-table RLS audit; Vercel dpl_5nEkGZK4w1m1nuFfuWxego3b7MGX READY with three aliases and GitHub Vercel status success).
 
 ## Checklist
 
