@@ -35,7 +35,7 @@ export default function AdminPage() {
   const [hadithImportResult,setHadithImportResult] = useState('');
   const [quranImportBusy,setQuranImportBusy] = useState(false);
   const [quranImportResult,setQuranImportResult] = useState('');
-  const canEdit = role === 'admin' || role === 'editor';
+  const canEdit = role === 'admin' || role === 'editor' || role === 'reviewer';
   const canImport = role === 'admin';
   const canViewAnalytics = role === 'admin';
   useEffect(()=>{ if(!supabase){setChecking(false);return;} supabase.auth.getSession().then(({data})=>setSession(data.session)); const {data:{subscription}}=supabase.auth.onAuthStateChange((_e,s)=>setSession(s));return()=>subscription.unsubscribe();},[]);
