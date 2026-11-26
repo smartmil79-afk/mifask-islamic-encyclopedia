@@ -236,6 +236,8 @@ if (!fs.existsSync(adminPageFile) || !fs.existsSync(editorialIntegrityFile) || !
     [adminSource, 'workflow change role guard', "Your CMS role does not permit workflow changes."],
     [adminSource, 'role-gated import controls', '{canImport&&<>'],
     [adminSource, 'role-gated analytics tab', 'canViewAnalytics&&<button'],
+    [adminSource, 'analytics content access guard', "tab==='analytics'?canViewAnalytics?"],
+    [adminSource, 'clear cached analytics on role downgrade', "if(!canViewAnalytics){setAnalyticsRows([]);if(tab==='analytics')setTab('overview');}"],
   ];
   for (const [source, feature, marker] of requiredEditorialMarkers) {
     if (!source.includes(marker)) problems.push({ file: 'editorial-source-smoke', href: feature, pathname: 'required editorial audit feature missing' });
