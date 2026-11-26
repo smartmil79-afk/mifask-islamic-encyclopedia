@@ -97,7 +97,7 @@ export async function POST(request:Request) {
     if(userErr||!userData.user)return NextResponse.json({error:"Invalid session"},{status:401});
     const admin=createClient(supabaseUrl,anonKey,{auth:{persistSession:false},global:{headers:{Authorization:"Bearer "+token}}});
     const {data:adminRow,error:adminErr}=await admin.from("ie_admins").select("active,role").eq("user_id",userData.user.id).maybeSingle();
-    if(adminErr||!adminRow?.active)return NextResponse.json({error:"Administrator access required"},{status:403});
+    if(adminErr||!adminRow?.active||adminRow.role!=="admin")return NextResponse.json({error:"Administrator access required"},{status:403});
     // Fail closed: repository code licences do not establish redistribution rights for underlying Hadith texts.
     if (process.env.MIFASK_HADITH_IMPORT_RIGHTS_CONFIRMED !== "true") {
       return NextResponse.json({
