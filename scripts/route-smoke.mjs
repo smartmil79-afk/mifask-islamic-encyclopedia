@@ -229,7 +229,7 @@ if (!fs.existsSync(adminPageFile) || !fs.existsSync(editorialIntegrityFile) || !
     [datasetAuditSource, 'missing article source-link audit', 'Articles missing linked source records'],
     [datasetAuditSource, 'companion source-link audit', 'Companion reference articles missing linked source records'],
     [adminSource, 'CMS role allowlist', "['admin','editor','reviewer'].includes(data?.role||'')"],
-    [adminSource, 'editor-only write capability', "const canEdit = role === 'admin' || role === 'editor';"],
+    [adminSource, 'article write capability aligned with reviewer RLS', "const canEdit = role === 'admin' || role === 'editor' || role === 'reviewer';"],
     [adminSource, 'admin-only import capability', "const canImport = role === 'admin';"],
     [adminSource, 'admin-only analytics capability', "const canViewAnalytics = role === 'admin';"],
     [adminSource, 'article save role guard', "Your CMS role does not permit article changes."],
