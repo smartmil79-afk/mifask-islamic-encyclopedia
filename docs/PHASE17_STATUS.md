@@ -1483,3 +1483,10 @@ Previous evidence review: 2026-11-25 23:44 Africa/Lagos (audit base main commit 
 5. Review a rate-limited analytics design and SECURITY DEFINER privileges without weakening RLS.
 6. Verify the README/documentation Git deployments after they reach READY; keep all alias claims tied to direct evidence.
 7. Complete authenticated reader regression only when legitimate SSO access is available.
+
+
+### Post-commit deployment check — 2026-11-26 01:06 Africa/Lagos
+
+- Checklist commit `9f250040a958c0b5344eef01b913b62d28a157e2` has an exact-SHA Vercel production deployment record: `dpl_4W1k9sTY2YgxurNv1yxTgfrUT9Hb`, state `QUEUED`. It is not READY and has no verified aliases.
+- The preceding README correction commit `4df7a032cf33d7b6703fe608215eba8c3348a7d1` has deployment `dpl_3eDvbeUfkfDiykmNmg7kgMnvo4XK`, state `BUILDING` at the latest exact-SHA check.
+- Direct project alias listing confirms the main, team and git-main aliases still point to the previously verified READY deployment `dpl_5ThJhLfgLp2ufYzd36mUHbQYqnDh` on commit `1509921d97d7a8ab1a876cfbcbe6a83882413992`. No alias was moved manually.
