@@ -11,7 +11,7 @@ The current Supabase content inventory includes:
 - **Qur'an:** 114 Surah records and 6,236 verse records. Arabic text and the QuranEnc English Saheeh translation (version 1.1.2) are present. The English translation records retain edition, version, publisher, and source URL metadata. Qur'an transliteration is not yet populated; redistribution permission for the intended MIFASK use remains under review.
 - **Hadith:** 3,754 records across Muwatta Malik and Riyad as-Salihin. Text gaps and collection metadata are still being reconciled against exact source editions and applicable rights; the current record count is not a claim of complete or edition-verified coverage.
 - **Prophets and Seerah:** 25 Prophet reference entries and 9 Seerah event records. These are draft/reference entries pending editorial review, not scholarly-verified narratives.
-- **Companions:** 23 CMS articles, with editorial and source review still required.
+- **Companions:** 25 CMS article records, with editorial and source review still required. Two Salman-named drafts have overlapping biographical scope and remain separate pending editorial reconciliation; the record count is not a count of unique individuals.
 - **Islamic knowledge:** dictionary, Aqeedah, Fiqh, Muslim Life, Qur'an, Hadith, Seerah, and other category articles.
 - **Duas and adhkar:** 40 Dua records and 34 adhkar records. Dua transliteration is incomplete.
 - **Names of Allah:** 99 records with transliteration and meaning fields populated; field completeness does not itself constitute individual scholarly verification.
