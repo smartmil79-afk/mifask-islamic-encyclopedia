@@ -26,7 +26,7 @@ export async function POST(req:Request) {
   if(userError||!user.user) return NextResponse.json({error:"Invalid session"},{status:401});
   db=createClient(supabaseUrl,anonKey,{auth:{persistSession:false},global:{headers:{Authorization:"Bearer "+token}}});
   const {data:admin,error:adminError}=await db.from("ie_admins").select("active,role").eq("user_id",user.user.id).maybeSingle();
-  if(adminError||!admin?.active) return NextResponse.json({error:"Administrator access required"},{status:403});
+  if(adminError||!admin?.active||admin.role!=="admin") return NextResponse.json({error:"Administrator access required"},{status:403});
   const body=await req.json().catch(()=>({}));
   const start=Math.max(1,Math.min(114,Number(body.start)||1));
   const end=Math.max(start,Math.min(114,Number(body.end)||Math.min(start+9,114)));
