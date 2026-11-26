@@ -1806,3 +1806,32 @@ Previous evidence review: 2026-11-25 23:44 Africa/Lagos (audit base main commit 
 8. Resolve the 15 articles without revision history, 23 latest snapshots without source_ids, and content/reference/status differences through authenticated editorial administration; never overwrite historical snapshots.
 9. Review analytics SECURITY DEFINER least privilege/rate limiting and other advisor findings without weakening RLS; repository main-branch protection remains an owner governance decision.
 10. Authenticated reader/admin tests remain SSO-blocked; no bypass attempted.
+
+
+## 2026-11-26 13:51 Africa/Lagos — audio storage, rights, manifest-shape and production re-audit
+
+### Direct Supabase verification
+- Project `honsqapwikfghoubwhcf` is `ACTIVE_HEALTHY`; PostgreSQL 17.11.
+- Re-inspected `information_schema.columns` before any potential write. `ie_quran_verses.audio_urls` is non-null JSONB; `ie_source_imports.source_manifest` is non-null JSONB; import hashes remain nullable text. No DDL or data writes were made.
+- Qur'an: 6,236 verses; Arabic gaps=0; correct `translations.en.text` gaps=0; edition/version/publisher/source_url gaps=0; transliteration gaps=6,236. All 6,236 `audio_urls` values are empty JSON objects (`{}`); none is populated. Surahs=114, ayah_count sum=6,236, Surah metadata gaps=0.
+- Source-manifest field audit refined the previous aggregate: 18 import rows; 17 completed and one historical failed zero-row attempt; all 18 `content_hash` values NULL; zero populated `source_hash` values. The `source_hash` key is absent from 16 manifests and present-but-empty in the Malik and Riyad manifests. `source_url` is populated in 3 manifests (Malik, Riyad, Qur'anic supplications) and absent in 15. `license_terms_url` is populated only for Qur'anic supplications; 17 manifests lack it. No hash or provenance value was invented.
+- Prophets=25, missing import IDs=0, missing stories=0, missing lessons=0. Seerah=9, descriptions missing=0, import IDs missing=6. Adhkar=34, English string values=34/34, transliteration gaps=0, missing import IDs=34. Duas=40, English object `text` gaps=0, transliteration gaps=40, missing import IDs=6. Names of Allah=99, transliteration gaps=0, missing import IDs=99.
+- Hadith: Malik=1,858 (Arabic gaps=29, English string gaps=40, narrator and book-number gaps=1,858 each); Riyad=1,896 (Arabic/English gaps=0, narrator gaps=11, book-number gaps=1,896). Both have source_import_id populated; rights and exact editions remain unresolved.
+- Articles=43 (2 published, 41 review, 0 verified); revision rows=28; 23 latest snapshots omit the `source_ids` key. No snapshot changes.
+- RLS schema audit: all 20 public `ie_*` tables have RLS enabled (20/20; disabled=0). The inspected public content tables expose SELECT policies; privileged management policies are limited to specified tables and the active-admin predicate. No attempt was made to bypass these policies or backfill import IDs.
+
+### Qur'an audio source and reader implementation
+- Re-fetched `app/quran/page.tsx` from GitHub main (blob `838e708cbffc30b53b17e8075ed1e0dea850eb16`). The Listen handler calculates the global ayah number, calls `https://api.alquran.cloud/v1/ayah/{globalNo}/ar.alafasy`, stores the returned `data.audio` in component state, and renders an HTML `audio` element with controls. This verifies the source-code path, not authenticated browser playback or all 6,236 endpoints.
+- Official AlQuranCloud terms, last updated 13 November 2026: https://alquran.cloud/terms-and-conditions. They state that recitations remain copyrighted by reciters; streaming, embedding and downloading are allowed for personal and educational use; in a commercial product a reciter may ask for removal; API/CDN use is free but subject to soft rate limits; caching is requested; large apps/full mirrors should contact the provider. MIFASK's applicable commercial status and any specific reciter/estate conditions were not established in this run. Do not treat the general terms as blanket commercial redistribution permission.
+- Official ayah-audio CDN documentation: https://alquran.cloud/cdn. It describes audio by global ayah number 1–6,236 and available edition/bitrate metadata. No bulk audio URL manifest was created and no `audio_urls` field was populated.
+- A sample endpoint response in the previous checkpoint is not a complete audio-availability or playback test. Authenticated reader tests remain SSO-blocked; no bypass attempted.
+
+### Fresh security, logs and production
+- Supabase security advisor observed 2026-11-26 12:52Z: 30 anonymous-executable SECURITY DEFINER findings, 31 authenticated-executable SECURITY DEFINER findings, 3 mutable search paths, one RLS-enabled table without policies (`ie_reminder_delivery_logs`, remains default-deny), and one leaked-password-protection warning. Performance advisor: 26 unindexed foreign keys, 23 RLS initialization-plan warnings, 10 unused-index notices, 18 multiple-permissive-policy warnings. Health advisor: zero lints. These are advisor findings, not evidence of exploitation. No remediation or security changes.
+- Supabase unified logs for 12:22–12:52Z contained 3 PgBouncer, 1 PostgreSQL and 1 edge log record. This is a bounded source count, not a comprehensive error count.
+- Vercel project latest deployment `dpl_HwcEdqcAJEcCUzvsC9ys6qVkpoMZ` is READY, production target, exact GitHub main SHA `feca8de07776f3b404900d0c8c367ae8bf73e18c`. GitHub combined Vercel status is success. The three expected aliases independently point to this deployment: main, team and git-main aliases.
+- Vercel runtime error aggregation over 24h returned no errors; production error/fatal runtime logs over 30m returned no entries. This is bounded telemetry, not proof every request succeeds.
+
+### Actions and constraints
+- This run performed read-only schema/data/policy/advisor/log audits and source-code/source-terms verification. No database writes, imports, DDL, destructive changes, RLS/security weakening, credential use, billing changes, manual deployment, alias reassignment or quota bypass.
+- Current unresolved work: QuranEnc latest-version/full-corpus comparison; transliteration permissions; Hadith source rights and edition mapping; six Seerah import IDs; Adhkar/Names of Allah authorized provenance linkage; six Dua provenance gaps; Prophet reference editorial deduplication; article revision gaps; analytics SECURITY DEFINER least-privilege/rate-limit review.
