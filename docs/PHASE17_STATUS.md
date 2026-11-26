@@ -1518,3 +1518,11 @@ Previous evidence review: 2026-11-25 23:44 Africa/Lagos (audit base main commit 
 5. Resolve Malik/Riyad edition and translation rights before metadata/text backfill.
 6. Review rate-limiting and least-privilege design for `ie_record_analytics` without weakening RLS; review `ie_bootstrap_first_admin` privilege scope.
 7. Verify each future Git-triggered deployment by exact commit SHA and direct alias resolution; keep authenticated reader tests blocked until legitimate SSO access exists.
+
+
+### QuranEnc publication-conditions review — 2026-11-26
+
+- Reviewed the official QuranEnc API documentation: https://quranenc.com/en/home/api/translations and https://quranenc.com/en/home/api/session/properties.
+- QuranEnc states that translation contents may be downloaded and republished subject to conditions: do not modify, add to, or remove content; clearly identify the publisher/source; include the translation version; retain required transcript information in the document; notify QuranEnc about translation notes; keep the translation updated to the latest source version; and do not display inappropriate advertisements alongside the translation.
+- The translation-list API documents `version` and `last_update` fields, which can support future freshness checks. The live list endpoint could not be retrieved in this run, so the current English Saheeh release remains unverified; the database still records v1.1.2.
+- These published conditions concern translation content. They do not establish permission for a separate Qur'an transliteration dataset. No transliteration import or translation update was performed. Before claiming compliance, verify the site's attribution/version/transcript display and compare all 6,236 stored translations and footnotes against the exact current source release.
