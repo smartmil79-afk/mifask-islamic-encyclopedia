@@ -228,6 +228,14 @@ if (!fs.existsSync(adminPageFile) || !fs.existsSync(editorialIntegrityFile) || !
     [editorialSource, 'verified articles source-link check', 'Verified article has fewer than two linked source records'],
     [datasetAuditSource, 'missing article source-link audit', 'Articles missing linked source records'],
     [datasetAuditSource, 'companion source-link audit', 'Companion reference articles missing linked source records'],
+    [adminSource, 'CMS role allowlist', "['admin','editor','reviewer'].includes(data?.role||'')"],
+    [adminSource, 'editor-only write capability', "const canEdit = role === 'admin' || role === 'editor';"],
+    [adminSource, 'admin-only import capability', "const canImport = role === 'admin';"],
+    [adminSource, 'admin-only analytics capability', "const canViewAnalytics = role === 'admin';"],
+    [adminSource, 'article save role guard', "Your CMS role does not permit article changes."],
+    [adminSource, 'workflow change role guard', "Your CMS role does not permit workflow changes."],
+    [adminSource, 'role-gated import controls', '{canImport&&<>'],
+    [adminSource, 'role-gated analytics tab', 'canViewAnalytics&&<button'],
   ];
   for (const [source, feature, marker] of requiredEditorialMarkers) {
     if (!source.includes(marker)) problems.push({ file: 'editorial-source-smoke', href: feature, pathname: 'required editorial audit feature missing' });
