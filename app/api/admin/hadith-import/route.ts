@@ -6,7 +6,7 @@ export const maxDuration = 60;
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-const malikBase = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions";
+const malikBase = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@df57907be35291c91ad6a6691180e22ca9920784/editions";
 const riyadUrl = "https://raw.githubusercontent.com/AhmedBaset/hadith-json/70b83d6d21995bb32f8d7271cd75501be5a922a/db/by_book/other_books/riyad_assalihin.json";
 
 function records(data:any):any[] {
@@ -32,10 +32,24 @@ async function fetchJson(url:string) {
   return res.json();
 }
 async function importCollection(admin:any,key:string,sourceName:string,sourceUrl:string,raw:any,rows:any[]) {
+  const sourceRevision=key==="malik"?"df57907be35291c91ad6a6691180e22ca9920784":"70b83d6d21995bb32f8d7271cd75501be5a922a";
+  const repositoryLicenseUrl=key==="malik"?"https://github.com/fawazahmed0/hadith-api/blob/df57907be35291c91ad6a6691180e22ca9920784/LICENSE":null;
+  const repositoryReadmeUrl=key==="riyad"?"https://github.com/AhmedBaset/hadith-json/blob/70b83d6d21995bb32f8d7271cd75501be5a922a/README.md":null;
   const {data:imp,error:impErr}=await admin.from("ie_source_imports").insert({
     source_name:sourceName,source_site:sourceUrl,source_path:sourceUrl,dataset_key:key,
-    import_version:"2026-11-21",status:"running",records_total:rows.length,records_imported:0,records_skipped:0,
-    source_manifest:{collection:key,source_url:sourceUrl,method:"server-side batch import",source_hash:null},
+    import_version:`git:${sourceRevision}`,status:"running",records_total:rows.length,records_imported:0,records_skipped:0,
+    source_manifest:{
+      collection:key,
+      source_url:sourceUrl,
+      source_revision:sourceRevision,
+      method:"server-side batch import",
+      source_hash:null,
+      source_hash_status:"not_supplied",
+      license_terms_url:null,
+      rights_review_status:"unresolved",
+      repository_license_url:repositoryLicenseUrl,
+      repository_readme_url:repositoryReadmeUrl
+    },
     started_at:new Date().toISOString()
   }).select("id").single();
   if(impErr)throw impErr;
@@ -84,6 +98,13 @@ export async function POST(request:Request) {
     const admin=createClient(supabaseUrl,anonKey,{auth:{persistSession:false},global:{headers:{Authorization:"Bearer "+token}}});
     const {data:adminRow,error:adminErr}=await admin.from("ie_admins").select("active,role").eq("user_id",userData.user.id).maybeSingle();
     if(adminErr||!adminRow?.active)return NextResponse.json({error:"Administrator access required"},{status:403});
+    // Fail closed: repository code licences do not establish redistribution rights for underlying Hadith texts.
+    if (process.env.MIFASK_HADITH_IMPORT_RIGHTS_CONFIRMED !== "true") {
+      return NextResponse.json({
+        error:"Bulk Hadith import is disabled until exact editions, underlying text rights and source provenance are documented and explicitly approved.",
+        code:"HADITH_IMPORT_RIGHTS_REVIEW_REQUIRED"
+      },{status:409});
+    }
     const [malikArabic,malikEnglish,riyadData]=await Promise.all([
       fetchJson(`${malikBase}/ara-malik.json`),fetchJson(`${malikBase}/eng-malik.json`),fetchJson(riyadUrl)
     ]);

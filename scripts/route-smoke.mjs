@@ -165,6 +165,42 @@ if (!fs.existsSync(quranReaderFile)) {
   }
 }
 
+// Guard privileged import routes against provenance loss and unreviewed bulk Hadith redistribution.
+const quranImportFile = path.join(root, 'app', 'api', 'admin', 'quran-import', 'route.ts');
+const hadithImportFile = path.join(root, 'app', 'api', 'admin', 'hadith-import', 'route.ts');
+if (!fs.existsSync(quranImportFile) || !fs.existsSync(hadithImportFile)) {
+  problems.push({ file: 'import-safety-smoke', href: 'admin import routes', pathname: 'missing route' });
+} else {
+  const quranImportSource = fs.readFileSync(quranImportFile, 'utf8');
+  const hadithImportSource = fs.readFileSync(hadithImportFile, 'utf8');
+  const quranImportMarkers = [
+    ['provider-supplied QuranEnc version requirement', 'if (!edition || typeof edition.version !== "string" || !edition.version.trim())'],
+    ['QuranEnc source URL in import manifest', 'source_url:sourceUrl'],
+    ['QuranEnc licence-terms URL in import manifest', 'license_terms_url:licenseTermsUrl'],
+    ['unavailable QuranEnc source hash explicitly recorded', 'source_hash:null'],
+    ['AlQuranCloud secondary source provenance', 'secondary_sources:[{'],
+    ['per-Surah QuranEnc source URL on verses', 'source_url:`${QENC}/translation/sura/english_saheeh/${n}`'],
+  ];
+  for (const [feature, marker] of quranImportMarkers) {
+    if (!quranImportSource.includes(marker)) problems.push({ file: 'quran-import-safety-smoke', href: feature, pathname: 'required provenance guard missing' });
+  }
+  const hadithImportMarkers = [
+    ['Hadith redistribution rights gate', 'MIFASK_HADITH_IMPORT_RIGHTS_CONFIRMED'],
+    ['pinned Malik source revision', '@df57907be35291c91ad6a6691180e22ca9920784/editions'],
+    ['pinned Riyad source revision', '@70b83d6d21995bb32f8d7271cd75501be5a922a/db'],
+    ['unresolved underlying text rights recorded', 'rights_review_status:"unresolved"'],
+    ['unavailable Hadith source hash explicitly recorded', 'source_hash:null'],
+  ];
+  for (const [feature, marker] of hadithImportMarkers) {
+    if (!hadithImportSource.includes(marker)) problems.push({ file: 'hadith-import-safety-smoke', href: feature, pathname: 'required rights/provenance guard missing' });
+  }
+  const rightsGateIndex = hadithImportSource.indexOf('if (process.env.MIFASK_HADITH_IMPORT_RIGHTS_CONFIRMED !== "true")');
+  const upstreamFetchIndex = hadithImportSource.indexOf('const [malikArabic,malikEnglish,riyadData]=await Promise.all([');
+  if (rightsGateIndex < 0 || upstreamFetchIndex < 0 || rightsGateIndex > upstreamFetchIndex) {
+    problems.push({ file: 'hadith-import-safety-smoke', href: 'rights gate before upstream fetch', pathname: 'unsafe import order' });
+  }
+}
+
 // Guard the editorial integrity audit against regressions in linked-source
 // coverage. Textual reference strings are not substitutes for source records.
 const adminPageFile = path.join(root, 'app', 'admin', 'page.tsx');
