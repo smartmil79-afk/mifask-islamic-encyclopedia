@@ -1871,3 +1871,11 @@ Previous evidence review: 2026-11-25 23:44 Africa/Lagos (audit base main commit 
 - No Hadith or Qur'an import was run. No database writes, DDL, policy/grant changes, RLS weakening, destructive changes, credentials, billing changes, manual deployment, alias reassignment or quota bypass.
 - Authenticated browser playback and admin testing remain SSO-blocked. The new build-time checks do not replace those tests.
 - Remaining priorities: obtain QuranEnc live version/full-corpus comparison; obtain transliteration permissions; resolve Hadith underlying-text rights and exact editions before enabling the new flag; authorized Adhkar/Names/Dua provenance linkage; six Seerah import IDs; Prophet-reference editorial reconciliation; article revision gaps; and least-privilege/rate-limit review without weakening RLS.
+
+
+## 2026-11-26 14:48 Africa/Lagos — first guarded build failure and smoke-marker correction
+
+- The first Git-triggered deployment for commit `73802f75116b5cc1fe852dc8fec16523b8fa00c8` failed during `prebuild`, before Next.js compilation. The route smoke test reported one false failure: its Riyad pin marker expected a jsDelivr-style `@<sha>` segment, while the actual pinned raw.githubusercontent.com URL correctly uses `/<sha>/`. The Hadith route itself contains the pinned URL and rights gate; this was a test-marker mismatch, not a TypeScript/application build error.
+- Corrected only the static smoke marker to match the exact pinned Riyad raw GitHub URL. No import route logic, database records or rights gate were weakened.
+- The failed deployment is `dpl_42tmLuciQGr1Epj3YT5sXFHu68ac`; it is not READY and receives no aliases. Existing production remains on the previously verified READY deployment `dpl_98RcgvYnSRDsqBLwvQ42LiyPbt8k` (commit `43b9dbd`) with its three aliases.
+- A new Git commit will trigger a fresh normal Git-integrated build. Its state and aliases must be checked independently; do not claim success before the new prebuild smoke, Next.js build, READY state and alias verification all pass.

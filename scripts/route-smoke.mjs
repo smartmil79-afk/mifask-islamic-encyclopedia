@@ -187,7 +187,7 @@ if (!fs.existsSync(quranImportFile) || !fs.existsSync(hadithImportFile)) {
   const hadithImportMarkers = [
     ['Hadith redistribution rights gate', 'MIFASK_HADITH_IMPORT_RIGHTS_CONFIRMED'],
     ['pinned Malik source revision', '@df57907be35291c91ad6a6691180e22ca9920784/editions'],
-    ['pinned Riyad source revision', '@70b83d6d21995bb32f8d7271cd75501be5a922a/db'],
+    ['pinned Riyad source revision', '/hadith-json/70b83d6d21995bb32f8d7271cd75501be5a922a/db/by_book/other_books/riyad_assalihin.json'],
     ['unresolved underlying text rights recorded', 'rights_review_status:"unresolved"'],
     ['unavailable Hadith source hash explicitly recorded', 'source_hash:null'],
   ];
