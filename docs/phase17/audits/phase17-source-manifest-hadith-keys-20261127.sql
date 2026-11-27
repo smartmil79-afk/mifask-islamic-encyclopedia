@@ -6,6 +6,8 @@
 --   ie_hadiths.translations->>'en' is a string.
 --   Hadith collection keys must be read from ie_hadith_collections;
 --   current keys are not inferred from display names.
+-- A source URL may contain an abbreviated Git SHA prefix (39-40 hex chars);
+-- resolve that prefix against the upstream Git API before calling it pinned.
 
 WITH imports AS (
   SELECT id, source_name, source_site, source_path, dataset_key, import_version,
@@ -27,7 +29,7 @@ by_dataset AS (
          count(*) FILTER (WHERE source_manifest ? 'license_terms_url') AS license_terms_url_rows,
          count(*) FILTER (WHERE source_manifest ? 'terms') AS terms_rows,
          count(*) FILTER (WHERE source_manifest ? 'republishing_terms') AS republishing_terms_rows,
-         count(*) FILTER (WHERE source_manifest->>'source_url' ~ '[0-9a-f]{40}') AS immutable_sha_in_source_url_rows,
+         count(*) FILTER (WHERE source_manifest->>'source_url' ~ '[0-9a-f]{39,40}') AS source_url_sha_prefix_rows,
          count(*) FILTER (WHERE source_manifest ? 'batch') AS batch_rows,
          count(*) FILTER (WHERE source_manifest ? 'publisher') AS publisher_rows
   FROM imports
@@ -60,6 +62,8 @@ manifest_details AS (
       FROM jsonb_object_keys(source_manifest) AS k
     ),
     'source_url', source_manifest->>'source_url',
+    'source_url_revision_prefix', substring(source_manifest->>'source_url' from '/([0-9a-f]{39,40})/'),
+    'source_url_revision_prefix_length', length(substring(source_manifest->>'source_url' from '/([0-9a-f]{39,40})/')),
     'source_hash', source_manifest->>'source_hash',
     'license_terms_url', source_manifest->>'license_terms_url',
     'terms_present', nullif(btrim(source_manifest->>'terms'),'') IS NOT NULL,
