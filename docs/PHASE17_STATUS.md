@@ -2578,3 +2578,16 @@ Last evidence review: 2026-11-27 14:09 Africa/Lagos.
 9. Run authenticated reader/CMS regression only after approved SSO access becomes available.
 
 Last evidence review: 2026-11-27 15:19 Africa/Lagos.
+
+
+## Production/build verification follow-up — 2026-11-27 15:25 Africa/Lagos
+
+- **Hadith reader prebuild guard passed:** Git-integrated Vercel build for code commit `1d9c0b9dd0335edc487e93bd03a8e313b050846b` executed `node scripts/route-smoke.mjs`; the script exited successfully and emitted the route/navigation smoke pass message. Because the new Hadith assertions are part of that script before its final success output, the 2-Available/6-Planned collection labels, Malik/Riyad local database route, source_refs/metadata selection, dataset/source URL attribution, external API fallback, and missing-text/source display assertions all passed. This is a static source-contract check, not an authenticated browser test.
+- **Code deployment READY:** `dpl_3YTSgdzAAuCkP7UxVtFiDmmCULoo`, exact SHA `1d9c0b9dd0335edc487e93bd03a8e313b050846b`, target production. Build log: route smoke passed; Next.js compile succeeded in 3.8s; lint/type checking ran; static generation completed 78/78. GitHub Vercel status is success.
+- **Production aliases moved automatically and were re-verified after READY:** main, team and git-main aliases all independently resolve to `dpl_3YTSgdzAAuCkP7UxVtFiDmmCULoo`. No manual alias assignment was performed.
+- **New status-document deployment:** commit `4f7decc6347383ee9970b061bce34723bdde84fc` deployment `dpl_pUQDkvUAeXV5APatoMFLyRNFtG3G` was BUILDING at the final exact-SHA check. It is not claimed READY; the three production aliases remain on the separately verified code deployment above until Vercel automatically promotes a later successful main deployment.
+- **Runtime:** latest 24-hour production error aggregation returned no runtime errors; latest 30-minute production error/fatal log query returned no matching logs.
+- **Advisor detail:** current security advisor reports 30 anonymous-executable SECURITY DEFINER functions, 31 authenticated-executable SECURITY DEFINER functions, one RLS-enabled/no-policy default-deny reminder log table, and leaked-password protection disabled. Performance advisor reports 26 unindexed foreign keys, 18 RLS init-plan warnings, 9 unused-index notices and 18 multiple-permissive-policy findings. Health advisor returned no lints. These are project-wide findings; no blanket changes were made.
+- **No database changes:** all content/provenance work remains read-only. No imports, migration application, RLS/grant changes, credential use, billing changes, manual deployment or quota bypass.
+
+Last verification: 2026-11-27 15:25 Africa/Lagos.
