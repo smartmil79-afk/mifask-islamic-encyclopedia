@@ -2794,3 +2794,16 @@ Last evidence review: 2026-11-27 20:27 Africa/Lagos.
 - No manual deployment, alias reassignment or quota workaround was used.
 
 Last deployment evidence review: 2026-11-27 20:30 Africa/Lagos.
+
+
+## Production promotion after integrity audit — 2026-11-27 20:31 Africa/Lagos
+
+- **Integrity-audit deployment promoted by Git integration:** `dpl_EZg2pevmemvBNXZHSKtwr9fvcmn4` is READY on exact commit `3234e38c81ecad67d31c4d091d573ac36eda4ce0`. The deployment's Git metadata matches that SHA and target is production.
+- **Build evidence:** Vercel build events show `prebuild` ran `node scripts/route-smoke.mjs`; route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped); Next.js compilation succeeded in 3.3s; static generation completed 79/79. The route smoke includes the new Adhkar review-only publication-boundary guard. The generated route inventory includes `/adhkar`. A non-blocking edge-runtime/static-generation warning remains.
+- **All three production aliases independently resolved:** exact `get_alias` lookups for main, team and git-main domains each return deployment ID `dpl_EZg2pevmemvBNXZHSKtwr9fvcmn4`. The deployment alias list also contains those three official aliases. No manual alias assignment was made.
+- **Code-only guard deployment:** `dpl_CxBRL2kyixxT711ypzrPKiqKq8YJ` is READY on exact commit `72681b72755dec11e98d1c1c724e118698b3b2ef`, but its deployment-specific alias list is empty. It is not claimed as the live alias target; the later integrity-audit deployment above is the verified live target.
+- **Latest status-document deployment:** `dpl_Giy6rtxEU3teFknTLY5CxQBjjeRv` is QUEUED on exact commit `18740bb439354d7f801b9ca401fd64389a672481`; no READY or alias claim is made for it.
+- **Post-promotion production runtime:** runtime error aggregation for the last 24 hours returned no errors; production error/fatal logs for 2026-11-27 19:00:30–19:30:30 UTC returned no matching entries. This is bounded evidence, not a guarantee of no possible errors.
+- **Access boundary:** Vercel project SSO protection remains enabled for deployments except custom domains. Authenticated reader/CMS tests remain blocked; no bypass was attempted.
+
+Last deployment evidence review: 2026-11-27 20:31 Africa/Lagos.
