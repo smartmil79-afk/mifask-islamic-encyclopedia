@@ -2591,3 +2591,34 @@ Last evidence review: 2026-11-27 15:19 Africa/Lagos.
 - **No database changes:** all content/provenance work remains read-only. No imports, migration application, RLS/grant changes, credential use, billing changes, manual deployment or quota bypass.
 
 Last verification: 2026-11-27 15:25 Africa/Lagos.
+
+
+## Active Phase 17 execution — 2026-11-27 16:08 Africa/Lagos
+
+- **GitHub main revalidated:** latest inspected main commit before this run was `fc8a5740bbe83ed7a7fc932e38b9607fcb685a36`. Repository default branch is `main`; latest commit CI reports Vercel success. Added a read-only cross-table integrity audit at `docs/phase17/audits/phase17-cross-table-integrity-20261127.sql`; the audit was executed directly against Supabase before it was committed.
+- **Schema-first Supabase inspection:** verbose `public` table inventory confirms 35 public base tables, all 35 with RLS enabled; 20 encyclopedia `ie_*` tables, all 20 with RLS enabled. Actual columns were inspected before queries. No DDL, policy, grant, migration or data changes.
+- **Fresh Qur'an coverage:** 6,236 verses; Arabic gaps=0; nested English translation text gaps=0; translation edition/version/publisher/source_url gaps=0; source_import_id gaps=0. Transliteration gaps=6,236; empty `audio_urls` objects=6,236. Surahs=114 and ayah_count sum=6,236. English translation remains an object at `translations->'en'`; text audit uses `->>'text'`.
+- **Fresh Hadith audit:** Muwatta Malik=1,858 (Arabic gaps=29, English gaps=40, narrator gaps=1,858, book/chapter number/title gaps=1,858 each); Riyad as-Salihin=1,896 (Arabic/English gaps=0, narrator gaps=11, book_number gaps=1,896, chapter number/title gaps=0). Duplicate (collection_key, hadith_number) keys=0. Two collection catalogue entries; Hadith book catalogue=0. Exact editions and redistribution rights remain unresolved; no imports/backfills.
+- **Prophet reference integrity:** 25 records; 171 Qur'an reference entries; malformed numeric references=0; missing local Qur'an verses=0. This validates link integrity only; Prophet narratives remain editorial review and not scholarly verified.
+- **Seerah/source-manifest integrity:** 9 events; 3 source-import linked, 6 unlinked; all 9 `source_refs` values are arrays, malformed shape=0. All 18 source manifests are JSON objects. The Seerah reference-index manifest declares 2 external Tafsir URLs while linked event records contain 3 distinct Tafsir URLs; the missing manifest entry is the Badr Tafsir Ibn Kathir URL for Ali Imran 3:123. This remains a manifest mismatch only; no live record was changed and no narrative/chronology was promoted.
+- **Editorial/source/revision integrity:** 43 articles (2 published, 41 review, 0 verified; all 43 verification_status=unverified); 56 sources (54 HTTPS URLs, 2 NULL-URL placeholders, citation/reliability gaps=0); 70 article-source links (orphan article/source links=0, duplicate pairs=0); 35 revision snapshots (invalid/non-object/empty=0, orphan revisions=0). Companions category has 25 CMS articles, all review/unverified.
+- **Import ledger:** 18 manifests (17 completed, 1 historical failed zero-row attempt), 10,052 records imported, skipped=0. All 18 content_hash and source_manifest.source_hash values remain NULL. No hashes were fabricated; source files were not available to reconstruct original checksums.
+- **Security/advisors:** `ie_record_analytics` and `ie_bootstrap_first_admin` remain SECURITY DEFINER with empty search paths. Analytics EXECUTE remains anon+authenticated; bootstrap remains authenticated-only. Security advisor: 30 project-wide anon-executable and 31 authenticated-executable SECURITY DEFINER findings, one RLS-enabled/no-policy default-deny `ie_reminder_delivery_logs` table, leaked-password protection disabled. Performance advisor: 26 unindexed foreign keys, 18 RLS init-plan warnings, 9 unused-index notices, 18 multiple-permissive-policy warnings. Health advisor returned 0 lints. No security or performance changes applied.
+- **Migration history:** remote Supabase history lists 18 migration rows. Previously documented local/remote mismatch and unsafe local-only Phase 2 seed remain unresolved; no migration was applied or history rewritten.
+- **Production verified:** Vercel deployment `dpl_TwVfJn4CPmM9CwDfTUGxkaCyPwNM` is READY on exact main SHA `fc8a5740bbe83ed7a7fc932e38b9607fcb685a36`. GitHub Vercel status is success. The three production aliases were independently resolved by hostname and all return this same READY deployment: `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. Runtime error aggregation (24h) returned no errors; production error/fatal logs (30m) returned no entries.
+- **Supabase logs:** 30-minute unified-log aggregation returned 3 pgbouncer records only; severity was not available in this result, so this is not a comprehensive zero-error assertion.
+- **Access/change boundary:** authenticated reader/CMS tests remain SSO-blocked; no bypass attempted. No Supabase writes/imports, DDL, RLS/grant changes, destructive actions, credential use, billing changes, manual deployment, alias reassignment or quota bypass. The new SQL audit is read-only and was run successfully before commit.
+
+### Next priorities after 16:08 audit
+
+1. Resolve the Badr Tafsir URL omission through an approved revision-preserving manifest correction path.
+2. Recover authentic source artifacts for the six unlinked Seerah events and six unlinked Duas; keep the six non-manifest Dua records separate from the 34-row supplication import.
+3. Resolve Names of Allah licensing and approved least-privilege provenance writes; retain all 99 as review/unverified.
+4. Resolve Adhkar source rights, morning/evening classification and vocabulary before snapshot-first corrections.
+5. Find separately licensed Qur'an transliteration/audio; preserve QuranEnc v1.1.2 unchanged.
+6. Resolve Hadith edition/redistribution rights and missing narrator/book metadata before imports.
+7. Reconcile local and remote migration histories without replaying the unsafe Phase 2 seed.
+8. Review remaining SECURITY DEFINER exposure individually; preserve current RLS boundaries.
+9. Run authenticated reader/CMS regression only after approved SSO access becomes available.
+
+Last evidence review: 2026-11-27 16:08 Africa/Lagos.
