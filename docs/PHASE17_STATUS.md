@@ -2747,3 +2747,39 @@ Last evidence review: 2026-11-27 18:39 Africa/Lagos.
 - No Supabase writes/imports, DDL, RLS/grant changes, destructive actions, credential use, billing changes, manual deployment or quota workaround occurred.
 
 Last evidence review: 2026-11-27 18:39 Africa/Lagos.
+
+
+## Live integrity audit and Adhkar publication-boundary regression — 2026-11-27 20:27 Africa/Lagos
+
+- **GitHub baseline:** main before this status update was `3234e38c81ecad67d31c4d091d573ac36eda4ce0`; the repository remains public with default branch `main`. The prior status document blob was `fd709285e4507901c31cb29920feebb559206132`.
+- **Schema-first Supabase check:** project `honsqapwikfghoubwhcf` reports `ACTIVE_HEALTHY`. Verbose inventory returned 35 public base tables and 20 `ie_*` tables; direct catalog SQL confirms RLS enabled on 35/35 public tables and 20/20 encyclopedia tables. Exact columns/FKs were inspected before queries. `ie_adhkar` has `id,title,category,arabic,transliteration,translations,repetition,source_refs,metadata,source_import_id,updated_at`; its source-import FK targets `ie_source_imports(id)`.
+- **New reproducible audit:** added `docs/phase17/audits/phase17-live-integrity-20261127.sql` (blob `8cb821c2b6d6fbc90cae92930a4e505996a2848b`) in commit `3234e38c81ecad67d31c4d091d573ac36eda4ce0`. The exact committed SQL file was fetched back from GitHub and executed directly against Supabase. It is read-only and returned the following evidence:
+  - Qur'an: 6,236 verses; Arabic gaps=0; nested English-text gaps=0; transliteration gaps=6,236; empty audio URL objects=6,236; source-import gaps=0. Surahs=114, declared ayah total=6,236, source-import gaps=0.
+  - Prophets: 25 records; 171 Qur'an references; malformed numeric references=0; missing local verses=0; local reader path mismatches=0; Quran.com URL mismatches=0; source-import gaps=0. Reference JSON was inspected before constructing the check (`surah`, `ayah`, `url`, `local_reader`). This is link integrity only, not scholarly verification.
+  - Seerah: 9 events; six source-import links missing; invalid/non-array `source_refs`=0.
+  - Hadith: Malik=1,858 (Arabic gaps=29, English gaps=40, narrator/book/chapter metadata gaps=1,858 each); Riyad=1,896 (Arabic/English gaps=0, narrator gaps=11, book-number gaps=1,896, chapter gaps=0). Both collections have source-import links; the inspected `ie_hadith_books` table remains empty (0).
+  - Duas: 40; transliteration gaps=40; source-import gaps=6.
+  - Adhkar: 34; source-import gaps=34; `metadata.type` missing=34; `metadata.explanation_of_hadith_vocabulary` missing=34; audio JSON null=1; audio empty-string=0. The previously documented upstream comparison remains 33/34 exact audio representation, with source order 1 represented as empty string upstream and JSON null in Supabase.
+  - Names of Allah: 99; source-import gaps=99.
+  - Import ledger: 18 manifests (17 completed, one historical failed zero-row attempt), 10,052 imported records; content hashes missing=18 and source-manifest source hashes missing=18. No hashes were fabricated.
+  - Editorial: 43 articles (2 published, 43 unverified, 0 verified); 35 revision snapshots, invalid/empty snapshots=0; sources=56 (two URL-less placeholders preserved, non-HTTPS URLs=0); article-source links=70, orphan links=0.
+- **Adhkar RLS boundary:** direct `pg_policies` inspection in the committed audit shows `ie_adhkar` has only public SELECT for anon/authenticated; `ie_source_imports` has authenticated ALL guarded by an active `ie_admins` row with role `admin`. There is no separate admin write policy on `ie_adhkar`. No policy was weakened and no source manifest/linkage was written.
+- **New route-smoke safeguard:** commit `72681b72755dec11e98d1c1c724e118698b3b2ef` updates `scripts/route-smoke.mjs` (blob `c8c68cc58139bcaaac2f50674ba6c02ec7baea3a`). It now requires the Adhkar rights/classification/scholarly-review disclosures and the separate Qur'anic Supplications/Qur'an/Sources links; it fails if the holding page starts querying `ie_adhkar`, calls an Adhkar API, fetches content, or initializes a Supabase client. `package.json` confirms `prebuild` runs this script. The guard is committed and re-read from GitHub; its next build result is still pending.
+- **Current advisors:** security reports 30 anonymous-executable and 31 authenticated-executable SECURITY DEFINER functions; one RLS-enabled/no-policy table (`ie_reminder_delivery_logs`, retained default-deny); leaked-password protection disabled. Performance reports 26 unindexed foreign keys, 18 auth/RLS init-plan findings, 9 unused-index notices and 18 multiple-permissive-policy findings. Health advisor returns zero lints. No grants, policies, functions or indexes were changed.
+- **Current verified production:** deployment `dpl_8MSa1VVHARPmNK5HraePpDiXRPEg` is READY on exact main SHA `04d6cd46faed7e5fa8bb731469e89f3fd7d4bb0d`. Its deployment record and alias list confirm the three official domains (main, team and git-main). Production error/fatal runtime-log query for 2026-11-27 18:59–19:29 UTC returned no matching entries. This is a bounded log result, not a global zero-error assertion.
+- **New Git-integrated deployments:** code-guard commit `72681b7` created `dpl_CxBRL2kyixxT711ypzrPKiqKq8YJ`, state BUILDING at the exact-SHA check. SQL-audit commit `3234e38` created `dpl_EZg2pevmemvBNXZHSKtwr9fvcmn4`, state QUEUED. Neither is reported READY; production aliases remain on the separately verified READY deployment above.
+- **Migration/access boundary:** local repository tree contains 16 migration files; Supabase remote history contains 18 rows. No migration/history changes were made. Authenticated reader/CMS tests remain SSO-blocked; no bypass attempted. No database writes/imports, DDL, RLS/grant changes, destructive actions, credential use, billing changes, manual deployment, alias reassignment or quota bypass.
+
+### Next priorities after 20:27 audit
+
+1. Wait for the Git-integrated route-smoke and SQL-audit deployments; inspect exact-SHA build results and verify aliases only after READY.
+2. Keep `/adhkar` as a review-only notice until rights, morning/evening mapping, vocabulary mapping and scholarly review are approved.
+3. Resolve the Badr Tafsir manifest omission and six unlinked Seerah events through authentic source artifacts.
+4. Obtain licensed Qur'an transliteration/audio; resolve QuranEnc terms at corpus level.
+5. Resolve Malik/Riyad underlying text rights and missing metadata before any backfill.
+6. Recover approved provenance for six Dua records and 99 Names of Allah entries.
+7. Reconcile 16 local migration files with 18 remote rows without replaying the unsafe Phase 2 seed.
+8. Review SECURITY DEFINER findings individually while preserving all existing RLS boundaries.
+9. Run authenticated reader/CMS regression only when approved SSO access is available.
+
+Last evidence review: 2026-11-27 20:27 Africa/Lagos.
