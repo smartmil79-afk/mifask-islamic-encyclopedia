@@ -35,7 +35,7 @@ export async function GET(req:Request) {
     const p=localParts(now,s.timezone||'Africa/Lagos');
     const dow=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(p.weekday);
     const preferred=String(s.preferred_time||'').slice(0,5);
-    const match= /^(?:[01]\\d|2[0-3]):[0-5]\\d$/.exec(preferred);
+    const match= /^(?:[01]\d|2[0-3]):[0-5]\d$/.exec(preferred);
     if(!match||!s.weekdays?.includes(dow)) return false;
     const [hour,minute]=preferred.split(':').map(Number);
     const currentMinute=Number(p.hour)*60+Number(p.minute);
