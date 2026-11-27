@@ -2690,3 +2690,16 @@ Last deployment evidence review: 2026-11-27 16:30 Africa/Lagos.
 6. Keep all Adhkar, Prophets, Seerah and Companions content in review/unverified status until approved scholarly review.
 
 Last evidence review: 2026-11-27 17:50 Africa/Lagos.
+
+
+## Production, security and deployment follow-up — 2026-11-27 17:50 Africa/Lagos
+
+- **New audit deployment READY:** Git-integrated Vercel deployment `dpl_7TsueBgw8gjEtaVCuD141mvW5vVV` is READY, target production, exact Git SHA `de8b53a741cd9f7316fc8ede16ec611036c17d84`. Build events confirm main branch clone, dependency installation, `scripts/route-smoke.mjs` passed (67 internal literal links, 27 unique targets, 25 route templates, 0 dynamic hrefs skipped, required header/footer links and category slugs present), Next.js compilation succeeded in 4.0s, lint/type checking ran, and static generation completed 78/78. Non-blocking npm `cache-dir` and edge-runtime/static-generation warnings remain.
+- **Production aliases independently resolved:** direct `get_alias` lookups for `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app` all returned deployment ID `dpl_7TsueBgw8gjEtaVCuD141mvW5vVV`. No manual alias assignment was performed.
+- **Latest status-document deployment:** commit `e568819a78eea2074bbec2e096410af5693a99c4` has Git-integrated deployment `dpl_9xCFQJg66n5cumL28JutsLykA3Rh`, BUILDING at the final exact-SHA check. It is not claimed READY; production aliases remain on the separately verified READY audit deployment above.
+- **Production runtime:** Vercel runtime error aggregation (24h) returned no errors; production error/fatal logs (30m) returned no matching entries.
+- **Supabase unified logs:** query window 2026-11-27 16:20–17:20 UTC returned 3 pgbouncer and 2 PostgreSQL records. The selected aggregation did not include severity/message fields; this is not a comprehensive zero-error assertion.
+- **Current advisor snapshot:** security advisor reports 30 anon-executable and 31 authenticated-executable SECURITY DEFINER functions, one intentionally RLS-enabled/no-policy default-deny table (`ie_reminder_delivery_logs`), and leaked-password protection disabled. Performance advisor reports 26 unindexed foreign keys, 18 auth/RLS initialization-plan warnings, 9 unused-index notices, and 18 multiple-permissive-policy findings. Health advisor returned 0 lints. All 35 public tables and all 20 `ie_*` tables remain RLS-enabled. `ie_record_analytics` retains SECURITY DEFINER, empty search_path, and its existing anon/authenticated EXECUTE grants.
+- **Access/change boundary:** authenticated reader/CMS tests remain SSO-blocked; no bypass attempted. No Supabase writes/imports, DDL, migration changes, RLS/grant changes, destructive actions, credential use, billing changes, manual deployment, alias reassignment or quota bypass.
+
+Last deployment/security evidence review: 2026-11-27 17:50 Africa/Lagos.
