@@ -2928,3 +2928,37 @@ Last deployment evidence review: 2026-11-27 21:33 Africa/Lagos.
 8. Review SECURITY DEFINER call sites individually and run authenticated reader/CMS regression only when approved SSO access is available.
 
 Last evidence review: 2026-11-27 23:12 Africa/Lagos.
+
+## Content-to-source-import lineage audit — 2026-11-28 00:06 Africa/Lagos
+
+- **GitHub baseline and new audit:** main before this audit file was `096688f4ab7e02c5461f2732d1d2573e548523a1`. Added `docs/phase17/audits/phase17-content-source-linkage-20261128.sql` in commit `7db6429c96448d8b7b2f080aa4a4d98b46d826e3`; the committed file was fetched back from main (blob `7e1be29f0f3dddc582ed0b4df51fd23ade77b632`) and that exact SQL was executed directly against Supabase project `honsqapwikfghoubwhcf`. It is SELECT-only.
+- **Schema-first check:** verbose public table inventory and `information_schema.columns` were inspected for `ie_source_imports`, Qur'an verses/Surahs, Prophets, Seerah, Hadith collections/books/records, Duas, Adhkar and Names of Allah before the audit. The query uses the confirmed `source_import_id uuid` columns and `source_manifest jsonb` structure. No schema change.
+- **Import ledger:** 18 rows; 17 completed; one historical failed zero-row attempt; 10,052 imported records; 0 skipped. There is one repeated `dataset_key/import_version` group: `quran-english-saheeh` / `1.1.2`, with 13 manifest rows (12 completed batches plus the failed zero-row attempt). This is the expected batch lineage, not a duplicate content import. All 18 `content_hash` values and all 18 `source_manifest.source_hash` values are NULL/absent; no hashes were generated.
+- **Source-import linkage (direct live query):**
+  - `ie_quran_verses`: 6,236/6,236 linked across 12 batch manifests; missing=0; dangling IDs=0.
+  - `ie_quran_surahs`: 114/114 linked across 12 batch manifests; missing=0; dangling IDs=0.
+  - `ie_prophets`: 25/25 linked to one index-only reference manifest; missing=0; dangling IDs=0.
+  - `ie_hadith_collections`: 2/2 linked to two manifests; `ie_hadiths`: 3,754/3,754 linked to those two manifests; missing/dangling IDs=0. `ie_hadith_books` remains empty (0).
+  - `ie_seerah_events`: 3/9 linked to the one reference-index manifest; 6 missing links; dangling IDs=0.
+  - `ie_duas`: 34/40 linked to the QuranEnc supplication manifest; 6 missing links; dangling IDs=0.
+  - `ie_adhkar`: 0/34 linked; 34 missing links; no matching Adhkar import manifest exists in the current 18-row ledger.
+  - `ie_names_of_allah`: 0/99 linked; 99 missing links; no matching Names-of-Allah import manifest exists in the current ledger.
+  - Across every non-NULL content `source_import_id` inspected, dangling manifest IDs=0. Do not infer missing links from display names, matching text, or record order.
+- **Fresh coverage snapshot:** Qur'an=6,236 (Arabic gaps=0; correct nested English text gaps=0; translation edition/version/publisher/source_url gaps=0; transliteration gaps=6,236; empty `audio_urls` objects=6,236); Surahs=114 with ayah sum=6,236 and metadata gaps=0. Prophets=25 with 171 reference entries and no empty stories/lessons. Seerah=9 with descriptions complete. Duas=40 with Arabic/English complete and transliteration gaps=40. Adhkar=34 with transliteration complete, but 0/34 have structured `metadata.type` or `metadata.explanation_of_hadith_vocabulary`. Names of Allah=99 with transliteration/meanings populated. Hadith: Malik=1,858 (Arabic gaps=29, English gaps=40, narrator/book/chapter fields missing on all 1,858); Riyad=1,896 (Arabic/English gaps=0, narrator gaps=11, book-number gaps=1,896, chapter number/title gaps=0).
+- **Editorial/source integrity:** articles=43 (2 published, 41 review, 0 verified; all 43 unverified); sources=56; article-source links=70; revision snapshots=35; invalid/empty revision snapshots=0. These are coverage/structure checks, not scholarly verification.
+- **RLS and advisors:** current catalog query confirms 35/35 public tables and 20/20 `ie_*` tables have RLS enabled. Advisor snapshot observed 2026-11-27 23:07 UTC: 30 anonymous-executable and 31 authenticated-executable SECURITY DEFINER findings; `ie_reminder_delivery_logs` remains RLS-enabled with no policies (default-deny); performance findings 26 unindexed foreign keys, 18 RLS init-plan warnings, 9 unused-index notices, 18 multiple-permissive-policy notices; health advisor returned 0 lints. No RLS, grants, indexes, functions or DDL changed.
+- **Production verification:** correct Vercel project is `mifask-islamic-encyclopedia-liha` (`prj_L7pZ4eDx1kM6plWkl7W8or3V3BAE`). Latest production deployment `dpl_G2dVuaMdwsZq1r5r9AGmjRMMwDXb` is READY on exact main SHA `096688f4ab7e02c5461f2732d1d2573e548523a1`; GitHub's combined Vercel status is success. Direct alias listing shows all three official aliases resolve to this deployment: main, team and git-main. Build output includes `/adhkar`, `/companions`, `/hadith`, `/prophets`, `/quran` and `/seerah`, and ends with deployment completed. Runtime error aggregation (24h) returned no errors; production error/fatal logs (30m) returned no entries. Vercel project SSO protection remains enabled for non-custom deployment URLs.
+- **Supabase log limitation:** the inspected 2026-11-27 22:36–23:06 UTC unified-log query returned three `pgbouncer_logs` rows only. No severity field was established, so this is not a comprehensive zero-error assertion.
+- **Access/change boundary:** authenticated reader/CMS tests remain SSO-blocked; no bypass attempted. No Supabase writes/imports, DDL, migration application/history repair, RLS/grant changes, destructive actions, credential use, billing changes, manual deployment, alias reassignment or quota workaround.
+
+### Next priorities after 00:06 source-linkage audit
+
+1. Obtain authentic source artifacts and approved provenance-write access before linking the six unlinked Seerah events and six unlinked Duas.
+2. Locate the original Adhkar and Names-of-Allah import artifacts/rights records; do not create manifests or hashes from inferred lineage.
+3. Preserve QuranEnc v1.1.2 text and attribution while resolving the missing official source URL and full republishing terms through the approved admin workflow.
+4. Keep Hadith backfills blocked pending corpus-level redistribution rights and exact editions; preserve the existing Malik/Riyad keys and missing-field audit.
+5. Reconcile the 16 local migration files against 18 remote history rows without replaying the unsafe Phase 2 seed or rewriting applied history.
+6. Review SECURITY DEFINER findings individually; retain the reminder delivery log's default-deny RLS.
+7. Run authenticated reader/CMS regression only when approved SSO access becomes available.
+
+Last evidence review: 2026-11-28 00:06 Africa/Lagos.
