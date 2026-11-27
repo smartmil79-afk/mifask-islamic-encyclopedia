@@ -17,7 +17,7 @@ const coreRoutes = [
   '/knowledge-graph', '/saved', '/quran', '/category/quran', '/hadith',
   '/hadith/library', '/category/hadith', '/category/prophets', '/prophets',
   '/companions', '/category/companions', '/seerah', '/category/seerah',
-  '/category/fiqh', '/duas', '/category/duas', '/category/aqeedah',
+  '/category/fiqh', '/duas', '/adhkar', '/category/duas', '/category/aqeedah',
   '/category/history', '/category/scholars', '/category/muslim-life',
   '/category/dictionary', '/about', '/sources',
 ];
@@ -25,11 +25,11 @@ const coreRoutes = [
 const requiredNavigation = [
   {
     file: path.join(root, 'components', 'Header.tsx'),
-    links: ['/quran', '/duas', '/hadith', '/category/prophets', '/companions', '/seerah'],
+    links: ['/quran', '/duas', '/adhkar', '/hadith', '/category/prophets', '/companions', '/seerah'],
   },
   {
     file: path.join(root, 'components', 'Footer.tsx'),
-    links: ['/explore', '/duas', '/about', '/sources'],
+    links: ['/explore', '/duas', '/adhkar', '/about', '/sources'],
   },
 ];
 
