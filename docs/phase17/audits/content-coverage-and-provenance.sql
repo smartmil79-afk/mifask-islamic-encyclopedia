@@ -140,3 +140,63 @@ SELECT 'seerah_manifest_reconciliation',
             FROM event_urls e
             WHERE NOT EXISTS (SELECT 1 FROM manifest_urls u WHERE u.url = e.url))
        );
+
+
+-- Editorial source-link, revision-snapshot, and collection-catalogue integrity.
+-- These checks are read-only and intentionally do not promote verification status.
+WITH article_state AS (
+  SELECT count(*) AS total,
+         count(*) FILTER (WHERE status = 'published') AS published,
+         count(*) FILTER (WHERE status = 'review') AS review,
+         count(*) FILTER (WHERE verification_status = 'verified') AS verified,
+         count(*) FILTER (WHERE verification_status = 'unverified') AS unverified
+  FROM public.ie_articles
+),
+source_state AS (
+  SELECT count(*) AS total,
+         count(*) FILTER (WHERE url ~ '^https://') AS https_urls,
+         count(*) FILTER (WHERE url IS NULL) AS intentional_or_other_null_urls,
+         count(*) FILTER (WHERE nullif(btrim(citation), '') IS NULL) AS citation_gaps,
+         count(*) FILTER (WHERE nullif(btrim(reliability_note), '') IS NULL) AS reliability_gaps,
+         (SELECT count(*) FROM (
+           SELECT lower(url) AS normalized_url
+           FROM public.ie_sources WHERE url IS NOT NULL
+           GROUP BY lower(url) HAVING count(*) > 1
+         ) duplicates) AS duplicate_urls
+  FROM public.ie_sources
+),
+link_state AS (
+  SELECT count(*) AS total,
+         count(*) FILTER (WHERE a.id IS NULL) AS orphan_article_links,
+         count(*) FILTER (WHERE s.id IS NULL) AS orphan_source_links,
+         (SELECT count(*) FROM (
+           SELECT article_id, source_id
+           FROM public.ie_article_sources
+           GROUP BY article_id, source_id HAVING count(*) > 1
+         ) duplicates) AS duplicate_pairs
+  FROM public.ie_article_sources l
+  LEFT JOIN public.ie_articles a ON a.id = l.article_id
+  LEFT JOIN public.ie_sources s ON s.id = l.source_id
+),
+revision_state AS (
+  SELECT count(*) AS total,
+         count(*) FILTER (
+           WHERE snapshot IS NULL OR jsonb_typeof(snapshot) <> 'object' OR snapshot = '{}'::jsonb
+         ) AS invalid_snapshots,
+         count(*) FILTER (WHERE a.id IS NULL) AS orphan_article_revisions
+  FROM public.ie_article_revisions r
+  LEFT JOIN public.ie_articles a ON a.id = r.article_id
+),
+hadith_catalogue AS (
+  SELECT
+    (SELECT count(*) FROM public.ie_hadith_collections) AS collections,
+    (SELECT count(*) FROM public.ie_hadith_collections WHERE source_import_id IS NULL) AS collections_missing_import_links,
+    (SELECT count(*) FROM public.ie_hadith_books) AS books,
+    (SELECT count(*) FROM public.ie_hadith_books WHERE source_import_id IS NULL) AS books_missing_import_links,
+    (SELECT count(*) FROM public.ie_hadiths) AS hadith_records
+)
+SELECT 'editorial_state' AS metric, to_jsonb(article_state) AS value FROM article_state
+UNION ALL SELECT 'source_state', to_jsonb(source_state) FROM source_state
+UNION ALL SELECT 'article_source_links', to_jsonb(link_state) FROM link_state
+UNION ALL SELECT 'revision_state', to_jsonb(revision_state) FROM revision_state
+UNION ALL SELECT 'hadith_catalogue', to_jsonb(hadith_catalogue) FROM hadith_catalogue;
