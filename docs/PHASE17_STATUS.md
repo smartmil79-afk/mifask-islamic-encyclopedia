@@ -2783,3 +2783,14 @@ Last evidence review: 2026-11-27 18:39 Africa/Lagos.
 9. Run authenticated reader/CMS regression only when approved SSO access is available.
 
 Last evidence review: 2026-11-27 20:27 Africa/Lagos.
+
+
+## Deployment follow-up — 2026-11-27 20:30 Africa/Lagos
+
+- **Review-only route guard build:** deployment `dpl_CxBRL2kyixxT711ypzrPKiqKq8YJ` is READY on exact commit `72681b72755dec11e98d1c1c724e118698b3b2ef`. Build events explicitly show `prebuild` invoking `node scripts/route-smoke.mjs`, the route/navigation smoke passing (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped), Next.js compilation successful in 3.6s, static generation 79/79, and `/adhkar` in the generated route table. Thus the new review-only publication-boundary guard passed in the build.
+- **Alias caution:** `list_deployment_aliases` for `dpl_CxBRL2kyixxT711ypzrPKiqKq8YJ` returned an empty list. Despite READY state, no production alias assignment is claimed for this deployment and no manual assignment was attempted. The three official production aliases remain listed on the previously verified deployment `dpl_8MSa1VVHARPmNK5HraePpDiXRPEg`, READY on exact main SHA `04d6cd46faed7e5fa8bb731469e89f3fd7d4bb0d`.
+- **Live-integrity SQL deployment:** `dpl_EZg2pevmemvBNXZHSKtwr9fvcmn4` is BUILDING on exact commit `3234e38c81ecad67d31c4d091d573ac36eda4ce0`. Its build events show route smoke passed (73 links, 28 unique targets, 26 route templates), compilation successful in 3.3s and static generation 79/79; it has not yet reached READY. No aliases are claimed.
+- **Status-document deployment:** `dpl_8ewLfuNvsseHQS31afvduJGYj2XG` is QUEUED on exact commit `a65eaf156935c5f181107ad1dcc7b1f42dd0bcb4`; no build or alias completion is claimed.
+- No manual deployment, alias reassignment or quota workaround was used.
+
+Last deployment evidence review: 2026-11-27 20:30 Africa/Lagos.
