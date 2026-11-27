@@ -2867,3 +2867,14 @@ Last evidence review: 2026-11-27 21:28 Africa/Lagos.
 - **Access/change boundary:** project SSO protection remains enabled for non-custom deployment URLs; authenticated reader/CMS testing remains blocked and no bypass was attempted. No manual deployment, alias reassignment, quota workaround, database write, DDL, RLS/grant change, credential use or billing change occurred.
 
 Last deployment evidence review: 2026-11-27 21:31 Africa/Lagos.
+
+
+## Production promotion after source-manifest audit — 2026-11-27 21:33 Africa/Lagos
+
+- **Source-manifest audit deployment promoted:** `dpl_86htnEsFyiNfstkSYAQEXjVxXy18` is READY on exact main SHA `36f81f79e5b55c0209c5cb5274e22db00602857b`. Build events confirm route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped), Next.js compilation succeeded in 3.8s, static generation completed 79/79, build completed in 31s, and deployment completed.
+- **All three production aliases independently rechecked after READY:** exact `get_alias` lookups for main, team and git-main each return deployment ID `dpl_86htnEsFyiNfstkSYAQEXjVxXy18`. The deployment record lists all three aliases; no manual alias assignment occurred.
+- **Newest status-document commit:** `1665a00760b0b4561126444cb78a0e3f518b3764` triggered Git-integrated deployment `dpl_Agh8kjXQcAJ4HHW8PBP25jPV5Wnj`, exact SHA confirmed, state=BUILDING at the final check. Its route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped); Next.js production compilation had started. It is not reported READY and no alias is claimed for it. The three official aliases remain on `dpl_86htnEsFyiNfstkSYAQEXjVxXy18`.
+- **Post-promotion runtime:** Vercel 24-hour runtime error aggregation returned no errors; production error/fatal logs for the inspected 30-minute window returned no entries. Supabase unified logs for 2026-11-27 20:01–20:31 UTC returned one `edge_logs` record; this is not a comprehensive zero-error assertion.
+- **Access/change boundary:** project SSO protection remains enabled for non-custom deployment URLs; authenticated reader/CMS testing remains blocked and no bypass was attempted. No database writes, imports, DDL, RLS/grant changes, destructive actions, credential use, billing changes, manual deployment, alias reassignment or quota workaround occurred.
+
+Last deployment evidence review: 2026-11-27 21:33 Africa/Lagos.
