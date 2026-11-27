@@ -2666,3 +2666,27 @@ Last evidence review: 2026-11-27 16:30 Africa/Lagos.
 - A separate branch-specific alias still points to a non-production deployment; it was not modified.
 
 Last deployment evidence review: 2026-11-27 16:30 Africa/Lagos.
+
+
+
+## Adhkar source-parity and field-mapping audit — 2026-11-27 17:50 Africa/Lagos
+
+- **GitHub/source revision verified:** upstream repository [Seen-Arabic/Morning-And-Evening-Adhkar-DB](https://github.com/Seen-Arabic/Morning-And-Evening-Adhkar-DB) was inspected at immutable commit `39d422fb3e3a6608b47a8f4e1040543220bfd215` (2026-11-19 14:33:22 UTC). Its root LICENSE at that commit is MIT (blob `c8358b2fa3a3df40e88bbcf244f5ac11ccc184dc`). The upstream README_EN documents the data fields and attributes English translation/transliteration to Hisn al-Muslim and Sunnah.com, with additional book references. Repository-level MIT declaration is evidence for the repository's published terms, but rights scope for third-party source material is not independently established; do not treat this as blanket legal clearance for further imports.
+- **Immutable source files:** upstream `en.json` blob `09605bb640c9f67c5c895926433f945b52edf420` and `ar.json` blob `4c7b3edf4dccf33ea9988a306d67104a2d3ab673`; each contains 34 records. Direct client-side comparison against Supabase `public.ie_adhkar`, joined by `metadata.source_order`, found 34 unique source orders, 0 missing/unmatched/duplicate orders, and exact 34/34 matches for Arabic text, transliteration, English translation, source citation text, `hadith_text`, `count_description`, `fadl`/virtue, audio URL, and database `repetition` vs source `count`. `metadata.source_dataset` matched the upstream repository on 34/34 rows. No per-record mismatches.
+- **Interpretation boundary:** this proves exact content parity to the pinned upstream files, not independent authentication of each narration, hadith grading, or scholarly verification. All 34 database records retain `source_review_status='pending scholarly review'` and `verification_status='source-imported-not-scholarly-verified'`.
+- **Fresh local Supabase shape audit:** 34/34 transliterations are now non-empty (previous checkpoint had reported 34 gaps); 34/34 have `metadata.source_order` and `metadata.source_dataset`; 34/34 have `source_import_id IS NULL`. The 34 `source_refs` array elements are plain-text strings, with 0 structured reference objects and 0 URLs. Thus the source identity/order is recoverable and exact parity was demonstrated, but formal import-manifest linkage and structured citation URLs remain absent.
+- **Classification mapping gap:** upstream README defines `type=0` as both morning/evening, `type=1` as morning-only, and `type=2` as evening-only. Pinned `en.json` distribution is 16/10/8 respectively. In Supabase all 34 `category` values are `morning_evening`, and no `metadata.type` is present. The source's 18 morning-only/evening-only distinctions are therefore not represented in the current database category/metadata shape; do not infer a corrected category without a snapshot-first mapping review.
+- **Vocabulary field mapping gap:** the upstream `explanation_of_hadith_vocabulary` field is non-empty in 15/34 source records and empty in 19/34. The corresponding field is absent from all 34 database metadata objects. Preserve this as a documented mapping gap; do not fabricate explanations.
+- **Audit artifact:** added `docs/phase17/audits/adhkar-source-parity-20261127.sql`. It was executed directly against Supabase after schema inspection and reports local transliteration, source-import linkage, source_refs JSON shape, metadata-key coverage, category distribution and review/verification status. It is read-only.
+- **Change boundary:** no Supabase writes, import manifest inserts, source_import_id updates, category edits, metadata backfills, DDL, RLS or grants were applied. The `ie_adhkar` table has no dedicated revision table in the inspected schema, so no snapshot-first correction path was available. Existing content remains unchanged.
+
+### Next priorities after 17:50 audit
+
+1. Design and approve a snapshot-preserving Adhkar correction workflow before mapping upstream `type` into a distinct morning/evening field and adding the 15 source-provided vocabulary explanations.
+2. Establish formal source-import linkage for the 34 exact-matched records using the pinned upstream commit/blob hashes, while retaining text citations and review status.
+3. Confirm rights scope for the upstream MIT declaration against the README's cited Hisn al-Muslim/Sunnah source materials before any additional redistribution.
+4. Continue resolving the Badr Tafsir manifest discrepancy and six unlinked Seerah events.
+5. Resolve QuranEnc transliteration/audio rights, Hadith corpus rights/metadata, Names of Allah provenance, and the six unlinked Dua records.
+6. Keep all Adhkar, Prophets, Seerah and Companions content in review/unverified status until approved scholarly review.
+
+Last evidence review: 2026-11-27 17:50 Africa/Lagos.
