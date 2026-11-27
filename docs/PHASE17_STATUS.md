@@ -2962,3 +2962,13 @@ Last evidence review: 2026-11-27 23:12 Africa/Lagos.
 7. Run authenticated reader/CMS regression only when approved SSO access becomes available.
 
 Last evidence review: 2026-11-28 00:06 Africa/Lagos.
+
+## Post-audit production promotion and alias convergence — 2026-11-28 00:07 Africa/Lagos
+
+- **Content-source audit deployment:** Git-integrated Vercel deployment `dpl_A6944Y3qG7Sj5NaQKmmHZCQYjixr` is READY on exact commit `7db6429c96448d8b7b2f080aa4a4d98b46d826e3`. Build events confirm the route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped, required header/footer links and category slugs checked); Next.js compilation succeeded in 3.2s; lint/type checking ran; static generation completed 79/79; build completed in 28s; deployment completed. The build route table includes `/adhkar`, `/companions`, `/hadith`, `/prophets`, `/quran` and `/seerah`. A non-blocking edge-runtime/static-generation warning remains.
+- **All three production aliases independently rechecked after READY:** `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app` each resolve to `dpl_A6944Y3qG7Sj5NaQKmmHZCQYjixr`. No manual alias reassignment occurred.
+- **Newest status-document commit:** `21b953f546f2aaeeb4d16a9c592bdf6b18271d52` triggered Git-integrated deployment `dpl_HrNYUmZpR14HzsBCawpUb8q8eSbj`, exact SHA confirmed, state=BUILDING at the final check; GitHub's Vercel combined status is pending. Do not claim READY or assign aliases to it. Current production remains the independently verified `dpl_A6944Y3qG7Sj5NaQKmmHZCQYjixr` until the documentation deployment is READY and aliases are rechecked.
+- **Post-promotion runtime:** Vercel 24-hour runtime error aggregation returned no errors; production error/fatal logs for the inspected 30-minute window returned no entries. Supabase unified logs for 2026-11-27 22:36–23:06 UTC returned three `pgbouncer_logs` rows only; no severity conclusion is drawn from that source count.
+- **Access/change boundary:** Vercel project SSO protection remains enabled for non-custom deployment URLs. Authenticated reader/CMS tests remain SSO-blocked; no bypass attempted. No database writes/imports, DDL, RLS/grant changes, destructive actions, credential use, billing changes, manual deployment, alias reassignment or quota workaround.
+
+Last deployment evidence review: 2026-11-28 00:07 Africa/Lagos.
