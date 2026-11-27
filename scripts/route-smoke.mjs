@@ -165,6 +165,48 @@ if (!fs.existsSync(quranReaderFile)) {
   }
 }
 
+// Guard the Hadith reader's local/imported versus externally served collection contract.
+const hadithLibraryFile = path.join(appDir, 'hadith', 'library', 'page.tsx');
+const hadithReaderFile = path.join(appDir, 'hadith', 'library', '[collection]', 'page.tsx');
+const hadithApiFile = path.join(root, 'app', 'api', 'hadith', 'route.ts');
+if (!fs.existsSync(hadithLibraryFile) || !fs.existsSync(hadithReaderFile) || !fs.existsSync(hadithApiFile)) {
+  problems.push({ file: 'hadith-reader-smoke', href: 'library, reader, and API route', pathname: 'required file missing' });
+} else {
+  const hadithLibrarySource = fs.readFileSync(hadithLibraryFile, 'utf8');
+  const hadithReaderSource = fs.readFileSync(hadithReaderFile, 'utf8');
+  const hadithApiSource = fs.readFileSync(hadithApiFile, 'utf8');
+  const availableCollections = (hadithLibrarySource.match(/status:'Available'/g) || []).length;
+  const plannedCollections = (hadithLibrarySource.match(/status:'Planned'/g) || []).length;
+  if (availableCollections !== 2 || plannedCollections !== 6) {
+    problems.push({ file: 'hadith-reader-smoke', href: 'collection availability labels', pathname: 'expected 2 available local collections and 6 planned local imports' });
+  }
+  const requiredHadithMarkers = [
+    [hadithLibrarySource, 'local-copy availability notice', 'Muwatta Malik and Riyad as-Salihin are imported into MIFASK’s database'],
+    [hadithLibrarySource, 'planned local-import notice', 'Other collections are still being prepared for local imports.'],
+    [hadithApiSource, 'explicit collection allowlist', 'const allowed = new Set(["bukhari","muslim","abudawud","tirmidhi","nasai","ibnmajah","malik","riyad"]);'],
+    [hadithApiSource, 'local database branch for Malik and Riyad', 'if (book === "malik" || book === "riyad")'],
+    [hadithApiSource, 'local Hadith table query', 'localDb.from("ie_hadiths")'],
+    [hadithApiSource, 'edition/source reference fields retained', 'source_refs,metadata'],
+    [hadithApiSource, 'local English translation JSON field', 'row.translations?.en'],
+    [hadithApiSource, 'local source dataset attribution', 'source_dataset: dataset'],
+    [hadithApiSource, 'local source URL attribution', 'source_url: sourceUrl'],
+    [hadithApiSource, 'external edition fallback', 'searchEdition(book, q!)'],
+    [hadithReaderSource, 'missing Arabic text notice', 'Arabic text unavailable for this record.'],
+    [hadithReaderSource, 'missing English translation notice', 'An English translation is not available in the returned source record for this narration.'],
+    [hadithReaderSource, 'source dataset display', 'Source dataset: {sourceDataset(selected)}'],
+    [hadithReaderSource, 'source record link', 'Source record'],
+    [hadithReaderSource, 'local and external source policy distinction', 'Other collections use their configured source APIs.'],
+  ];
+  for (const [source, feature, marker] of requiredHadithMarkers) {
+    if (!source.includes(marker)) problems.push({ file: 'hadith-reader-smoke', href: feature, pathname: 'required source/availability contract missing' });
+  }
+  const localBranchIndex = hadithApiSource.indexOf('if (book === "malik" || book === "riyad")');
+  const externalEndpointIndex = hadithApiSource.indexOf('const endpoint = number');
+  if (localBranchIndex < 0 || externalEndpointIndex < 0 || localBranchIndex > externalEndpointIndex) {
+    problems.push({ file: 'hadith-reader-smoke', href: 'local database branch before external API branch', pathname: 'collection routing order changed' });
+  }
+}
+
 // Guard privileged import routes against provenance loss and unreviewed bulk Hadith redistribution.
 const quranImportFile = path.join(root, 'app', 'api', 'admin', 'quran-import', 'route.ts');
 const hadithImportFile = path.join(root, 'app', 'api', 'admin', 'hadith-import', 'route.ts');
