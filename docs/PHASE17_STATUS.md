@@ -2856,3 +2856,14 @@ Last deployment evidence review: 2026-11-27 20:33 Africa/Lagos.
 7. Run authenticated reader/CMS regression only when approved SSO access is available.
 
 Last evidence review: 2026-11-27 21:28 Africa/Lagos.
+
+
+## Post-audit deployment and alias convergence — 2026-11-27 21:31 Africa/Lagos
+
+- **Newest documentation commit:** `36f81f79e5b55c0209c5cb5274e22db00602857b` is on main. Its Git-integrated Vercel deployment is `dpl_86htnEsFyiNfstkSYAQEXjVxXy18`, exact SHA confirmed, target=production, state=BUILDING at the final check. Build events show the route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped), compilation succeeded in 3.8s, lint/type checking ran, and static page-data collection was still underway. Do not claim READY or assign aliases to it.
+- **Current verified alias target:** the preceding audit-fix deployment `dpl_54Dt8kYuanXCWCbG1cwKbkgmsJHS` is READY on exact main commit `12835e014569bf3c75fc5532fe28ae0592e395df`. Its build events confirm route smoke passed, compilation succeeded in 3.5s, static generation completed 79/79, and deployment completed. Exact `get_alias` lookups performed after it became READY show all three official aliases now resolve to this same deployment: main, team and git-main. No manual alias reassignment was performed.
+- **Overlapping Git-build alias observation:** while the two adjacent Git deployments were completing, one intermediate set of direct alias lookups briefly showed main/git-main on `dpl_91BtaRaW4ySpCHHeqSpnFVtbeqK1` (commit `bf97bdaf`) and team on `dpl_54Dt8kYuanXCWCbG1cwKbkgmsJHS` (commit `12835e014`). After the latter deployment completed, a fresh exact lookup of all three domains showed convergence to `dpl_54Dt8kYuanXCWCbG1cwKbkgmsJHS`. The older READY deployment `dpl_9S3rKbgLQSCk6sz6Hh8HE7fikLJa` is no longer the current alias target. No alias was manually moved.
+- **Post-promotion runtime:** Vercel 24-hour runtime error aggregation returned no errors; production error/fatal logs for 2026-11-27 20:02:29–20:32:29 UTC returned no entries. Supabase unified logs for 20:01–20:31 UTC returned one `edge_logs` record; the query did not establish a comprehensive zero-error count.
+- **Access/change boundary:** project SSO protection remains enabled for non-custom deployment URLs; authenticated reader/CMS testing remains blocked and no bypass was attempted. No manual deployment, alias reassignment, quota workaround, database write, DDL, RLS/grant change, credential use or billing change occurred.
+
+Last deployment evidence review: 2026-11-27 21:31 Africa/Lagos.
