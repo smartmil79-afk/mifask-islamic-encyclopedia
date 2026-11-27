@@ -2423,3 +2423,10 @@ Previous evidence review: 2026-11-25 23:44 Africa/Lagos (audit base main commit 
 6. Run authenticated reader/CMS regression only after approved SSO access is available.
 
 Last evidence review: 2026-11-27 09:35 Africa/Lagos.
+
+
+## Documentation deployment follow-up — 2026-11-27 09:36 Africa/Lagos
+
+- Git-triggered Vercel deployment for Phase 17 documentation commit `b2a90f4e6c148e08457206799bbdbfc2ea12fab0`: `dpl_2TGPTyqYMUx8RAL7v8qHUxePyb5d`, target production, state BUILDING at the latest exact-SHA lookup.
+- Build events confirm it cloned the exact `main` commit, restored cache from the prior READY deployment, installed dependencies, and passed the route/navigation smoke check (67 internal literal links, 27 unique targets, 25 route templates, zero dynamic hrefs skipped, required header/footer links and category slugs checked). Next.js 15.5.29 production compilation had started but no completion/static-generation/READY event was yet present.
+- Do not claim READY or alias promotion for this new commit. The existing verified production deployment `dpl_BTAVA9wXyBwr2jbe8gPFUiq9p8vL` on `f024e77c2897182531f5d8cb929e7f840d7de26a` continues to own all three production aliases.
