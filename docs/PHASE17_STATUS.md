@@ -2807,3 +2807,15 @@ Last deployment evidence review: 2026-11-27 20:30 Africa/Lagos.
 - **Access boundary:** Vercel project SSO protection remains enabled for deployments except custom domains. Authenticated reader/CMS tests remain blocked; no bypass was attempted.
 
 Last deployment evidence review: 2026-11-27 20:31 Africa/Lagos.
+
+
+## Latest documentation deployment promotion — 2026-11-27 20:32 Africa/Lagos
+
+- **Current production deployment:** `dpl_8ewLfuNvsseHQS31afvduJGYj2XG` is READY on exact Git main SHA `a65eaf156935c5f181107ad1dcc7b1f42dd0bcb4`. This deployment includes the Adhkar review-only route guard and the committed live-integrity SQL audit.
+- **Build verification:** build events show `prebuild`/route-smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped); Next.js compilation succeeded in 3.8s; static generation completed 79/79; `/adhkar` is present in the route table; deployment completed. The non-blocking edge-runtime/static-generation warning remains.
+- **Three official aliases independently resolved to this deployment:** `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. Each exact `get_alias` lookup returned deployment ID `dpl_8ewLfuNvsseHQS31afvduJGYj2XG`; the deployment alias list contains all three. No manual alias assignment occurred.
+- **Latest documentation commit:** `529c92806656ec977794d184992816ad51734b9b` triggered `dpl_CeapznFUQd3DaxoYhfQx3UiFAfWi`, state QUEUED at exact-SHA check. It is not reported READY and no alias is claimed for it; the three official aliases remain on `dpl_8ewLfuNvsseHQS31afvduJGYj2XG`.
+- **Post-promotion runtime:** runtime error aggregation for 24 hours returned no errors; production error/fatal logs for the inspected 30-minute window returned no entries. These are bounded query results, not a guarantee of no possible errors.
+- **Access boundary:** SSO protection remains enabled for non-custom deployment URLs. Authenticated reader/CMS regression remains SSO-blocked; no bypass attempted.
+
+Last deployment evidence review: 2026-11-27 20:32 Africa/Lagos.
