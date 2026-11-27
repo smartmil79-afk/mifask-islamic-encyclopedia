@@ -82,6 +82,21 @@ SELECT jsonb_build_object(
     )
     FROM public.ie_adhkar
   ),
+  'audio_url_storage', (
+    SELECT jsonb_build_object(
+      'metadata_key_present', count(*) FILTER (WHERE metadata ? 'audio_url'),
+      'json_null', count(*) FILTER (
+        WHERE metadata ? 'audio_url' AND metadata->'audio_url' = 'null'::jsonb
+      ),
+      'empty_string', count(*) FILTER (
+        WHERE metadata ? 'audio_url' AND metadata->>'audio_url' = ''
+      ),
+      'nonempty_string', count(*) FILTER (
+        WHERE nullif(btrim(metadata->>'audio_url'), '') IS NOT NULL
+      )
+    )
+    FROM public.ie_adhkar
+  ),
   'category_distribution', (
     SELECT coalesce(jsonb_agg(to_jsonb(c) ORDER BY category), '[]'::jsonb)
     FROM category_counts AS c

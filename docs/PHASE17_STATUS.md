@@ -2734,3 +2734,16 @@ Last deployment/security evidence review: 2026-11-27 17:50 Africa/Lagos.
 9. Complete authenticated reader/CMS regression only when approved SSO access is available.
 
 Last evidence review: 2026-11-27 18:39 Africa/Lagos.
+
+
+## Adhkar source-comparison correction and production promotion — 2026-11-27 18:39 Africa/Lagos
+
+- **Immutable upstream recheck:** fetched both upstream JSON files at Seen-Arabic/Morning-And-Evening-Adhkar-DB commit 39d422fb3e3a6608b47a8f4e1040543220bfd215. English file blob: 09605bb640c9f67c5c895926433f945b52edf420; Arabic file blob: 4c7b3edf4dccf33ea9988a306d67104a2d3ab673. Each file contains 34 records.
+- **Corrected exact-parity result:** direct client-side comparison against all 34 current Supabase rows found exact 34/34 matches for Arabic, transliteration, English translation, repetition, source citation text, Hadith text, count description, virtue/context and source order. Audio URL representation is exact on 33/34: upstream source order 1 stores an empty string, while Supabase stores JSON null. Direct SQL confirms the metadata key exists on all 34 rows, with 1 JSON null and 33 non-empty URL strings. This is a storage-representation mismatch, not a missing audio URL to invent; no value was changed. The earlier 17:50 statement of exact 34/34 audio-field parity is corrected by this finding.
+- **Audit SQL expanded:** docs/phase17/audits/adhkar-source-parity-20261127.sql now reports audio_url metadata-key coverage, JSON-null count, empty-string count and non-empty-string count. The query is read-only.
+- **New Adhkar route deployed:** deployment dpl_C9koFLn1JJMvmjfcpYf96tiwxkgF is READY on exact main SHA 073d9cd45239d76fadf90f3d25b830a05aec60d2. Build logs confirm route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped), Next.js compilation succeeded in 5.6s, lint/type checking ran, static generation completed 79/79 and the route table explicitly includes /adhkar. Non-blocking npm cache-dir and edge-runtime/static-generation warnings remain.
+- **Production aliases independently rechecked after READY:** main, team and git-main official aliases all resolve to dpl_C9koFLn1JJMvmjfcpYf96tiwxkgF. Runtime error aggregation (24h) returned no errors; production error/fatal logs (30m) returned no entries.
+- **Access boundary:** Vercel project SSO protection remains enabled for deployments except custom domains. No authenticated reader/CMS test or SSO bypass was attempted. The new /adhkar page is a public review notice only and does not display the stored Adhkar text.
+- No Supabase writes/imports, DDL, RLS/grant changes, destructive actions, credential use, billing changes, manual deployment or quota workaround occurred.
+
+Last evidence review: 2026-11-27 18:39 Africa/Lagos.
