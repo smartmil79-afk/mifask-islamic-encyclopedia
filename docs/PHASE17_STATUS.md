@@ -2654,3 +2654,15 @@ Last evidence review: 2026-11-27 16:08 Africa/Lagos.
 10. Run authenticated reader/CMS regression only after approved SSO access becomes available.
 
 Last evidence review: 2026-11-27 16:30 Africa/Lagos.
+
+
+## Production promotion follow-up — 2026-11-27 16:30 Africa/Lagos
+
+- The Git-integrated deployment created by the provenance-audit SQL commit `cad6544d640ea2c8ef7551b54787f92d5d42ada8` is `dpl_DFC465V6TdGUvkZy49kWsX1Be4X6`; `get_deployment` independently confirms state READY, target production, exact Git SHA match and no alias error.
+- After READY, all three official production aliases were re-read and now resolve to `dpl_DFC465V6TdGUvkZy49kWsX1Be4X6`: main domain, team alias and git-main alias. No manual alias assignment was made.
+- Build events confirm Next.js compilation succeeded in 4.2s, static generation completed 78/78, outputs deployed and build cache uploaded. The previous route/navigation smoke check on the same source-code base passed (67 links, 27 targets, 25 route templates); this audit commit adds only a read-only SQL documentation file.
+- The subsequent status-document commit `b36f79009d7ed9825c117d7c1929323421b98a2f` triggered deployment `dpl_2Bs5Lv2GyTSbXtB4E1vs6UKxZVSe`, which was BUILDING at the final exact-SHA check. It is not claimed READY. The three official aliases remain on the separately verified READY deployment above.
+- Post-promotion production error aggregation (24h) returned no runtime errors; production error/fatal logs (30m) returned no matching entries.
+- A separate branch-specific alias still points to a non-production deployment; it was not modified.
+
+Last deployment evidence review: 2026-11-27 16:30 Africa/Lagos.
