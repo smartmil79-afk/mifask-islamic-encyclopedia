@@ -2483,3 +2483,10 @@ Last evidence review: 2026-11-27 10:38 Africa/Lagos.
 8. Run authenticated reader/CMS regression only after approved SSO access is available.
 
 Last evidence review: 2026-11-27 12:23 Africa/Lagos.
+
+
+## Vercel follow-up — 2026-11-27 12:23 Africa/Lagos
+
+- The Git-integrated deployment triggered by the 12:23 audit commit `0153bdd51ae9ce4b0ceb8bac2d2c7740d433ade1` is `dpl_9tTBQe6797oLxiMWCWFkKZEtwLH8`, target production, state **BUILDING** at the exact-SHA lookup. GitHub's Vercel status context is pending.
+- Build events confirm the deployment cloned branch `main` at commit `0153bdd`, restored cache from the preceding READY deployment `dpl_2F7vEpvfwRe4ksmZBNLwRYrk4ZJR`, and started `vercel build`. No route-smoke, compilation-complete, static-generation-complete, READY or alias evidence was available yet.
+- The preceding deployment `dpl_2F7vEpvfwRe4ksmZBNLwRYrk4ZJR` remains the independently verified READY production deployment with all three aliases. Do not claim the new deployment is READY or move aliases before exact evidence.
