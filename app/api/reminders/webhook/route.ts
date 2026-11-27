@@ -14,8 +14,10 @@ export async function GET(req:Request) {
 }
 export async function POST(req:Request) {
  const appSecret=process.env.WHATSAPP_APP_SECRET;
- if(!appSecret) return NextResponse.json({error:'Webhook not configured'},{status:503});
  const raw=await req.text(), signature=req.headers.get('x-hub-signature-256')||'';
+ // Fail closed with the same response used for every unverifiable signature.
+ // Do not reveal whether the app secret is configured.
+ if(!appSecret) return NextResponse.json({error:'Invalid signature'},{status:401});
  const expected='sha256='+crypto.createHmac('sha256',appSecret).update(raw).digest('hex');
  const a=Buffer.from(signature),b=Buffer.from(expected);
  if(a.length!==b.length||!crypto.timingSafeEqual(a,b)) return NextResponse.json({error:'Invalid signature'},{status:401});
