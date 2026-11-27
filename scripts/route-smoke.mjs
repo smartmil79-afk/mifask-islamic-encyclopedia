@@ -286,6 +286,41 @@ if (!fs.existsSync(adminPageFile) || !fs.existsSync(editorialIntegrityFile) || !
   }
 }
 
+// Keep the Adhkar route in a review-only holding state until source rights,
+// classification mapping, and editorial review are approved. This is a
+// static publication-boundary guard, not an authenticated browser test.
+const adhkarPageFile = path.join(appDir, 'adhkar', 'page.tsx');
+if (!fs.existsSync(adhkarPageFile)) {
+  problems.push({ file: 'adhkar-review-smoke', href: 'holding page', pathname: 'missing file' });
+} else {
+  const adhkarPageSource = fs.readFileSync(adhkarPageFile, 'utf8');
+  const requiredAdhkarDisclosures = [
+    ['source-rights limitation', 'repository-level licence does not by itself establish redistribution rights'],
+    ['morning/evening classification limitation', 'upstream distinction between entries intended for the morning, the evening, or both'],
+    ['content withholding notice', 'Adhkar entries are not displayed on this page yet.'],
+    ['scholarly review disclosure', 'independently scholarly verified'],
+    ['separate Qur’anic Supplications link', 'href="/duas"'],
+    ['Qur’an reader link', 'href="/quran"'],
+    ['sources and methodology link', 'href="/sources"'],
+  ];
+  for (const [feature, marker] of requiredAdhkarDisclosures) {
+    if (!adhkarPageSource.includes(marker)) {
+      problems.push({ file: 'adhkar-review-smoke', href: feature, pathname: 'required review disclosure or navigation link missing' });
+    }
+  }
+  const forbiddenAdhkarExposureMarkers = [
+    ['direct Adhkar table reference', 'ie_adhkar'],
+    ['Adhkar API request', '/api/adhkar'],
+    ['client-side data fetch', 'fetch('],
+    ['Supabase client initialization', 'createClient('],
+  ];
+  for (const [feature, marker] of forbiddenAdhkarExposureMarkers) {
+    if (adhkarPageSource.includes(marker)) {
+      problems.push({ file: 'adhkar-review-smoke', href: feature, pathname: 'review-only route must not query or render stored Adhkar records before approval' });
+    }
+  }
+}
+
 if (problems.length) {
   console.error('Route/navigation smoke check FAILED:');
   for (const item of problems.slice(0, 30)) console.error('- ' + item.file + ': ' + item.href + ' -> ' + item.pathname);
