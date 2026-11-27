@@ -2819,3 +2819,14 @@ Last deployment evidence review: 2026-11-27 20:31 Africa/Lagos.
 - **Access boundary:** SSO protection remains enabled for non-custom deployment URLs. Authenticated reader/CMS regression remains SSO-blocked; no bypass attempted.
 
 Last deployment evidence review: 2026-11-27 20:32 Africa/Lagos.
+
+
+## Production promotion after status-document build — 2026-11-27 20:33 Africa/Lagos
+
+- **Current production deployment:** `dpl_Giy6rtxEU3teFknTLY5CxQBjjeRv` is READY on exact main SHA `18740bb439354d7f801b9ca401fd64389a672481`.
+- **Build evidence:** `prebuild` route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped); Next.js compilation succeeded in 4.4s; static generation completed 79/79; `/adhkar` appears in the route table; deployment completed. The build includes the Adhkar review-only publication-boundary guard.
+- **Alias verification:** exact lookups for all three official domains (main, team and git-main) return deployment ID `dpl_Giy6rtxEU3teFknTLY5CxQBjjeRv`; the deployment alias list contains all three. No manual alias assignment occurred.
+- **Runtime:** Vercel runtime error aggregation for 24 hours returned no errors; production error/fatal logs for the inspected 30-minute window returned no matching entries. These are bounded query results.
+- **Newest status commit deployment:** `dpl_joJr295XwzZinCCGYFGgMTPYq517` for commit `26bfff88afb3bbf8c9f5ed37c537aa461ac7f375` remains QUEUED at the exact-SHA check. No READY or alias claim is made for it; current aliases remain on `dpl_Giy6rtxEU3teFknTLY5CxQBjjeRv`.
+
+Last deployment evidence review: 2026-11-27 20:33 Africa/Lagos.
