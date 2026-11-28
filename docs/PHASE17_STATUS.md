@@ -3025,3 +3025,14 @@ Last evidence review: 2026-11-28 01:00 Africa/Lagos.
 6. Review SECURITY DEFINER findings individually; preserve all RLS boundaries and the default-deny reminder log.
 
 Last evidence review: 2026-11-28 01:30 Africa/Lagos.
+
+
+## Production promotion follow-up — 2026-11-28 01:34 Africa/Lagos
+
+- The 01:30 category-audit entry recorded the pre-promotion deployment dpl_5sZfyQb5omrG19YCyvgyLcLkHsCY. After that audit-file commit, Vercel automatically promoted the Git-integrated deployment dpl_J4hFWUrz2jsBiaGXA7szZfNU6ETZ to READY on exact commit 58c1c4c8a15031dbe0c94dcfddb94c90dfb169fe. Its build events independently show route-smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped), Next.js compilation succeeded in 4.3s, lint/type checks ran, static generation completed 79/79 and deployment completed in 33s.
+- All three official production aliases were looked up again after promotion and each now resolves to dpl_J4hFWUrz2jsBiaGXA7szZfNU6ETZ: mifask-islamic-encyclopedia-liha.vercel.app, mifask-islamic-encyclopedia-liha-mifask-team.vercel.app and mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app. This supersedes the immediately preceding alias mapping recorded above; no manual alias reassignment was performed.
+- The subsequent status-document commit e7c179660f89b3636d08de6d1f77efcff9009343 triggered dpl_DkrbnzeuBb6htssvgPdBDephjg38, which was BUILDING at the last exact-SHA/deployment-ID checks. Its route smoke passed (73 links, 28 unique targets, 26 templates, 0 dynamic hrefs skipped), compilation succeeded in 4.4s, and lint/type checking had started; static generation and READY were not yet observed. Do not claim READY or aliases for this deployment.
+- Correct-project Vercel runtime error aggregation (project prj_L7pZ4eDx1kM6plWkl7W8or3V3BAE) returned no errors for 24h; production error/fatal logs returned no entries for the inspected 30-minute window. Supabase unified logs for 2026-11-28 00:00–00:30 UTC returned two edge_logs records only; this is a source count, not a comprehensive zero-error assertion.
+- No additional Supabase writes, DDL, RLS/grant changes, imports, migration operations, manual deployments, alias changes, credentials, billing changes or quota workarounds occurred.
+
+Last deployment evidence review: 2026-11-28 01:34 Africa/Lagos.
