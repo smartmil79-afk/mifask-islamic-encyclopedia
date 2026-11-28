@@ -1,0 +1,51 @@
+name: MIFASK Daily Reminders Scheduler
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mifask-daily-reminders-scheduler
+  cancel-in-progress: false
+
+jobs:
+  invoke-reminder-sender:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Invoke protected reminder sender
+        env:
+          REMINDERS_CRON_SECRET: ${{ secrets.REMINDERS_CRON_SECRET }}
+          REMINDERS_ENDPOINT: https://mifask-islamic-encyclopedia-liha.vercel.app/api/reminders/send
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${REMINDERS_CRON_SECRET}" ]]; then
+            echo "::notice::REMINDERS_CRON_SECRET is not configured; scheduler safely skipped."
+            exit 0
+          fi
+
+          response_file="$(mktemp)"
+          trap 'rm -f "$response_file"' EXIT
+          status="$(curl --silent --show-error --max-time 45 \
+            --output "$response_file" --write-out '%{http_code}' \
+            --header "Authorization: Bearer ${REMINDERS_CRON_SECRET}" \
+            --header 'Accept: application/json' \
+            "$REMINDERS_ENDPOINT")"
+          body="$(cat "$response_file")"
+
+          if [[ "$status" == "200" ]]; then
+            echo "Reminder sender completed."
+            exit 0
+          fi
+          if [[ "$status" == "503" ]] && grep -q '"status":"sending_disabled"' "$response_file"; then
+            echo "Reminder sending is intentionally disabled; no subscriber lookup or delivery occurred."
+            exit 0
+          fi
+
+          echo "Reminder sender returned HTTP $status."
+          echo "$body"
+          exit 1
