@@ -3619,3 +3619,8 @@ Last production verification: 2026-11-28 10:12 Africa/Lagos.
 - Build events for `dpl_3j61Gdrm8AWR6xDz9JtGZm23AhHR` confirm compilation in 4.3 seconds, static generation 79/79, and deployment completion. The edge-runtime/static-generation warning remains non-blocking. No route-smoke line was present in the inspected event slice, so no fresh route-smoke claim is made.
 - Project-level runtime-error aggregation for 24 hours returned no errors; production error/fatal runtime logs for 30 minutes returned no entries.
 - The subsequent status correction commit `a0f09a0de9c94c73540ad8d1ec4c32951473a70e` has deployment `dpl_3eh3JZf4ovcEwPRurFzX7S2bCsgD`, state BUILDING at the exact-SHA lookup. It is not claimed READY and no alias promotion is claimed for it. The current three official aliases remain on `dpl_3j61Gdrm8AWR6xDz9JtGZm23AhHR`.
+
+
+### Repository governance observation — 2026-11-28 14:42 Africa/Lagos
+
+- GitHub branch API for `main` reports `protected=false`; the protection object reports `enabled=false` and required-status-check enforcement `off`. No branch-protection or repository-setting change was made in this run. This is a governance risk for future direct-to-main changes and should be reviewed by the repository owner through normal GitHub settings.
