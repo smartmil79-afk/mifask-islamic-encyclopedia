@@ -3624,3 +3624,11 @@ Last production verification: 2026-11-28 10:12 Africa/Lagos.
 ### Repository governance observation — 2026-11-28 14:42 Africa/Lagos
 
 - GitHub branch API for `main` reports `protected=false`; the protection object reports `enabled=false` and required-status-check enforcement `off`. No branch-protection or repository-setting change was made in this run. This is a governance risk for future direct-to-main changes and should be reviewed by the repository owner through normal GitHub settings.
+
+
+### Latest production promotion verification — 2026-11-28 14:43 Africa/Lagos
+
+- Status correction commit `a0f09a0de9c94c73540ad8d1ec4c32951473a70e` completed READY as `dpl_3eh3JZf4ovcEwPRurFzX7S2bCsgD`, target production. Direct lookups of the main, team, and main-branch aliases all resolve to this exact deployment and SHA; its deployment alias list contains all three official domains.
+- Build events confirm deployment completion and static generation 79/79. The inspected event slice did not contain a compilation-duration or route-smoke line, so neither is newly asserted here.
+- Runtime-error aggregation for the last 24 hours returned no errors; production error/fatal logs for the last 30 minutes returned no entries.
+- The current documentation commit `77f6cc69ed367368452f785ac56157bc0bf79d92` has Git-integrated production-target deployment `dpl_AoZx6VuH8JDpr6HeohnsRkeMN3pk`, state QUEUED at exact-SHA lookup. It is not claimed READY or aliased. The live official domains remain on `dpl_3eh3JZf4ovcEwPRurFzX7S2bCsgD`.
