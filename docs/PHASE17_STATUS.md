@@ -3226,3 +3226,24 @@ Last evidence review: 2026-11-28 05:24 Africa/Lagos.
 5. Reconcile local/remote migration history without replaying the unsafe Phase 2 seed.
 6. Restore missing editorial revision snapshots through the approved CMS workflow.
 7. Complete authenticated reader/CMS regression only when approved SSO access is available.
+
+
+## Latest production promotion verification — 2026-11-28 06:04 Africa/Lagos
+
+- **Current production deployment:** `dpl_2whuxvN2P6iexwWmR3gDcjmp31mM` is READY on exact main commit `3d44c788a00a9e772ffa4abc9ad8c1fb341382fc`. Direct `get_deployment` confirms `readyState=READY`, target `production`, and Git source from `main`.
+- **Build evidence:** route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped, required header/footer links and category slugs checked); Next.js compilation succeeded in 3.7s; lint/type checking ran; static generation completed 79/79 pages; deployment completed. Non-blocking npm `cache-dir` and edge-runtime/static-generation warnings remain.
+- **Production aliases independently rechecked after READY:** all three official aliases now resolve to `dpl_2whuxvN2P6iexwWmR3gDcjmp31mM`: `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. Both deployment-specific alias listing and project alias listing agree. No alias was manually reassigned.
+- **Runtime health:** Vercel runtime error aggregation for 24h returned no errors; production error/fatal runtime logs for the latest 30m returned no entries for this deployment.
+- **Latest documentation commit at this check:** `94a5748751a7d60a5df4649b5ec8849360aa81ed` is the latest GitHub main commit before this follow-up. An exact-SHA Vercel deployment query returned no deployment record for it yet; therefore no READY or alias claim is made for that commit. The live aliases remain independently verified on the READY `3d44c788` deployment above.
+- **Supabase boundary:** current RLS catalog remains 35/35 public tables and 20/20 `ie_*` tables enabled. The last 30-minute unified logs query returned only three `pgbouncer_logs` records; this is not a comprehensive database error count. No database writes, imports, DDL, RLS/grant changes, migration history edits or permission changes occurred.
+- **Authenticated reader/CMS tests** remain SSO-blocked; no bypass attempted. No manual deployment, alias reassignment, credential use, billing changes or quota workaround.
+
+### Next priorities after 06:04 production verification
+
+1. Keep Prophet references unchanged pending editorial review of exact duplicates, metadata variants and cross-Prophet coordinate reuse.
+2. Continue QuranEnc provenance and separately licensed transliteration/audio research.
+3. Resolve Hadith rights/edition and metadata gaps before any import or backfill.
+4. Recover authentic Seerah, Dua, Adhkar and Names-of-Allah provenance.
+5. Reconcile local and remote migrations without replaying the unsafe Phase 2 seed.
+6. Restore missing article revision snapshots through the approved CMS workflow.
+7. Complete authenticated reader/CMS regression only when approved SSO access is available.
