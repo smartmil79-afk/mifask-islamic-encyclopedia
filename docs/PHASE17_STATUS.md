@@ -3571,3 +3571,12 @@ Last production verification: 2026-11-28 10:12 Africa/Lagos.
 5. Reconcile missing editorial revision history through the authenticated CMS workflow; preserve current unverified classifications.
 6. Review SECURITY DEFINER findings individually and retain RLS boundaries.
 7. Run authenticated reader/CMS regression only when approved SSO access becomes available.
+
+
+### Vercel alias/deployment follow-up — 2026-11-28 14:25 Africa/Lagos
+
+- The Git-integrated deployment for migration reconciliation report commit `a78bdfb69422fc05d5a150cc4905cd3557472a89` completed READY as `dpl_F4dzrExH1HRGQ3uUFo8D13MshAiX`, production target, exact Git SHA verified. Its deployment record lists all three official production aliases.
+- Independently queried each official alias after that promotion. Main, team, and main-branch aliases all resolve to `dpl_F4dzrExH1HRGQ3uUFo8D13MshAiX`. This supersedes the earlier pre-promotion note that aliases still targeted `dpl_3xaqit44dY3tDXbepEmTdtsWQ4TS`.
+- The subsequent Phase 17 status commit `a967fa77779a46d1b32f814691a67b2fa5bc15f1` has a separate Git deployment `dpl_EGZxCEauC1B9NTL2QnoaUkyy7SBt`; the last exact-SHA lookup reported QUEUED and the subsequent deployment lookup reported BUILDING. It is not READY and has not been assigned the production aliases. No manual deployment or alias reassignment was performed.
+- A separate branch deployment `dpl_BpHXbUMEg1RgpkuuDAZmNmtN5WpY` belongs to branch `docs/prophet-content-audit`, target null, and has only a branch preview alias; it is not the production deployment.
+- The main alias's existing shareable-link protection-bypass override remains present with expiry `2026-11-28 18:28:47 UTC`; it was not used, created, extended, or changed.
