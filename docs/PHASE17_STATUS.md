@@ -3328,3 +3328,15 @@ Last Vercel alias/build evidence review: 2026-11-28 08:22 Africa/Lagos.
 - Do not infer that the queued documentation deployment is READY; check the exact commit SHA and alias mappings before any future promotion claim.
 
 Last queue correction evidence: 2026-11-28 08:23 Africa/Lagos.
+
+
+## Production promotion completed after source-manifest audit — 2026-11-28 08:24 Africa/Lagos
+
+- **New current production target:** deployment `dpl_A4xVcjXBknts1vKJ6svMD98pDLYF` is now independently confirmed `READY`, `target=production`, Git source `main`, exact commit `25fe7e9f28a7eb2d34bdf10426cf7fa93dfd702b`. This supersedes the earlier 08:22 note that the same deployment was still BUILDING.
+- **Build evidence:** route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped, required header/footer links and category slugs checked); Next.js compilation succeeded in 3.8s; lint/type checking ran; static generation completed 79/79 pages; build completed in 32s and deployment completed. Non-blocking npm `cache-dir` and edge-runtime/static-generation warnings remain.
+- **Production alias verification:** current Vercel alias listing maps each official alias to `dpl_A4xVcjXBknts1vKJ6svMD98pDLYF`: `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. Direct deployment metadata lists the same three aliases. No manual alias reassignment.
+- **Runtime health:** 24-hour project runtime error aggregation returned no errors; deployment-specific production error/fatal logs for the latest 30 minutes returned no entries.
+- **Most recent documentation commit at this check:** `5fbf4bd859f449afd16a62085ad359f89e70c90e` triggered deployment `dpl_9n8mniX4NTwBukomKLcjHuKvizEE`, state `QUEUED` at exact-SHA lookup. It is not READY and is not the current alias target. The three aliases remain on the verified READY `25fe7e9f` deployment until a later check proves otherwise.
+- Authenticated reader/CMS regression remains SSO-blocked; no bypass attempted. No database writes, imports, migrations, RLS changes, credentials, billing changes, manual deployment or quota workaround.
+
+Last production promotion evidence review: 2026-11-28 08:24 Africa/Lagos.
