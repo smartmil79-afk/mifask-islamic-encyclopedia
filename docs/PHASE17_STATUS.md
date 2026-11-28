@@ -3306,3 +3306,15 @@ Last evidence review: 2026-11-28 07:07 Africa/Lagos.
 7. Complete authenticated reader/CMS regression only when approved SSO access is available.
 
 Last evidence review: 2026-11-28 08:20 Africa/Lagos.
+
+
+## Vercel alias promotion follow-up — 2026-11-28 08:22 Africa/Lagos
+
+- **Alias-resolved production target changed after the preceding status write:** direct Vercel alias listing now maps all three official aliases to deployment `dpl_7vytUs6Zw18YKTcnwThLQ2KDxkLU`, not the previously observed `dpl_HeVbSWi4TcoCvAWJjWpZ3MfiFSbo`. The new alias target was independently fetched and confirms `state=READY`, `readyState=READY`, `target=production`, source `git`, branch `main`, exact commit `18103ba7306cdd116d6bd8a47a2bb5fc50f7e10`. This is Git-integrated promotion; no alias was manually assigned.
+- **Build evidence for live alias target:** route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped, required header/footer links present, category slugs checked); Next.js compilation succeeded in 3.9s; lint/type checking ran; static generation completed 79/79 pages; build completed and deployment completed. Non-blocking npm `cache-dir` and edge-runtime/static-generation warnings remain.
+- **Three aliases independently confirmed on the same READY target:** `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app` all resolve to `dpl_7vytUs6Zw18YKTcnwThLQ2KDxkLU`.
+- **Latest documentation commit deployment:** commit `25fe7e9f28a7eb2d34bdf10426cf7fa93dfd702b` has Git-integrated deployment `dpl_A4xVcjXBknts1vKJ6svMD98pDLYF` in `BUILDING` at the exact-SHA and direct-deployment checks. Do not claim it READY or assign aliases to it. The three official aliases remain on the verified READY `18103ba` deployment until a subsequent exact-SHA/alias check proves otherwise.
+- **Runtime health:** project-level Vercel runtime error aggregation for 24h returned no errors; production error/fatal runtime logs for 30m returned no entries. These are scoped results, not a guarantee of no user-visible issues.
+- Authenticated reader/CMS tests remain SSO-blocked; no bypass attempted. No database writes, migration changes, RLS/security changes, manual deployment, alias reassignment, credentials, billing changes or quota workaround.
+
+Last Vercel alias/build evidence review: 2026-11-28 08:22 Africa/Lagos.
