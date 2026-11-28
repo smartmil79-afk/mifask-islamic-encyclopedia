@@ -3036,3 +3036,14 @@ Last evidence review: 2026-11-28 01:30 Africa/Lagos.
 - No additional Supabase writes, DDL, RLS/grant changes, imports, migration operations, manual deployments, alias changes, credentials, billing changes or quota workarounds occurred.
 
 Last deployment evidence review: 2026-11-28 01:34 Africa/Lagos.
+
+
+## Latest documentation promotion verification — 2026-11-28 01:36 Africa/Lagos
+
+- The editorial-audit documentation deployment dpl_DkrbnzeuBb6htssvgPdBDephjg38 has now reached READY on exact commit e7c179660f89b3636d08de6d1f77efcff9009343. Final build events confirm route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped), compilation succeeded in 4.4s, lint/type checks ran, static generation completed 79/79 and deployment completed in 37s. The non-blocking edge-runtime/static-generation warning remains.
+- All three production aliases were independently looked up after READY and now resolve to dpl_DkrbnzeuBb6htssvgPdBDephjg38: mifask-islamic-encyclopedia-liha.vercel.app, mifask-islamic-encyclopedia-liha-mifask-team.vercel.app and mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app.
+- Runtime error aggregation for 24h returned no errors; production error/fatal runtime logs for the latest 30-minute window returned no entries. These checks used the project ID from the deployment record.
+- The immediately preceding correction commit 77dccbf7afe8d6927b7c96f1abfa6a04dea518f2 triggered deployment dpl_9Byw6HPXrBeNCKQ2X22XisoUpUo5, which was QUEUED at the first exact-SHA check and BUILDING at the latest check. It has not been declared READY and has no verified production aliases. The three aliases remain on dpl_DkrbnzeuBb6htssvgPdBDephjg38 until a later deployment is independently confirmed READY.
+- No Supabase data writes, imports, DDL, migration operations, RLS/grant changes, credential use, billing changes, manual deployment, alias reassignment or quota bypass occurred.
+
+Last production evidence review: 2026-11-28 01:36 Africa/Lagos.
