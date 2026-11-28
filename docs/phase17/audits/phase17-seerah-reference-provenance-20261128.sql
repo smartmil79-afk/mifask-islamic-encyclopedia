@@ -61,11 +61,11 @@ WITH quran_refs AS (
 )
 SELECT
   count(*) AS quran_reference_rows,
-  count(*) FILTER (WHERE surah_number IS NULL OR ayah_number IS NULL) AS invalid_numeric_reference_rows,
-  count(*) FILTER (WHERE v.surah_number IS NULL) AS missing_local_quran_verses,
+  count(*) FILTER (WHERE r.surah_number IS NULL OR r.ayah_number IS NULL) AS invalid_numeric_reference_rows,
+  count(*) FILTER (WHERE r.surah_number IS NOT NULL AND r.ayah_number IS NOT NULL AND v.surah_number IS NULL) AS missing_local_quran_verses,
   count(*) FILTER (
     WHERE coalesce(ref->>'local_reader','') <>
-      '/quran?surah=' || surah_number::text || '&ayah=' || ayah_number::text
+      '/quran?surah=' || r.surah_number::text || '&ayah=' || r.ayah_number::text
   ) AS local_reader_route_mismatches,
   count(*) FILTER (
     WHERE coalesce(ref->>'url','') !~
