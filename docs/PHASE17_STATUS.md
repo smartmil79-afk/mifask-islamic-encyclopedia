@@ -3205,3 +3205,24 @@ Last evidence review: 2026-11-28 05:24 Africa/Lagos.
 5. Recover Seerah, Dua, Adhkar and Names-of-Allah source provenance through approved workflows.
 6. Reconcile local/remote migration history without replaying the unsafe Phase 2 seed.
 7. Complete authenticated reader/CMS regression only when approved SSO access is available.
+
+
+## Vercel promotion follow-up — 2026-11-28 06:03 Africa/Lagos
+
+- **GitHub main at start of this follow-up:** `3d44c788a00a9e772ffa4abc9ad8c1fb341382fc`, verified by descending commit search. The Phase 17 status file blob before this follow-up was `415100360dbbd4f4d8a0b88688a40960d3b8c044`.
+- **Production alias promotion completed:** the previously BUILDING documentation deployment `dpl_GpvajoaCzSVtzX9toXgUWwTPtvCV` is now READY on exact commit `78a17222d7e7662b5873a89ea0958f712a20a6b2`. Direct deployment lookup, deployment alias listing and project alias listing all confirm the three official aliases currently resolve to this deployment: `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app` and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. The intermediate deployment `dpl_CYgJDLikei3585QfGaktymGkQm1y` on audit commit `0bdf30e` had also reached READY; Vercel's Git integration subsequently promoted the later `78a17222` deployment and moved the three aliases. No manual alias assignment occurred.
+- **Latest production build evidence for `dpl_GpvajoaCzSVtzX9toXgUWwTPtvCV`:** route/navigation smoke passed with 73 internal literal links, 28 unique targets, 26 route templates and 0 dynamic hrefs skipped; required header/footer links and category slugs checked. Next.js compilation succeeded in 3.8s; lint/type checking ran; static generation completed 79/79 pages; deployment completed. Non-blocking npm `cache-dir` and edge-runtime/static-generation warnings remain.
+- **Latest production runtime checks:** Vercel 24h runtime error aggregation returned no errors. Production error/fatal runtime logs for the latest 30m returned no entries.
+- **Newest main commit remains pending:** commit `3d44c788a00a9e772ffa4abc9ad8c1fb341382fc` has Git-integrated deployment `dpl_2whuxvN2P6iexwWmR3gDcjmp31mM` in `BUILDING`, with Vercel CI `pending` at the latest exact-SHA check. Do not claim READY or assign aliases to it. The three live production aliases remain on READY deployment `dpl_GpvajoaCzSVtzX9toXgUWwTPtvCV` until the new build completes and promotion is independently verified.
+- **Supabase follow-up:** direct catalog query remains 35/35 public base tables and 20/20 `ie_*` tables with RLS enabled. The 30-minute unified logs query returned three `pgbouncer_logs` rows only; the separate log-schema inspection call returned a transient backend error, so this is not a comprehensive zero-error database-log assertion. No database writes, DDL, RLS or grants changed.
+- **Change boundary:** no data imports, content edits, migration application/history repair, security weakening, credentials, billing changes, manual deployment, alias reassignment or quota bypass. Authenticated reader/CMS tests remain SSO-blocked and were not bypassed.
+
+### Next priorities after 06:03 promotion follow-up
+
+1. Preserve all Prophet reference entries until an approved revision-preserving editorial cleanup process exists; review 66 exact duplicate JSON entries, 25 legacy metadata gaps, 16 metadata-variant groups and two cross-Prophet coordinate groups.
+2. Continue QuranEnc rights/provenance work and separately licensed transliteration/audio research.
+3. Resolve Hadith redistribution rights, edition details and missing narrator/book metadata before backfill.
+4. Recover Seerah, Dua, Adhkar and Names-of-Allah source provenance through approved workflows.
+5. Reconcile local/remote migration history without replaying the unsafe Phase 2 seed.
+6. Restore missing editorial revision snapshots through the approved CMS workflow.
+7. Complete authenticated reader/CMS regression only when approved SSO access is available.
