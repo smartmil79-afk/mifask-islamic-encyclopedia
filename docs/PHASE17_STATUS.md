@@ -3094,3 +3094,38 @@ Last evidence review: 2026-11-28 03:10 Africa/Lagos.
 - No further Supabase writes, imports, DDL, RLS/grant changes, migration operations, manual deployment, alias reassignment, credentials, billing changes or quota workarounds occurred.
 
 Last deployment evidence review: 2026-11-28 03:11 Africa/Lagos.
+
+## Source URL and citation-anchor integrity audit — 2026-11-28 04:24 Africa/Lagos
+
+- **GitHub baseline:** the latest main commit before this status update was `f09283a22335fafbfecc1f00fdf7370c2b49a2e5`, which added `docs/phase17/audits/phase17-source-url-anchor-integrity-20261128.sql`. The new audit blob is `bf1feef644fc03406cd19a7df18bf9df280b90db`. The SQL was fetched back from GitHub and that exact 5,024-character file was executed directly against Supabase project `honsqapwikfghoubwhcf`.
+
+- **Schema-first source review:** inspected `ie_sources` and `ie_article_sources` columns before querying. The source catalogue fields are `source_type`, `title`, `citation`, `url`, `notes`, and `reliability_note`; link rows use `article_id`, `source_id`, and `citation_detail`.
+
+- **URL integrity results:** 56 source records; 54 HTTPS URLs and 2 intentional NULL-URL placeholders. Blank URLs=0, non-HTTPS URLs=0, whitespace URLs=0, query-string URLs=0, fragment-anchor URLs=8. Missing title/citation/notes/reliability-note fields=0. Exact duplicate URL groups=0 when URL fragments are preserved.
+
+- **Important normalization correction:** a prior exploratory normalization stripped both query strings and fragments and reported one duplicate base URL group. That is a false positive for the three Ebû Hanîfe TDV references: `#1`, `#2-akaide-dair-gorusleri`, and `#3-literatur` are three distinct section anchors with different titles and citations on one article page. The committed audit lowercases only the scheme/host and preserves the full path, query, and fragment when checking duplicates. Do not strip fragments from source URLs or merge these citations.
+
+- **Article-source integrity:** 70 populated links; missing citation details=0; dangling article links=0; dangling source links=0. Five source-catalogue records are currently unlinked to CMS articles: two explicitly generic book placeholders, a Jaguar16 structured-Hadith-metadata candidate (CC0 applies to structured metadata only; English translation rights and exact field alignment remain unresolved), a Qur'an 24:11 reference pointer awaiting editorial review, and a Tanzil transliteration entry awaiting rights clearance. These are review items, not records to auto-delete or attach.
+
+- **Source concentration:** TDV İslâm Ansiklopedisi accounts for 28/54 URL-backed sources (51.9%); Sunnah.com 15/54 (27.8%); Quran.com 6/54 (11.1%); the remaining five are distributed across GitHub, QuranEnc, Tanzil, Britannica, and Encyclopedia.com. This is a concentration indicator for editorial independence/source-diversity review, not proof that any citation is invalid.
+
+- **Fresh direct Supabase content snapshot:** Qur'an=6,236 verses; Arabic gaps=0; nested English-text gaps=0; edition/version/publisher/source_url gaps=0; transliteration gaps=6,236; empty audio URL objects=6,236. Surahs=114 and ayah_count sum=6,236. Hadith: Malik=1,858 (Arabic gaps=29, English=40, narrator/book/chapter metadata gaps=1,858 each); Riyad=1,896 (Arabic/English gaps=0, narrator gaps=11, book-number gaps=1,896, chapter-number/title gaps=0). Prophets=25, all source-import links present. Seerah=9 with 6 missing source-import links; Duas=40 with 40 transliteration gaps and 6 missing source-import links; Adhkar=34 with 34 missing source-import links; Names of Allah=99 with 99 missing source-import links. Import ledger=18 rows, 17 completed; all 18 content hashes and source hashes remain NULL.
+
+- **Editorial snapshot:** 43 articles (2 published, 41 review, 0 verified; all 43 unverified); 35 non-empty revision snapshots across 28 articles, with 15 articles lacking snapshots and 0 invalid snapshots. All 70 article-source links retain citation detail. Existing revisions were not modified.
+
+- **Security and production:** 35/35 public tables and 20/20 encyclopedia tables retain RLS. Security advisor still reports 30 anon-executable and 31 authenticated-executable SECURITY DEFINER findings plus the intentionally default-deny `ie_reminder_delivery_logs` table with no policies. Performance findings remain 26 unindexed foreign keys, 18 RLS init-plan warnings, 9 unused-index notices, and 18 multiple-permissive-policy warnings; health advisor returned 0 lints. Current production deployment `dpl_E4SivLgfTAHsuvyrS4ejWo71oG7K` is READY on exact main SHA `f55d906d97f3430a2fa8f250cc1468262f465825`; deployment metadata and deployment-alias listing confirm all three official aliases point to it. Runtime error aggregation (24h) returned no errors; production error/fatal logs (30m) returned no entries. Supabase unified logs for 2026-11-28 02:55–03:25 UTC returned no rows; this is not a comprehensive zero-error assertion.
+
+- **Migration/access boundary:** 16 local migration files versus 18 remote history rows remain unreconciled. Do not replay the local-only Phase 2 seed or rewrite applied migration history. Authenticated reader/CMS testing remains SSO-blocked; no bypass. No database writes/imports, DDL, RLS/grant changes, credential use, billing changes, manual deployment, alias reassignment, or quota workaround.
+
+### Next priorities after 04:24 source URL audit
+
+1. Preserve section fragments in all source-link deduplication and citation tooling; review TDV source concentration for independent corroboration where needed.
+2. Keep the five unlinked source records unattached until editors establish their exact article/work relationship and, where applicable, rights.
+3. Obtain written resource-specific transliteration permission; keep Hadith text imports blocked pending edition and redistribution-rights clearance.
+4. Recover authentic Seerah/Dua/Adhkar/Names-of-Allah provenance through the approved administrator workflow.
+5. Restore the 15 missing article revision snapshots through the authenticated CMS workflow without fabricating historical snapshots.
+6. Reconcile the 16 local migration files with 18 remote rows without replaying the Phase 2 seed.
+7. Review SECURITY DEFINER functions individually and retain all RLS boundaries.
+8. Complete authenticated reader/CMS regression only when approved SSO access is available.
+
+Last evidence review: 2026-11-28 04:24 Africa/Lagos.
