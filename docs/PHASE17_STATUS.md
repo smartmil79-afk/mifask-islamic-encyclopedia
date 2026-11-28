@@ -1,3 +1,26 @@
+## Phase 17 execution — 2026-11-28 16:31 Africa/Lagos
+
+- **GitHub main inspected:** current parent commit `bdb5cfb5792653e439e15bb2aefd4605cc5d71ca`; repository remains public with default branch `main`. GitHub branch API reports `protected=false` and required status-check enforcement `off`. This is a governance risk; no repository settings were changed.
+- **Schema-first Supabase audit:** inspected verbose public table inventory and exact `ie_articles` columns before querying. Database identity query confirms 35 public tables and 20 `ie_*` tables. All 35 public tables and all 20 encyclopedia tables have RLS enabled. No DDL, policy, grant, or data changes.
+- **New editorial reviewer-assignment audit:** direct read-only SQL confirms 43 articles total; 2 published/unverified and 41 review/unverified; named reviewers=0; missing reviewer_name=43; verified articles=0. All 43 have author attribution and non-empty content; all 43 remain unverified. Missing `verified_by`/`verified_at` is expected while no article is verified and was not treated as a defect. The two published/unverified articles have 2 and 3 linked source records and 2 and 3 reference-text entries respectively. No reviewer identities were invented.
+- **CMS workflow inspection:** `app/admin/page.tsx` loads `reviewer_name`, exposes it in the editor form, and requires a named reviewer plus specific references and notes for reviewed/source-checked/verified states; new publication requires verified status. `components/EditorialIntegrity.tsx` previously did not surface missing reviewer assignment. Added an explicit coverage count and per-article info/warning so the existing CMS integrity scan shows unassigned reviewers without auto-filling or changing article status.
+- **Qur'an reader attribution improvement:** inspected `app/quran/page.tsx`; per-ayah audio is fetched from AlQuran Cloud using edition identifier `ar.alafasy`. Official AlQuran Cloud CDN documentation maps `ar.alafasy` to Mishary Rashid Alafasy and lists the ayah-audio delivery format ([CDN documentation](https://alquran.cloud/cdn)). Added visible per-player reciter/provider attribution and linked the current [AlQuran Cloud terms](https://alquran.cloud/terms-and-conditions). Terms last updated 13 November 2026 state recordings remain copyrighted by their reciters/rightsholders; streaming/embedding/downloading is permitted for personal and educational use, and reciters may request removal in commercial products. This UI attribution is not a legal clearance; commercial-use scope remains subject to rights review. No audio was downloaded or mirrored.
+- **New reusable read-only SQL audit:** `docs/phase17/audits/phase17-article-reviewer-assignment-readiness-20261128.sql`. It inspects the exact editorial columns, groups status/verification coverage, lists published article reviewer/source readiness, and reports aggregate reviewer coverage. The audit was executed directly against Supabase; results: total=43, named reviewers=0, missing reviewers=43, verified=0, published/unverified=2, review/unverified=41.
+- **Current production before this code commit:** Vercel deployment `dpl_BdwrvNvhTDtfpp9vPPFD22GSfZiW` is READY on exact main SHA `bdb5cfb5792653e439e15bb2aefd4605cc5d71ca`. Its deployment metadata lists all three official aliases: main, team, and main-branch. Runtime error aggregation (24h) returned no errors; production error/fatal logs (30m) returned no entries. New Git commit below will trigger a separate Git-integrated deployment; do not claim its READY state or alias promotion until independently verified.
+- **Change boundary:** application changes are limited to visible audio attribution and CMS reviewer-gap visibility. Supabase operations were read-only. No content imports, article status changes, reviewer assignments, database writes, migrations, RLS changes, permission changes, credentials, billing changes, manual deployments, alias reassignment, or quota workarounds. Authenticated reader/CMS testing remains SSO-blocked; no bypass attempted.
+
+### Next priorities after 16:31 audit
+
+1. Obtain genuine reviewer assignments and complete editorial review through the authenticated CMS; keep all 43 articles unverified until evidence and qualified review exist.
+2. Reconfirm AlQuran Cloud audio use against the product's actual commercial/non-commercial distribution model and rights-holder removal requirements.
+3. Continue licensed Qur'an transliteration/audio research without importing unlicensed material.
+4. Reconcile the 15 local and 18 remote migration records without replaying the unsafe Phase 2 seed.
+5. Resolve Hadith editions, redistribution rights, missing text and metadata.
+6. Complete Seerah, Dua, Adhkar and Names-of-Allah source-import provenance without inventing historical import records.
+7. Review SECURITY DEFINER functions individually; retain all existing RLS boundaries.
+8. Complete authenticated reader/CMS regression only when approved SSO access is available.
+
+
 ## Active Phase 17 execution — 2026-11-26 23:22 Africa/Lagos
 
 - **GitHub main revalidated:** branch API reports `2120b6d8db58fc6cf7fc8e5bf5cf818c181f4fd5` before this update. The status file blob was `f1ef0a4078adb257d87abc9de10e8fbf903b77bd`. Repository remains public, default branch `main`; local migration directory was re-read and contains 15 SQL files.

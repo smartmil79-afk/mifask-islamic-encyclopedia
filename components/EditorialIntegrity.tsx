@@ -22,6 +22,10 @@ export default function EditorialIntegrity({articles,categories}:{articles:Integ
  for(const group of titles.values())if(group.length>1)group.forEach(a=>issues.push({severity:'warning',article:a,message:'Duplicate or near-duplicate title'}));
  const catIds=new Set(categories.map(c=>c.id));
  for(const a of articles){
+  if(!a.reviewer_name?.trim()){
+   const publishedUnverified=a.status==='published'&&a.verification_status!=='verified';
+   issues.push({severity:publishedUnverified?'warning':'info',article:a,message:publishedUnverified?'Published article has no named reviewer; scholarly verification remains unverified.':'No named reviewer is assigned; editorial review remains pending.'});
+  }
   if(!a.title?.trim())issues.push({severity:'error',article:a,message:'Title is empty'});
   if(!a.slug?.trim()||!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(a.slug))issues.push({severity:'error',article:a,message:'Slug missing or not URL-safe'});
   if(!a.summary?.trim())issues.push({severity:'warning',article:a,message:'Summary missing'});
@@ -52,6 +56,7 @@ export default function EditorialIntegrity({articles,categories}:{articles:Integ
    <div><strong>{warnings}</strong><span>Warnings</span></div>
    <div><strong>{infos}</strong><span>Editorial notes</span></div>
   </div>
+  <p className="admin-word-count">Named reviewer assignment: {articles.filter(a=>Boolean(a.reviewer_name?.trim())).length} of {articles.length} articles have a named reviewer. Missing assignments remain pending and are not auto-filled.</p>
   <p className="admin-word-count">Linked source records: {articles.filter(a=>typeof a.source_count==='number'&&a.source_count>0).length} of {articles.length} articles have at least one source record. Textual reference strings are audited separately and are not counted as linked sources.</p>
   <p className="admin-review-warning">Automated checks identify missing fields, consistency issues and citation-format concerns. They do not validate the authenticity of Hadith, correctness of Qur’anic references, or scholarly claims.</p>
   <h3>Category coverage</h3><div className="admin-table"><div className="admin-row admin-row-header"><span>Category</span><span>Articles</span><span>Coverage</span></div>{coverage.map(row=><div className="admin-row" key={row.category.id}><span><strong>{row.category.name}</strong></span><span>{row.count}</span><span>{row.count===0?'No articles':'Has content'}</span></div>)}</div>{uncovered.length>0&&<p className="admin-review-warning">Categories with no CMS articles: {uncovered.map(x=>x.category.name).join(', ')}. These are coverage gaps, not proof that the topic is absent elsewhere on the site.</p>}
