@@ -3148,16 +3148,20 @@ Last evidence review: 2026-11-28 04:24 Africa/Lagos.
 Last production evidence review: 2026-11-28 04:25 Africa/Lagos.
 
 
-## Source-audit deployment promotion confirmation — 2026-11-28 04:26 Africa/Lagos
+## Source-audit and documentation deployment promotion confirmation — 2026-11-28 04:27 Africa/Lagos
 
-- The source URL audit commit `f75a3c980b0810563267989a3cd21f9aad349da4` has now reached Vercel production **READY** as `dpl_5AgsTrSM2PmgoDzMkDyX9W7sd7Ks`. `get_deployment` reports READY with the exact Git SHA and no alias error. Build events confirm route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped, required header/footer links and category slugs checked), compilation succeeded in 3.6s, lint/type checks ran, and 79/79 static pages generated. The route table includes `/adhkar`, `/companions`, `/hadith`, `/quran`, `/seerah`, and `/sources`. The non-blocking npm `cache-dir` and edge-runtime/static-generation warnings remain.
+- **Source-audit commit:** `f75a3c980b0810563267989a3cd21f9aad349da4` reached Vercel production READY as `dpl_5AgsTrSM2PmgoDzMkDyX9W7sd7Ks`, exact Git SHA confirmed. Its build passed the route/navigation smoke (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped, required header/footer links and category slugs), compiled in 3.6s, ran lint/type checks, generated 79/79 static pages, and completed. It was subsequently superseded by the later documentation deployment below.
 
-- The three official aliases were independently checked after READY and all map to `dpl_5AgsTrSM2PmgoDzMkDyX9W7sd7Ks`: `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. This supersedes the prior 04:25 alias mapping to `dpl_A7HB4ShXrYMwN4CqqTimub37bzmC`.
+- **Current verified production:** documentation correction commit `fb2beec6bdf6e3f820fc687eec70ff8353fbb884` is deployed as `dpl_12Bsyk9eetzGJWRFHf2fMKvC7WYt`. `get_deployment` reports READY on the exact Git SHA. Build events confirm route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped, required header/footer links and category slugs checked), compilation succeeded in 3.4s, lint/type checks ran, 79/79 static pages generated, and deployment completed. Non-blocking npm `cache-dir` and edge-runtime/static-generation warnings remain.
 
-- The immediately preceding status-document commit `fb2beec6bdf6e3f820fc687eec70ff8353fbb884` has Git-integrated deployment `dpl_12Bsyk9eetzGJWRFHf2fMKvC7WYt`, which remained BUILDING at the last exact-SHA and `get_deployment` checks. It is not declared READY and no aliases are attributed to it. The three official aliases remain on the independently verified READY deployment `dpl_5AgsTrSM2PmgoDzMkDyX9W7sd7Ks` until a newer deployment is independently confirmed READY.
+- **All three official production aliases currently map to `dpl_12Bsyk9eetzGJWRFHf2fMKvC7WYt`:** `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. This was independently confirmed by the deployment alias listing and project alias listing.
 
-- Runtime error aggregation for the production project returned no errors over 24h; production error/fatal logs returned no entries over the latest 30m. Supabase unified logs for 02:55–03:25 UTC returned no rows, not a comprehensive zero-error assertion.
+- **Latest Phase 17 status commit before this correction:** `8024f91004cb6b24bc9c2799130aaf43d1287659`. Its Git-integrated deployment is `dpl_6uLj8mkB28dveccPau9n796besUe`, which remains BUILDING at the exact-SHA and `get_deployment` checks. Available events show route/navigation smoke passed (73 links, 28 unique targets, 26 templates, 0 dynamic hrefs skipped) and compilation succeeded in 3.7s; lint/type checking started, but static-page completion and READY have not been observed. It is not declared READY and has no verified aliases. The three official aliases remain on `dpl_12Bsyk9eetzGJWRFHf2fMKvC7WYt` until a newer deployment is independently confirmed READY.
+
+- **Application health:** Vercel project-scoped runtime error aggregation returned no errors over 24h; production error/fatal logs returned no entries over the latest 30m. Supabase unified logs for 2026-11-28 02:55–03:25 UTC returned no rows; this is not a comprehensive zero-error assertion.
+
+- **Supabase advisors:** security findings remain 30 anon-executable and 31 authenticated-executable SECURITY DEFINER functions, one RLS-enabled/no-policy table (`ie_reminder_delivery_logs`, intentionally default-deny), and leaked-password protection disabled. Performance findings remain 26 unindexed foreign keys, 18 RLS initialization-plan warnings, 9 unused-index notices, and 18 multiple-permissive-policy warnings. Health advisor: 0 lints. No broad advisor remediation was applied.
 
 - No database writes/imports, DDL, RLS/grant changes, credentials, billing changes, manual deployment, alias reassignment, or quota workaround occurred.
 
-Last production evidence review: 2026-11-28 04:26 Africa/Lagos.
+Last production evidence review: 2026-11-28 04:27 Africa/Lagos.
