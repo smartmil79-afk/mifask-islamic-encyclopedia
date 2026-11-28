@@ -161,3 +161,48 @@ select
 from public.ie_articles a
 join latest_revision lr on lr.article_id = a.id
 where a.slug = 'hadith-what-is-hadith';
+
+
+-- 6. Snapshot source-link coverage and field-level drift summary.
+-- The snapshot's source_ids field is optional in the existing JSON shape;
+-- missing keys are reported rather than silently reconstructed.
+with latest as (
+  select distinct on (r.article_id)
+    r.article_id,r.snapshot,r.created_at
+  from public.ie_article_revisions r
+  order by r.article_id,r.revision_number desc,r.created_at desc
+), current_state as (
+  select a.id,a.slug,a.summary,a.content,a.reference_texts,a.updated_at,
+         coalesce(
+           jsonb_agg(s.source_id::text order by s.source_id::text)
+             filter (where s.source_id is not null),
+           '[]'::jsonb
+         ) as current_source_ids
+  from public.ie_articles a
+  left join public.ie_article_sources s on s.article_id=a.id
+  group by a.id,a.slug,a.summary,a.content,a.reference_texts,a.updated_at
+)
+select
+  count(*) as articles_with_snapshots,
+  count(*) filter (where not (l.snapshot ? 'source_ids'))
+    as snapshots_missing_source_ids_key,
+  count(*) filter (where jsonb_typeof(l.snapshot->'source_ids')='null')
+    as snapshots_source_ids_json_null,
+  count(*) filter (where jsonb_typeof(l.snapshot->'source_ids')='array')
+    as snapshots_source_ids_array,
+  count(*) filter (
+    where (l.snapshot->'source_ids') is distinct from c.current_source_ids
+  ) as snapshots_source_ids_differ_from_current,
+  count(*) filter (
+    where (l.snapshot->'content') is distinct from c.content
+  ) as content_differences,
+  count(*) filter (
+    where (l.snapshot->>'summary') is distinct from c.summary
+  ) as summary_differences,
+  count(*) filter (
+    where (l.snapshot->'reference_texts') is distinct from to_jsonb(c.reference_texts)
+  ) as reference_text_differences,
+  count(*) filter (where c.updated_at > l.created_at)
+    as current_article_updated_after_snapshot
+from latest l
+join current_state c on c.id=l.article_id;
