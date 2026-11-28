@@ -3318,3 +3318,13 @@ Last evidence review: 2026-11-28 08:20 Africa/Lagos.
 - Authenticated reader/CMS tests remain SSO-blocked; no bypass attempted. No database writes, migration changes, RLS/security changes, manual deployment, alias reassignment, credentials, billing changes or quota workaround.
 
 Last Vercel alias/build evidence review: 2026-11-28 08:22 Africa/Lagos.
+
+
+## Documentation deployment queue correction — 2026-11-28 08:23 Africa/Lagos
+
+- After the preceding Vercel alias follow-up was committed as `0e213090e9516a475dd5f941da1111e58e10c049`, exact-SHA deployment lookup returned `dpl_CPrLZh3zP8uppqoLfjBu4XN9tTQQ` in `QUEUED` (production target). It is not READY and has no production-alias claim.
+- The earlier documentation commit `25fe7e9f28a7eb2d34bdf10426cf7fa93dfd702b` remains represented by `dpl_A4xVcjXBknts1vKJ6svMD98pDLYF` in `BUILDING` at its last direct check.
+- The official aliases remain independently listed on READY deployment `dpl_7vytUs6Zw18YKTcnwThLQ2KDxkLU` (exact source commit `18103ba7306cdd116d6bd8a47a2bb5fc50f7e10`). No alias was manually reassigned.
+- Do not infer that the queued documentation deployment is READY; check the exact commit SHA and alias mappings before any future promotion claim.
+
+Last queue correction evidence: 2026-11-28 08:23 Africa/Lagos.
