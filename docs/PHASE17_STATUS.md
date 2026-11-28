@@ -3539,3 +3539,10 @@ Last production verification: 2026-11-28 10:12 Africa/Lagos.
 6. Reconcile 15 local migration files against 17 remote rows without replaying the unsafe Phase 2 seed or rewriting applied history.
 7. Review SECURITY DEFINER findings individually and retain all RLS boundaries.
 8. Run authenticated reader/CMS regression only when approved SSO access is available.
+
+
+### Documentation deployment follow-up — 2026-11-28 12:59 Africa/Lagos
+
+- Exact-SHA Vercel deployment lookup for documentation commit `8e3786a6b2a319baea374449fb112a99ac2db51d` returned `dpl_HN46mjtXz4ikgRgoiGNaGyoyU5JM`, state `BUILDING`, target `production`, Git source. It is not READY and no alias promotion is claimed.
+- The currently verified live production deployment remains `dpl_4HQrMiZd4tVrVnwducHxRBPkCPZn` on `bccfd67ef16c954f251bba39bdd9b86462ad4a4f`. Direct deployment lookup confirms READY and lists the three official aliases. A separate filtered alias-list request returned no rows, so alias evidence is based on the deployment's own alias array and the earlier unfiltered project alias listing that mapped all three official domains to this deployment.
+- This follow-up is documentation-only; no deployment was manually created or promoted.
