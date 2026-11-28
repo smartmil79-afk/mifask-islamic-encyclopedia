@@ -3129,3 +3129,20 @@ Last deployment evidence review: 2026-11-28 03:11 Africa/Lagos.
 8. Complete authenticated reader/CMS regression only when approved SSO access is available.
 
 Last evidence review: 2026-11-28 04:24 Africa/Lagos.
+
+
+## Production alias and latest deployment follow-up — 2026-11-28 04:25 Africa/Lagos
+
+- **Latest production promotion correction:** the source-audit commit `f09283a22335fafbfecc1f00fdf7370c2b49a2e5` is deployed as `dpl_A7HB4ShXrYMwN4CqqTimub37bzmC`, and `get_deployment` reports READY with the exact Git SHA. Build events confirm the route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped, required header/footer links and category slugs checked), Next.js compilation succeeded in 3.6s, lint/type checking ran, 79/79 static pages generated, and deployment completed. Non-blocking npm `cache-dir` and edge-runtime/static-generation warnings remain.
+
+- **All three official aliases currently map to `dpl_A7HB4ShXrYMwN4CqqTimub37bzmC`:** `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. This was confirmed by the deployment's alias listing and the project alias listing. This supersedes the immediately preceding 04:24 note that still named `dpl_E4SivLgfTAHsuvyrS4ejWo71oG7K` as current production.
+
+- **Latest Phase 17 status commit:** `f75a3c980b0810563267989a3cd21f9aad349da4`. Its Git-integrated production deployment is `dpl_5AgsTrSM2PmgoDzMkDyX9W7sd7Ks`. Exact-SHA `list_deployments` and `get_deployment` still report BUILDING. Its available build events show the same route smoke passed, compilation succeeded in 3.6s, lint/type checks ran, 79/79 static pages generated, and a “Deployment completed” event; nevertheless the deployment API state remains BUILDING, so it is **not** declared READY and no aliases are attributed to it. The three official aliases remain on the independently verified READY deployment `dpl_A7HB4ShXrYMwN4CqqTimub37bzmC`.
+
+- **Current application health:** project-scoped Vercel runtime error aggregation for 24h returned no errors; production error/fatal logs for 30m returned no entries. Supabase unified logs for 2026-11-28 02:55–03:25 UTC returned no rows; that limited result is not represented as a comprehensive zero-error database assertion.
+
+- **Current Supabase advisors:** security: 30 anon-executable SECURITY DEFINER functions, 31 authenticated-executable SECURITY DEFINER functions, one RLS-enabled/no-policy table (`ie_reminder_delivery_logs`, intentionally default-deny), and leaked-password protection disabled. Performance: 26 unindexed foreign keys, 18 RLS initialization-plan warnings, 9 unused-index notices, 18 multiple-permissive-policy warnings. Health: 0 lints. No advisor remediation was applied because each security/performance finding needs scoped review and the existing RLS boundaries must remain intact.
+
+- No database writes/imports, DDL, RLS/grant changes, credentials, billing changes, manual deployment, alias reassignment, or quota workaround occurred.
+
+Last production evidence review: 2026-11-28 04:25 Africa/Lagos.
