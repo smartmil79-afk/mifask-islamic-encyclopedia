@@ -3364,3 +3364,23 @@ Last production promotion evidence review: 2026-11-28 08:24 Africa/Lagos.
 6. Complete authenticated reader/CMS regression only when approved SSO access is available.
 
 Last evidence review: 2026-11-28 08:40 Africa/Lagos.
+
+
+## Hadith reader/navigation remediation — production verification — 2026-11-28 08:45 Africa/Lagos
+
+- **Code commit:** ab3831c3f9b608a245055fca0d23ff7db8b2674e. GitHub main was re-read and both modified source files were fetched after commit. The Hadith Explorer now includes Riyad as-Salihin in its collection card and citation-builder list; the collection library and dynamic reader already supported Riyad.
+- **Reader regression fix:** the grade helper in app/hadith/library/[collection]/page.tsx now returns only a string. The prior fallback returned the empty JSON object from database grading fields, which React could attempt to render as an object child. Empty grading remains absent; no grade was created or inferred.
+- **Vercel deployment:** Git-integrated deployment dpl_GbsrNTdBRhSL7Vq1AvmdQnhusFYN is independently confirmed READY, target=production, on exact Git SHA ab3831c3f9b608a245055fca0d23ff7db8b2674e. Build logs show route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped); Next.js compilation succeeded in 5.1s; lint/type checks ran; static generation completed 79/79 pages; build completed in 35s; deployment completed. Non-blocking npm cache-dir and edge-runtime/static-generation warnings remain.
+- **Production aliases:** Vercel project alias listing independently maps all three official aliases to dpl_GbsrNTdBRhSL7Vq1AvmdQnhusFYN: mifask-islamic-encyclopedia-liha.vercel.app, mifask-islamic-encyclopedia-liha-mifask-team.vercel.app, and mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app. Deployment metadata confirms the same aliases and readyState=READY. No manual alias assignment occurred.
+- **Runtime health after promotion:** project-level Vercel runtime error aggregation for 24h returned no errors; production error/fatal runtime logs for 30m returned no entries. These are scoped observations, not a guarantee of zero user-visible defects.
+- **Access boundary:** authenticated reader/CMS interaction remains SSO-blocked. The build/route smoke is not an authenticated end-to-end test; no SSO or RLS bypass was attempted. No Supabase writes, imports, migrations, grading changes, book catalogue inserts, RLS/security changes, credentials, billing changes, manual deployment or quota workaround.
+
+### Next priorities after 08:45 production verification
+
+1. Obtain rights-holder/data-specific redistribution terms and authentic source checksums for Malik and Riyad before any text or metadata backfill.
+2. Populate Hadith book structure only from an edition-matched source that explicitly supplies book boundaries/names; do not infer books from Riyad chapter IDs.
+3. Continue QuranEnc transliteration/audio rights review and outstanding Seerah, Dua, Adhkar, Names-of-Allah and editorial revision provenance tasks.
+4. Reconcile 16 local migration files against 18 remote rows without replaying the unsafe Phase 2 seed or rewriting applied history.
+5. Complete authenticated reader/CMS regression only when approved SSO access is available.
+
+Last production evidence review: 2026-11-28 08:45 Africa/Lagos.
