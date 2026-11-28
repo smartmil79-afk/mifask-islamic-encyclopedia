@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "purpose": "Discovery and attribution metadata only; not a content import or reuse licence.",
+  "sources": [
+    {
+      "id": "kalamullah",
+      "name": "Kalamullah",
+      "url": "https://www.kalamullah.com/",
+      "source_type": ["books", "pdf", "lectures", "educational_material"],
+      "discovery_role": "Discover Islamic books and educational references relevant to editorial research.",
+      "inspection_status": "partially_unavailable",
+      "inspection_note": "Initial direct inspection was blocked; verify individual items and metadata independently.",
+      "reuse_status": "unknown",
+      "permission_required_before_republication": true,
+      "editorial_status": "discovered"
+    },
+    {
+      "id": "muslimcentral",
+      "name": "Muslim Central",
+      "url": "https://muslimcentral.com/",
+      "source_type": ["audio", "podcasts", "lecture_series"],
+      "discovery_role": "Discover supplementary lectures, speakers, and audio series.",
+      "inspection_status": "homepage_reviewed_catalogue_not_audited",
+      "inspection_note": "Record each episode's canonical page, speaker, series, and item-specific rights before any reuse.",
+      "reuse_status": "unknown",
+      "permission_required_before_republication": true,
+      "editorial_status": "discovered"
+    },
+    {
+      "id": "islamqa",
+      "name": "IslamQA",
+      "url": "https://islamqa.info/",
+      "source_type": ["questions_and_answers", "scholarly_discussion", "references"],
+      "discovery_role": "Discover questions, evidences, and references for comparative editorial research.",
+      "inspection_status": "terms_and_methodology_reviewed",
+      "inspection_note": "Published terms restrict reproduction and redistribution without permission; the site's stated methodology must be attributed and not presented as universal consensus.",
+      "reuse_status": "link_only",
+      "permission_required_before_republication": true,
+      "editorial_status": "discovered"
+    }
+  ],
+  "allowed_initial_actions": [
+    "store canonical URLs and bibliographic metadata",
+    "record short attributed research notes",
+    "link readers to original sources",
+    "record item-specific licence and permission evidence"
+  ],
+  "blocked_without_rights_review": [
+    "bulk scraping or mirroring",
+    "republishing full answers, articles, books, or transcripts",
+    "mirroring audio files",
+    "treating public accessibility as a reuse licence"
+  ],
+  "reuse_status_values": [
+    "unknown",
+    "link_only",
+    "metadata_only",
+    "permission_required",
+    "licensed",
+    "permission_granted"
+  ],
+  "editorial_status_values": [
+    "discovered",
+    "metadata_checked",
+    "rights_reviewed",
+    "evidence_extracted",
+    "scholarly_review",
+    "approved_for_publication",
+    "published"
+  ]
+}
