@@ -3601,3 +3601,13 @@ Last production verification: 2026-11-28 10:12 Africa/Lagos.
 4. Reconcile the 16 local versus 18 remote migrations without replaying the unsafe Phase 2 seed or rewriting applied history.
 5. Continue editorial revision-history reconciliation and individual SECURITY DEFINER review.
 6. Re-run authenticated reader/CMS regression only when approved SSO access is available.
+
+
+### Vercel promotion follow-up — 2026-11-28 14:40 Africa/Lagos
+
+- The earlier exact-SHA deployment for Prophet-reference audit commit `9a4013ce9e3aecd3f06a3d8199ada1142a1b8050` has completed READY as `dpl_FK1ccV3gGzkP4HmFKKufCm9XLvV4`, target production. Direct lookups of the main, team, and main-branch aliases each resolve to this exact deployment and SHA. This supersedes the preceding note that this audit deployment was BUILDING.
+- Build events for `dpl_FK1ccV3gGzkP4HmFKKufCm9XLvV4` confirm Next.js compilation succeeded in 4.2 seconds, static generation completed 79/79, and deployment completed. The edge-runtime/static-generation warning remains non-blocking. The event slice did not include a route-smoke line, so no new route-smoke assertion is made for this deployment.
+- Project-level Vercel runtime-error aggregation for 24 hours returned no runtime errors; production error/fatal runtime logs for the last 30 minutes returned no entries.
+- The latest status-document commit from the preceding update, `8fedbe11a3bc77d783897a3c6aeb52e67ce5ce41`, has separate deployment `dpl_3j61Gdrm8AWR6xDz9JtGZm23AhHR`, state BUILDING at the exact-SHA check. It is not claimed READY and has no production alias claim. The current official aliases remain on `dpl_FK1ccV3gGzkP4HmFKKufCm9XLvV4`.
+- The separate Prophet-draft branch preview `dpl_HkPu2NE4uWA9agayscqVJ2VwhoNp` remains target null with only its branch-preview alias; it is not production. Vercel project `latestDeployment` points to that latest preview activity, but direct production-domain resolution confirms the three official aliases remain on the production deployment above.
+- The existing main-alias shareable-link protection-bypass override remains present, expiring `2026-11-28 18:28:47 UTC` (19:28:47 Africa/Lagos). It was not used, created, extended, or changed; project owner should review its intended scope through normal Vercel controls.
