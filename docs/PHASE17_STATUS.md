@@ -3611,3 +3611,11 @@ Last production verification: 2026-11-28 10:12 Africa/Lagos.
 - The latest status-document commit from the preceding update, `8fedbe11a3bc77d783897a3c6aeb52e67ce5ce41`, has separate deployment `dpl_3j61Gdrm8AWR6xDz9JtGZm23AhHR`, state BUILDING at the exact-SHA check. It is not claimed READY and has no production alias claim. The current official aliases remain on `dpl_FK1ccV3gGzkP4HmFKKufCm9XLvV4`.
 - The separate Prophet-draft branch preview `dpl_HkPu2NE4uWA9agayscqVJ2VwhoNp` remains target null with only its branch-preview alias; it is not production. Vercel project `latestDeployment` points to that latest preview activity, but direct production-domain resolution confirms the three official aliases remain on the production deployment above.
 - The existing main-alias shareable-link protection-bypass override remains present, expiring `2026-11-28 18:28:47 UTC` (19:28:47 Africa/Lagos). It was not used, created, extended, or changed; project owner should review its intended scope through normal Vercel controls.
+
+
+### Documentation deployment promotion follow-up — 2026-11-28 14:41 Africa/Lagos
+
+- The prior status commit `8fedbe11a3bc77d783897a3c6aeb52e67ce5ce41` has now completed READY as `dpl_3j61Gdrm8AWR6xDz9JtGZm23AhHR`, target production. Direct lookups of all three official aliases (main, team, main-branch) independently resolve to this deployment and exact SHA. This supersedes the preceding note that this deployment was BUILDING.
+- Build events for `dpl_3j61Gdrm8AWR6xDz9JtGZm23AhHR` confirm compilation in 4.3 seconds, static generation 79/79, and deployment completion. The edge-runtime/static-generation warning remains non-blocking. No route-smoke line was present in the inspected event slice, so no fresh route-smoke claim is made.
+- Project-level runtime-error aggregation for 24 hours returned no errors; production error/fatal runtime logs for 30 minutes returned no entries.
+- The subsequent status correction commit `a0f09a0de9c94c73540ad8d1ec4c32951473a70e` has deployment `dpl_3eh3JZf4ovcEwPRurFzX7S2bCsgD`, state BUILDING at the exact-SHA lookup. It is not claimed READY and no alias promotion is claimed for it. The current three official aliases remain on `dpl_3j61Gdrm8AWR6xDz9JtGZm23AhHR`.
