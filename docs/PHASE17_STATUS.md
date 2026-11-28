@@ -2999,3 +2999,29 @@ Last deployment evidence review: 2026-11-28 00:07 Africa/Lagos.
 7. Review SECURITY DEFINER functions individually; retain default-deny reminder logs and existing RLS.
 
 Last evidence review: 2026-11-28 01:00 Africa/Lagos.
+
+
+## Editorial category coverage and revision-snapshot audit — 2026-11-28 01:30 Africa/Lagos
+
+- **GitHub baseline:** main was re-read at 58c1c4c8a15031dbe0c94dcfddb94c90dfb169fe before this status update. Added docs/phase17/audits/phase17-editorial-category-coverage-20261128.sql in that commit, then fetched the exact committed SQL back from GitHub and executed its six read-only checks directly against Supabase project honsqapwikfghoubwhcf.
+- **Schema-first evidence:** verbose public-table inspection confirmed the exact columns and foreign keys for ie_categories, ie_articles, ie_article_sources and ie_article_revisions. All 35 public tables have RLS enabled; all 20 ie_* tables have RLS enabled. ie_articles.content is JSONB and all 43 current values are arrays (not objects); the audit reports the observed shape without assuming a new schema.
+- **Category coverage:** 12 active categories, 43 articles, all categorized. Companions=25 (all review/unverified); Dictionary=5; Prophets=3; Fiqh=2; Seerah=2; Quran=1; Hadith=1; Aqeedah=1; History=1; Scholars=1; Muslim Life=1; Duas & Adhkar=0 CMS articles (the separate Dua/Adhkar tables remain distinct). Every article has at least one source link and a non-empty reference_texts array; no empty content JSON was found.
+- **Companions review coverage:** 25/25 have source links; 25/25 remain review/unverified; 0 verified. Sixteen Companion articles have at least one revision snapshot, while 9/25 have no revision snapshot. The category has 22 snapshots across those 16 articles. This is a new editorial-history gap to address through the approved CMS/revision workflow, not by fabricating snapshots or altering historical records.
+- **Other category revision gaps:** all 3 Prophet-category articles have no revision snapshot; both Fiqh articles have no revision snapshot; one of the two Seerah articles has no revision snapshot. Across the whole CMS, 35 non-empty object snapshots cover 28 of 43 articles; 15 articles currently have no snapshot. Invalid/empty snapshots=0; orphan snapshots=0.
+- **Editorial workflow consistency:** 2 articles are published + unverified, each has published_at and neither has verifier fields. 41 are review + unverified, with no published_at or verifier fields. No article is marked verified. This preserves the existing rule that publication status does not imply scholarly verification.
+- **Relationship integrity:** duplicate article/source pairs=0; orphan article links=0; orphan source links=0. No article is uncategorized and no article lacks reference text.
+- **Fresh migration inventory:** local supabase/migrations currently contains 16 SQL files; Supabase remote migration history contains 18 rows. The two-count gap remains and version/name/content reconciliation is still incomplete. Do not apply or replay the local-only Phase 2 seed; previous inspection found it would demote two published-but-unverified articles. No migration or migration-history repair was attempted.
+- **Current Supabase advisors (observed 2026-11-28 00:32 UTC):** security: 30 anon-executable and 31 authenticated-executable SECURITY DEFINER findings; one RLS-enabled/no-policy table (ie_reminder_delivery_logs, retained default-deny). Performance: 26 unindexed foreign keys, 18 RLS initialization-plan warnings, 9 unused-index notices and 18 multiple-permissive-policy notices. Health advisor: 0 lints. No policies, grants, functions, indexes or DDL changed.
+- **Production deployment:** Vercel deployment dpl_5sZfyQb5omrG19YCyvgyLcLkHsCY is READY on exact GitHub main SHA 2eeda2f5fd23c39045a830bafd9da4b8a779e42d. Build events show route-smoke execution, lint/type checks, successful Next.js build, 79/79 static pages generated and deployment completed in 30 seconds. The build route table includes /adhkar, /companions, /hadith, /hadith/library, /prophets, /quran and /seerah. All three official aliases were independently looked up and resolve to this same deployment: mifask-islamic-encyclopedia-liha.vercel.app, mifask-islamic-encyclopedia-liha-mifask-team.vercel.app and mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app. Vercel 24-hour runtime error aggregation returned no errors; production error/fatal runtime logs for 30 minutes returned no entries. The project ID was taken from the deployment record (prj_L7pZ4eDx1kM6plWkl7W8or3V3BAE) for these log checks.
+- **Access/change boundary:** authenticated reader/CMS testing remains SSO-blocked; no bypass. All database checks were read-only. No database writes/imports, DDL, policy/grant changes, destructive actions, credential use, billing changes, manual deployment, alias reassignment or quota workaround.
+
+### Next priorities after 01:30 editorial coverage audit
+
+1. Use the approved authenticated CMS workflow to create revision snapshots for the 9 Companion articles and the 3 Prophet-category and 2 Fiqh articles that currently have none; preserve all existing snapshots and keep verification status unverified until scholarly review.
+2. Reconcile 16 local migration files against 18 remote history rows, preserving the unsafe Phase 2 seed as unapplied and not rewriting applied history.
+3. Continue QuranEnc republishing-provenance work and find separately licensed Qur'an transliteration/audio.
+4. Resolve Hadith text rights, edition metadata and missing narrator/book fields before backfill.
+5. Resolve Adhkar/Names-of-Allah source provenance and the remaining Seerah/Dua linkage gaps through approved admin workflow.
+6. Review SECURITY DEFINER findings individually; preserve all RLS boundaries and the default-deny reminder log.
+
+Last evidence review: 2026-11-28 01:30 Africa/Lagos.
