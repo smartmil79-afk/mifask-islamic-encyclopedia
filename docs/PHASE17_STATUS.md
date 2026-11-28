@@ -3420,3 +3420,14 @@ Last evidence review: 2026-11-28 10:05 Africa/Lagos.
 - Authenticated reader/CMS regression remains SSO-blocked; no bypass attempted. No database writes, imports, migrations, RLS/security changes, credentials, billing changes, manual deployment, alias reassignment or quota workaround.
 
 Last production alias/build evidence review: 2026-11-28 10:10 Africa/Lagos.
+
+
+## Final Vercel production recheck — 2026-11-28 10:12 Africa/Lagos
+
+- The prior 10:10 transition has completed. Deployment `dpl_AzXKD4wLqx3B5PEy1Qi8e2v5jwJy` is now directly confirmed `READY`, `readyState=READY`, production target, Git source, exact main commit `b1c1d90e6a517e408dd93f54aa369700ff4b9fc7`. All three official aliases were re-listed and independently map to this same deployment: main domain, team domain, and main-branch domain. This promotion occurred through Git integration; no manual alias operation was performed.
+- Build evidence on `dpl_AzXKD4wLqx3B5PEy1Qi8e2v5jwJy`: route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, zero dynamic hrefs skipped, required header/footer links present, category slugs checked); compilation succeeded in 3.6s; lint/type checks ran; static generation completed 79/79 pages; build completed in 30s; deployment completed. Non-blocking npm `cache-dir` and edge-runtime/static-generation warnings remain.
+- Runtime health after this promotion: project-level runtime error aggregation for 24h returned no errors; production error/fatal logs for the latest 30m returned no entries. These checks are scoped to the queried windows.
+- The immediately newer documentation-only commit `803b212002ad7cad8d7d74871978dd814d6a4b80` has deployment `dpl_jT1CEiSdFwkRVJvDSkhQxbsxaNMM` in `QUEUED` at the last exact-SHA query. Do not claim that newest commit is deployed or READY until its own status and aliases are independently verified. The official aliases currently remain on the verified READY `b1c1d90` deployment.
+- Authenticated reader/CMS regression remains SSO-blocked. No SSO bypass, DB write, import, migration, RLS/security change, credential use, billing change, manual deploy, alias reassignment, or quota workaround.
+
+Last production verification: 2026-11-28 10:12 Africa/Lagos.
