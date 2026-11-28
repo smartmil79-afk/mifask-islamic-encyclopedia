@@ -3409,3 +3409,14 @@ Last production evidence review: 2026-11-28 08:45 Africa/Lagos.
 7. Complete authenticated reader/CMS regression when approved SSO access becomes available.
 
 Last evidence review: 2026-11-28 10:05 Africa/Lagos.
+
+
+## Vercel alias promotion follow-up — 2026-11-28 10:10 Africa/Lagos
+
+- **Alias target changed after the 10:05 checkpoint.** Current Vercel alias listing maps all three official aliases to deployment `dpl_3RnBLK8kbRPYCvNaLurB1UvNah4W`, exact Git main SHA `b35b234d050ef159ecca9381828050271bf3acaf`. Direct deployment metadata independently confirms `state=READY`, `readyState=READY`, `target=production`, `source=git`, branch `main`. All three aliases resolve to this same deployment: `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. No manual alias reassignment occurred.
+- **Build evidence for the alias target:** route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped, required header/footer links present and category slugs checked); Next.js compilation succeeded in 4.5s; lint/type checks ran; static generation completed 79/79 pages; build completed and deployment completed. Non-blocking npm `cache-dir` and edge-runtime/static-generation warnings remain.
+- **Latest docs/report deployments are not yet production:** devotional provenance report commit `7f87bd6e78f4ebc0b785f1176456b1020eab5f82` has deployment `dpl_FEQqidHhWvYVo73X17neqeWGwjjE` in `BUILDING`; the Phase 17 status update commit `b1c1d90e6a517e408dd93f54aa369700ff4b9fc7` has deployment `dpl_AzXKD4wLqx3B5PEy1Qi8e2v5jwJy` in `QUEUED`. Neither is READY or assigned production aliases. The official aliases remain on the verified READY `b35b234d` deployment until a subsequent exact-SHA/alias check proves otherwise.
+- **Runtime health after alias promotion:** project-level Vercel runtime error aggregation for 24h returned no errors; production error/fatal runtime logs for the latest 30 minutes returned no entries. These are scoped checks, not a guarantee of no user-visible defects.
+- Authenticated reader/CMS regression remains SSO-blocked; no bypass attempted. No database writes, imports, migrations, RLS/security changes, credentials, billing changes, manual deployment, alias reassignment or quota workaround.
+
+Last production alias/build evidence review: 2026-11-28 10:10 Africa/Lagos.
