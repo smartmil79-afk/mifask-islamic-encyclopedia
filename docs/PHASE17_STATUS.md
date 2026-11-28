@@ -3146,3 +3146,18 @@ Last evidence review: 2026-11-28 04:24 Africa/Lagos.
 - No database writes/imports, DDL, RLS/grant changes, credentials, billing changes, manual deployment, alias reassignment, or quota workaround occurred.
 
 Last production evidence review: 2026-11-28 04:25 Africa/Lagos.
+
+
+## Source-audit deployment promotion confirmation — 2026-11-28 04:26 Africa/Lagos
+
+- The source URL audit commit `f75a3c980b0810563267989a3cd21f9aad349da4` has now reached Vercel production **READY** as `dpl_5AgsTrSM2PmgoDzMkDyX9W7sd7Ks`. `get_deployment` reports READY with the exact Git SHA and no alias error. Build events confirm route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped, required header/footer links and category slugs checked), compilation succeeded in 3.6s, lint/type checks ran, and 79/79 static pages generated. The route table includes `/adhkar`, `/companions`, `/hadith`, `/quran`, `/seerah`, and `/sources`. The non-blocking npm `cache-dir` and edge-runtime/static-generation warnings remain.
+
+- The three official aliases were independently checked after READY and all map to `dpl_5AgsTrSM2PmgoDzMkDyX9W7sd7Ks`: `mifask-islamic-encyclopedia-liha.vercel.app`, `mifask-islamic-encyclopedia-liha-mifask-team.vercel.app`, and `mifask-islamic-encyclopedia-liha-git-main-mifask-team.vercel.app`. This supersedes the prior 04:25 alias mapping to `dpl_A7HB4ShXrYMwN4CqqTimub37bzmC`.
+
+- The immediately preceding status-document commit `fb2beec6bdf6e3f820fc687eec70ff8353fbb884` has Git-integrated deployment `dpl_12Bsyk9eetzGJWRFHf2fMKvC7WYt`, which remained BUILDING at the last exact-SHA and `get_deployment` checks. It is not declared READY and no aliases are attributed to it. The three official aliases remain on the independently verified READY deployment `dpl_5AgsTrSM2PmgoDzMkDyX9W7sd7Ks` until a newer deployment is independently confirmed READY.
+
+- Runtime error aggregation for the production project returned no errors over 24h; production error/fatal logs returned no entries over the latest 30m. Supabase unified logs for 02:55–03:25 UTC returned no rows, not a comprehensive zero-error assertion.
+
+- No database writes/imports, DDL, RLS/grant changes, credentials, billing changes, manual deployment, alias reassignment, or quota workaround occurred.
+
+Last production evidence review: 2026-11-28 04:26 Africa/Lagos.
