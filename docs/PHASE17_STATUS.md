@@ -3082,3 +3082,15 @@ Last production evidence review: 2026-11-28 01:36 Africa/Lagos.
 7. Complete authenticated reader/CMS regression only when approved SSO access is available.
 
 Last evidence review: 2026-11-28 03:10 Africa/Lagos.
+
+## Transliteration rights-note deployment promotion — 2026-11-28 03:11 Africa/Lagos
+
+- The licensing-note commit `2e1a244cc5dca740b15d12ee95bea00f38b23a8c`, which was BUILDING at the earlier check, has now reached Vercel production READY as deployment `dpl_41ZYenUiPPb8ToWisSsF59oqeqSW`. Exact Git SHA matches. Build events confirm route/navigation smoke passed (73 internal literal links, 28 unique targets, 26 route templates, 0 dynamic hrefs skipped), Next.js compilation succeeded in 3.8s, lint/type checks ran, 79/79 static pages generated and deployment completed in 29s. The non-blocking npm `cache-dir` warning remains.
+
+- All three official aliases were independently looked up after READY and each resolves to `dpl_41ZYenUiPPb8ToWisSsF59oqeqSW`: main, team, and git-main. This supersedes the earlier temporary alias mapping to the Seerah audit deployment `dpl_4rvyXdYKsKNgj7PQY8gY9tftb9oR`.
+
+- The subsequent Phase 17 status-document commit `59076625dddab1c0fcee10e7304e0e46f330cff4` triggered deployment `dpl_HirRKoN4r9F3Uy3GG8Ebiio1PVhC`, which was BUILDING at the latest exact-SHA check. It has not been declared READY and has no verified aliases. The three official aliases remain on the independently verified READY deployment `dpl_41ZYenUiPPb8ToWisSsF59oqeqSW` until a newer deployment is independently confirmed READY.
+
+- No further Supabase writes, imports, DDL, RLS/grant changes, migration operations, manual deployment, alias reassignment, credentials, billing changes or quota workarounds occurred.
+
+Last deployment evidence review: 2026-11-28 03:11 Africa/Lagos.
