@@ -14,7 +14,8 @@ const collections:Collection[]=[
  {name:'Jamiʿ al-Tirmidhi',slug:'tirmidhi',about:'Reports, chapter headings and transmitted grading commentary.',note:'Where grading is quoted, preserve who attributed it.'},
  {name:'Sunan al-Nasa’i',slug:'nasai',about:'A collection commonly studied in hadith and fiqh.',note:'Numbering may vary between editions.'},
  {name:'Sunan Ibn Majah',slug:'ibnmajah',about:'Often included among the six major Sunni collections.',note:'Check report context and grading from qualified sources.'},
- {name:'Muwattaʾ Malik',slug:'malik',about:'An early work reflecting reports and practice associated with Madinah.',note:'Different recensions and editions may have differing references.'}
+ {name:'Muwattaʾ Malik',slug:'malik',about:'An early work reflecting reports and practice associated with Madinah.',note:'Different recensions and editions may have differing references.'},
+ {name:'Riyad as-Salihin',slug:'riyad',about:'A Hadith collection compiled by Imam Yahya ibn Sharaf al-Nawawi.',note:'Check numbering and chapter references against the cited edition.'}
 ];
 const normalize=(s:string)=>s.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/[’ʿ]/g,"'").trim();
 export default function HadithExplorer(){

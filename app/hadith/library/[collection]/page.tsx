@@ -30,7 +30,15 @@ export default function HadithCollectionPage(){
  const arabic=(r:RecordData)=>r.arabic||r.text_ar||r.arabic_text||r.text||r.hadith||"";
  const english=(r:RecordData)=>{const candidates=[r.english,r.text_en,r.translation,r.english_text,r.translated_text,r.translation_text,r.translations?.english,r.translations?.en,r.text?.english,r.text?.en,r.hadith?.english,r.hadith?.en];for(const value of candidates){if(typeof value==="string"&&value.trim())return value;if(value&&typeof value==="object"){const nested=value.english||value.en||value.text;if(typeof nested==="string"&&nested.trim())return nested;}}return "";};
  const chapter=(r:RecordData)=>r.chapter?.title||r.chapter_title||r.chapter||r.book_title||"";
- const grade=(r:RecordData)=>typeof r.grade==="object"?(r.grade.label||r.grade.name||""):r.grade||r.grading||"";
+ const grade=(r:RecordData)=>{
+ const value=r.grade??r.grading;
+ if(typeof value==="string")return value;
+ if(value&&typeof value==="object"){
+  const label=value.label??value.name??value.grade;
+  return typeof label==="string"?label:"";
+ }
+ return "";
+};
  const canonical=(r:RecordData)=>r.canonical||r.url||r.source_url||"";
  const sourceDataset=(r:RecordData)=>r.source_dataset||r.source_refs?.dataset||r.metadata?.source_dataset||"Imported source";
  const currentNum=Number(selected?.number||selected?.hadith_number||number||1);

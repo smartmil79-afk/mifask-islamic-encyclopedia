@@ -3340,3 +3340,27 @@ Last queue correction evidence: 2026-11-28 08:23 Africa/Lagos.
 - Authenticated reader/CMS regression remains SSO-blocked; no bypass attempted. No database writes, imports, migrations, RLS changes, credentials, billing changes, manual deployment or quota workaround.
 
 Last production promotion evidence review: 2026-11-28 08:24 Africa/Lagos.
+
+
+## Hadith source_refs JSON shape and reader navigation remediation — 2026-11-28 08:40 Africa/Lagos
+
+- GitHub state before this follow-up: main was 6e1779e5e3935d6478fe5ed80f6e222f81758a25; the committed read-only SQL audit is docs/phase17/audits/phase17-hadith-source-ref-object-integrity-20261128.sql (blob 50e2fa2c097e1e670b115e7eb6a3ca4a28b915e7). The exact committed 4,610-character file was fetched from main and all five SELECT statements were executed directly against Supabase project honsqapwikfghoubwhcf.
+- Schema-first JSON-shape correction: all 3,754 Hadith source_refs values are JSON objects, not arrays; all 3,754 translations values are JSON objects whose en member is a string; all 3,754 metadata values are JSON objects. An earlier exploratory check that treated source_refs as an array produced a false-positive shape warning. It is not a data defect. The correct field access is source_refs->>'dataset', source_refs->>'edition', source_refs->>'number', and source_refs->>'source_url'.
+- Record-level provenance parity: Malik 1,858/1,858 and Riyad 1,896/1,896. Across both collections: source-reference number mismatches=0; upstream dataset identity mismatches=0; record edition gaps=0; source URL versus import-manifest source_path mismatches=0; record metadata.imported_from versus manifest path mismatches=0; collection/source-import link mismatches=0; non-HTTPS source URLs=0. The source_refs.dataset value is the upstream repository identifier (fawazahmed0/hadith-api or AhmedBaset/hadith-json), while ie_source_imports.dataset_key is the local collection key (malik or riyad); comparing those two namespaces directly is invalid.
+- Edition structure and outstanding data: Malik has 1,858 source-reference objects with dataset, edition, number, source_url; no upstream chapter_id. Riyad has those four fields plus chapter_id on all 1,896 records, with 19 distinct upstream chapter IDs. The local catalogue has 2 collection rows, but ie_hadith_books has 0 rows and 0 Hadith records have book_number. Do not synthesize book names/numbers from chapter IDs.
+- Content/grade coverage: all 3,754 records have an empty grading object. Malik still has 29 Arabic gaps, 40 English gaps, and 1,858 narrator/book/chapter metadata gaps. Riyad has no Arabic/English gaps, 11 narrator gaps, and 1,896 missing book numbers; its chapter number/title fields are populated. No grades or metadata were fabricated.
+- Reader code regression found: app/hadith/library/[collection]/page.tsx previously returned r.grading directly when r.grade was absent. The imported Malik/Riyad API rows carry grading: {}; the page then tried to render that object as a React child. The helper now returns only a string label and safely suppresses an empty grading object. No grading is assigned.
+- Navigation gap found and fixed: app/hadith/library/page.tsx and the dynamic reader already list/support Riyad as-Salihin, but the separate /hadith collection index omitted it. Added a Riyad entry to app/hadith/page.tsx, using the collection catalogue author and edition-specific numbering caution. This makes the collection card and citation-builder option available from the main Hadith explorer.
+- Production before the code follow-up: Vercel deployment dpl_78of5m8thCrZ8jucU97WwRdYnBU5 is READY on exact main SHA 125067bd067972ca79a784dddd1b1c27978a0b5d. All three official aliases independently resolve to it. Build logs show route/navigation smoke, 73 internal literal links, 28 unique targets, 26 route templates, zero dynamic hrefs skipped, successful compilation and 79/79 static pages. Project runtime error aggregation (24h) returned no errors; production error/fatal runtime logs (30m) returned no entries.
+- Change boundary: the SQL audit is read-only. The only application changes are the safe Hadith grade-rendering guard and the missing Riyad navigation entry. No Supabase data writes, imports, grading changes, book catalogue inserts, migrations, RLS/security changes, credentials, billing changes, manual deployment, alias reassignment or quota workaround. Authenticated reader/CMS tests remain SSO-blocked; no bypass attempted.
+
+### Next priorities after 08:40 Hadith JSON/reader audit
+
+1. Verify the new Riyad entry and empty-grade rendering in the Git-integrated Vercel build; do not claim production until exact-SHA READY and all three aliases are confirmed.
+2. Obtain rights-holder/data-specific redistribution terms and authentic source checksums for Malik and Riyad before any text or metadata backfill.
+3. Populate Hadith book structure only from an edition-matched source that explicitly supplies book boundaries/names; do not infer books from Riyad chapter IDs.
+4. Continue QuranEnc transliteration/audio rights review and the outstanding Seerah, Dua, Adhkar, Names-of-Allah and editorial revision provenance tasks.
+5. Reconcile 16 local migration files against 18 remote rows without replaying the unsafe Phase 2 seed or rewriting applied history.
+6. Complete authenticated reader/CMS regression only when approved SSO access is available.
+
+Last evidence review: 2026-11-28 08:40 Africa/Lagos.
